@@ -236,7 +236,7 @@ float ADS1Character::TakeDamage(float Damage, const FDamageEvent& DamageEvent, A
 	{
 		AttributeComponent->TakeDamageAmount(0.f);
 		// 스테미나 차감
-		AttributeComponent->DecreaseStamina(20.f);
+		AttributeComponent->DecreaseStamina(BlockingHitStaminaCost);
 		StateComponent->SetState(DS1GameplayTags::Character_State_Blocking);
 	}
 	else
@@ -443,13 +443,13 @@ void ADS1Character::Sprinting()
 		return;
 	}
 
-	if (AttributeComponent->CheckHasEnoughStamina(5.f) && IsMoving())
+	if (AttributeComponent->CheckHasEnoughStamina(SprintMinStamina) && IsMoving())
 	{
 		AttributeComponent->ToggleStaminaRegeneration(false);
 
 		GetCharacterMovement()->MaxWalkSpeed = SprintingSpeed;
 
-		AttributeComponent->DecreaseStamina(0.1f);
+		AttributeComponent->DecreaseStamina(SprintStaminaCostPerTick);
 
 		bSprinting = true;
 	}
@@ -479,7 +479,7 @@ void ADS1Character::Rolling()
 	check(AttributeComponent);
 	check(StateComponent);
 
-	if (AttributeComponent->CheckHasEnoughStamina(15.f))
+	if (AttributeComponent->CheckHasEnoughStamina(RollingStaminaCost))
 	{
 		// 스태미나 재충전 멈춤
 		AttributeComponent->ToggleStaminaRegeneration(false);
@@ -488,7 +488,7 @@ void ADS1Character::Rolling()
 		StateComponent->ToggleMovementInput(false);
 
 		// 스태미나 차감.
-		AttributeComponent->DecreaseStamina(15.f);
+		AttributeComponent->DecreaseStamina(RollingStaminaCost);
 
 		// 구르기 애니메이션 재생
 		PlayAnimMontage(RollingMontage);
@@ -654,7 +654,7 @@ void ADS1Character::Parrying()
 
 			StateComponent->ToggleMovementInput(false);
 			AttributeComponent->ToggleStaminaRegeneration(false);
-			AttributeComponent->DecreaseStamina(10.f);
+			AttributeComponent->DecreaseStamina(ParryingStaminaCost);
 
 			PlayAnimMontage(ParryingMontage);
 
@@ -789,7 +789,7 @@ bool ADS1Character::CanPerformAttackBlocking() const
 	check(CombatComponent);
 	check(AttributeComponent);
 
-	return bFacingEnemy && CombatComponent->IsBlockingEnabled() && AttributeComponent->CheckHasEnoughStamina(20.f);
+	return bFacingEnemy && CombatComponent->IsBlockingEnabled() && AttributeComponent->CheckHasEnoughStamina(BlockingHitStaminaCost);
 }
 
 bool ADS1Character::CanPerformParry() const

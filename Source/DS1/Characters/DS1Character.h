@@ -154,6 +154,28 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category = "Movement Speed")
 	bool bSprinting = false;
 
+// Stamina Cost Section
+protected:
+	/** 질주 중 틱당 소모 스태미나 */
+	UPROPERTY(EditAnywhere, Category = "Stamina Cost")
+	float SprintStaminaCostPerTick = 0.1f;
+
+	/** 질주 시작에 필요한 최소 스태미나 */
+	UPROPERTY(EditAnywhere, Category = "Stamina Cost")
+	float SprintMinStamina = 5.f;
+
+	/** 구르기 스태미나 소모량 */
+	UPROPERTY(EditAnywhere, Category = "Stamina Cost")
+	float RollingStaminaCost = 15.f;
+
+	/** 방어 피격 시 스태미나 소모량 */
+	UPROPERTY(EditAnywhere, Category = "Stamina Cost")
+	float BlockingHitStaminaCost = 20.f;
+
+	/** 패링 스태미나 소모량 */
+	UPROPERTY(EditAnywhere, Category = "Stamina Cost")
+	float ParryingStaminaCost = 10.f;
+
 // Combo Section
 protected:
 	/** 콤보 시퀀스 진행중 */

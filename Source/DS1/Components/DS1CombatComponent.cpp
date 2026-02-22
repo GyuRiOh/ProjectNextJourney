@@ -4,6 +4,9 @@
 #include "Components/DS1CombatComponent.h"
 
 #include "Characters/DS1Character.h"
+#include "Components/DS1InventoryComponent.h"
+#include "Data/DS1ItemData.h"
+#include "Data/DS1ItemDataRegistry.h"
 #include "Equipments/DS1Armour.h"
 #include "Equipments/DS1Shield.h"
 #include "Equipments/DS1Weapon.h"
@@ -31,15 +34,11 @@ void UDS1CombatComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
 
 void UDS1CombatComponent::SetWeapon(ADS1Weapon* NewWeapon)
 {
-    // 이미 무기를 가지고 있으면 PickupItem으로 만들어서 떨군다.
+    // 이미 무기를 가지고 있으면 인벤토리에 넣거나 바닥에 떨군다.
     if (::IsValid(MainWeapon))
     {
-        if (const AActor* OwnerActor = GetOwner())
-        {
-            SpawnPickupItem(OwnerActor, MainWeapon->GetClass());
-
-            MainWeapon->Destroy();
-        }
+        ReturnEquipmentToInventoryOrDrop(MainWeapon->GetClass());
+        MainWeapon->Destroy();
     }
 
 	MainWeapon = NewWeapon;
@@ -54,16 +53,12 @@ void UDS1CombatComponent::SetArmour(ADS1Armour* NewArmour)
 {
     const EDS1ArmourType ArmourType = NewArmour->GetArmourType();
 
-    // 이미 같은 부위에 장착된 방어구가 있으면 PickupItem으로 떨군다.
+    // 이미 같은 부위에 장착된 방어구가 있으면 인벤토리에 넣거나 바닥에 떨군다.
     if (ADS1Armour* EquippedArmourPart = GetArmour(ArmourType))
     {
 	    if (IsValid(EquippedArmourPart))
 	    {
-		    // PickupItem으로 만든다.
-            if (const AActor* OwnerActor = GetOwner())
-            {
-                SpawnPickupItem(OwnerActor, EquippedArmourPart->GetClass());
-            }
+		    ReturnEquipmentToInventoryOrDrop(EquippedArmourPart->GetClass());
 
             // 장착 해제
             EquippedArmourPart->UnequipItem();
@@ -83,12 +78,8 @@ void UDS1CombatComponent::SetShield(ADS1Shield* NewShield)
 {
     if (IsValid(Shield))
     {
-	    if (const AActor* OwnerActor = GetOwner())
-	    {
-            SpawnPickupItem(OwnerActor, Shield->GetClass());
-
-            Shield->Destroy();
-	    }
+        ReturnEquipmentToInventoryOrDrop(Shield->GetClass());
+        Shield->Destroy();
     }
 
     Shield = NewShield;
@@ -113,5 +104,33 @@ void UDS1CombatComponent::SpawnPickupItem(const AActor* OwnerActor, const TSubcl
     ADS1PickupItem* PickupItem = GetWorld()->SpawnActorDeferred<ADS1PickupItem>(ADS1PickupItem::StaticClass(), OwnerActor->GetActorTransform(), nullptr, nullptr, ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn);
     PickupItem->SetEquipmentClass(NewEquipmentClass);
     PickupItem->FinishSpawning(OwnerActor->GetActorTransform());
+}
+
+void UDS1CombatComponent::ReturnEquipmentToInventoryOrDrop(const TSubclassOf<ADS1Equipment>& EquipmentClass)
+{
+    AActor* OwnerActor = GetOwner();
+    if (!OwnerActor)
+    {
+        return;
+    }
+
+    // 인벤토리 컴포넌트가 있으면 인벤토리에 넣으려 시도
+    if (UDS1InventoryComponent* InvComp = OwnerActor->FindComponentByClass<UDS1InventoryComponent>())
+    {
+        UDS1ItemDataRegistry* Registry = GetWorld()->GetGameInstance()->GetSubsystem<UDS1ItemDataRegistry>();
+        if (Registry)
+        {
+            if (UDS1ItemData* ItemData = Registry->FindItemDataByEquipmentClass(EquipmentClass))
+            {
+                if (InvComp->AddItem(ItemData, 1) > 0)
+                {
+                    return;  // 인벤토리에 성공적으로 추가됨
+                }
+            }
+        }
+    }
+
+    // 인벤토리가 없거나 꽉 찬 경우 기존 동작(바닥 드롭)
+    SpawnPickupItem(OwnerActor, EquipmentClass);
 }
 

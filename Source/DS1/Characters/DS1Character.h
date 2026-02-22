@@ -9,6 +9,7 @@
 #include "DS1Character.generated.h"
 
 class UDS1PotionInventoryComponent;
+class UDS1InventoryComponent;
 class ADS1FistWeapon;
 class UDS1TargetingComponent;
 class UDS1CombatComponent;
@@ -86,6 +87,10 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* ConsumeAction;
 
+	/** 인벤토리 토글 */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* ToggleInventoryAction;
+
 private:
 	/** 캐릭터의 각종 스탯 관리 */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
@@ -106,6 +111,10 @@ private:
 	/** 포션 인벤토리 */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	UDS1PotionInventoryComponent* PotionInventoryComponent;
+
+	/** 아이템 인벤토리 */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	UDS1InventoryComponent* InventoryComponent;
 
 // Body parts Mesh
 protected:
@@ -256,6 +265,8 @@ protected:
 	void Parrying();
 	/** 포션 마시기 */
 	void Consume();
+	/** 인벤토리 토글 */
+	void ToggleInventory();
 
 protected:
 	/** 현재 상태에서 수행 가능한 일반공격 */

@@ -88,4 +88,9 @@ public:
 
 private:
 	void SpawnPickupItem(const AActor* OwnerActor, const TSubclassOf<ADS1Equipment>& NewEquipmentClass) const;
+
+	/**
+	 * 기존 장비를 인벤토리에 넣으려 시도, 실패 시 바닥 드롭
+	 */
+	void ReturnEquipmentToInventoryOrDrop(const TSubclassOf<ADS1Equipment>& EquipmentClass);
 };

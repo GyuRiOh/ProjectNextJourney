@@ -13,6 +13,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/DS1CombatComponent.h"
 #include "Components/DS1AttributeComponent.h"
+#include "Components/DS1InventoryComponent.h"
 #include "Components/DS1PotionInventoryComponent.h"
 #include "Components/DS1StateComponent.h"
 #include "Components/DS1TargetingComponent.h"
@@ -24,6 +25,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Kismet/KismetSystemLibrary.h"
+#include "Player/DS1PlayerController.h"
 #include "Sound/SoundCue.h"
 #include "UI/DS1PlayerHUDWidget.h"
 
@@ -72,6 +74,8 @@ ADS1Character::ADS1Character()
 	// 포션 인벤토리
 	PotionInventoryComponent = CreateDefaultSubobject<UDS1PotionInventoryComponent>(TEXT("PotionInventory"));
 
+	// 아이템 인벤토리
+	InventoryComponent = CreateDefaultSubobject<UDS1InventoryComponent>(TEXT("Inventory"));
 }
 
 void ADS1Character::BeginPlay()
@@ -158,6 +162,9 @@ void ADS1Character::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 
 		// 포션 마시기
 		EnhancedInputComponent->BindAction(ConsumeAction, ETriggerEvent::Started, this, &ThisClass::Consume);
+
+		// 인벤토리 토글
+		EnhancedInputComponent->BindAction(ToggleInventoryAction, ETriggerEvent::Started, this, &ThisClass::ToggleInventory);
 	}
 
 }
@@ -962,5 +969,16 @@ void ADS1Character::DeactivateWeaponCollision(EWeaponCollisionType WeaponCollisi
 void ADS1Character::ToggleIFrames(const bool bEnabled)
 {
 	bEnabledIFrames = bEnabled;
+}
+
+void ADS1Character::ToggleInventory()
+{
+	if (APlayerController* PC = Cast<APlayerController>(GetController()))
+	{
+		if (ADS1PlayerController* DS1PC = Cast<ADS1PlayerController>(PC))
+		{
+			DS1PC->ToggleInventory();
+		}
+	}
 }
 

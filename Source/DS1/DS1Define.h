@@ -79,3 +79,24 @@ enum class EDS1DamageType : uint8
 	HitBack,
     KnockBack,
 };
+
+/** 아이템 유형 */
+UENUM(BlueprintType)
+enum class EDS1ItemType : uint8
+{
+	Equipment,
+	Consumable,
+	Misc,
+};
+
+/** 장비 슬롯 유형 */
+UENUM(BlueprintType)
+enum class EDS1EquipSlotType : uint8
+{
+	Weapon,
+	Shield,
+	Chest,
+	Pants,
+	Boots,
+	Gloves,
+};

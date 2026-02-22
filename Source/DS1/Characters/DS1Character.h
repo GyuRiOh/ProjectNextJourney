@@ -11,7 +11,6 @@
 class UDS1PotionInventoryComponent;
 class UDS1InventoryComponent;
 class ADS1FistWeapon;
-class UDS1TargetingComponent;
 class UDS1CombatComponent;
 class UDS1StateComponent;
 class UDS1PlayerHUDWidget;
@@ -42,9 +41,6 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Input")
 	UInputAction* MoveAction;
 
-	UPROPERTY(EditAnywhere, Category = "Input")
-	UInputAction* LookAction;
-
 	UPROPERTY(EditAnywhere, Category="Input")
 	UInputAction* SprintRollingAction;
 
@@ -65,18 +61,6 @@ private:
 	/** Heavy Attack */
 	UPROPERTY(EditAnywhere, Category = "Input")
 	UInputAction* HeavyAttackAction;
-
-	/** LockedOn */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-	UInputAction* LockOnTargetAction;
-
-	/** 왼쪽으로 타겟 전환 */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-	UInputAction* LeftTargetAction;
-
-	/** 오른쪽으로 타겟 전환 */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-	UInputAction* RightTargetAction;
 
 	/** 방어 자세 */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
@@ -106,10 +90,6 @@ private:
 	/** 무기, 전투 관리 */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	UDS1CombatComponent* CombatComponent;
-
-	/** LockedOn Targeting */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
-	UDS1TargetingComponent* TargetingComponent;
 
 	/** 포션 인벤토리 */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
@@ -240,8 +220,6 @@ protected:
 
 	/** 이동 */
 	void Move(const FInputActionValue& Values);
-	/** 카메라 방향 */
-	void Look(const FInputActionValue& Values);
 	/** 질주 */
 	void Sprinting();
 	/** 질주 중단 */
@@ -257,10 +235,6 @@ protected:
 	void Attack();
 	void SpecialAttack();
 	void HeavyAttack();
-	/** LockedOn */
-	void LockOnTarget();
-	void LeftTarget();
-	void RightTarget();
 	/** 방어 자세 */
 	void Blocking();
 	void BlockingEnd();

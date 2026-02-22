@@ -16,7 +16,6 @@
 #include "Components/DS1InventoryComponent.h"
 #include "Components/DS1PotionInventoryComponent.h"
 #include "Components/DS1StateComponent.h"
-#include "Components/DS1TargetingComponent.h"
 #include "Engine/DamageEvents.h"
 #include "Equipments/DS1FistWeapon.h"
 #include "Equipments/DS1Weapon.h"
@@ -46,9 +45,13 @@ ADS1Character::ADS1Character()
 
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	CameraBoom->SetupAttachment(RootComponent);
-	CameraBoom->TargetArmLength = 400.0f;
-	CameraBoom->SetRelativeRotation(FRotator(-30.f, 0.f, 0.f));
-	CameraBoom->bUsePawnControlRotation = true;
+	CameraBoom->TargetArmLength = 1200.0f;
+	CameraBoom->SetRelativeRotation(FRotator(-50.f, 0.f, 0.f));
+	CameraBoom->bUsePawnControlRotation = false;
+	CameraBoom->bInheritPitch = false;
+	CameraBoom->bInheritYaw = false;
+	CameraBoom->bInheritRoll = false;
+	CameraBoom->bDoCollisionTest = false;
 
 
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
@@ -65,9 +68,6 @@ ADS1Character::ADS1Character()
 	AttributeComponent = CreateDefaultSubobject<UDS1AttributeComponent>(TEXT("Attribute"));
 	StateComponent = CreateDefaultSubobject<UDS1StateComponent>(TEXT("State"));
 	CombatComponent = CreateDefaultSubobject<UDS1CombatComponent>(TEXT("Combat"));
-	// LockedOn Targeting
-	TargetingComponent = CreateDefaultSubobject<UDS1TargetingComponent>(TEXT("Targeting"));
-
 	// OnDeath Delegate 함수 바인딩.
 	AttributeComponent->OnDeath.AddUObject(this, &ThisClass::OnDeath);
 
@@ -127,7 +127,6 @@ void ADS1Character::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent))
 	{
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ThisClass::Move);
-		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ThisClass::Look);
 
 		// 질주 (Shift)
 		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Triggered, this, &ThisClass::Sprinting);
@@ -147,11 +146,6 @@ void ADS1Character::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 		EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Triggered, this, &ThisClass::SpecialAttack);
 		// HeavyAttack
 		EnhancedInputComponent->BindAction(HeavyAttackAction, ETriggerEvent::Started, this, &ThisClass::HeavyAttack);
-
-		// LockedOn
-		EnhancedInputComponent->BindAction(LockOnTargetAction, ETriggerEvent::Started, this, &ThisClass::LockOnTarget);
-		EnhancedInputComponent->BindAction(LeftTargetAction, ETriggerEvent::Started, this, &ThisClass::LeftTarget);
-		EnhancedInputComponent->BindAction(RightTargetAction, ETriggerEvent::Started, this, &ThisClass::RightTarget);
 
 		// 방어 자세
 		EnhancedInputComponent->BindAction(BlockAction, ETriggerEvent::Started, this, &ThisClass::Blocking);
@@ -427,47 +421,16 @@ void ADS1Character::Move(const FInputActionValue& Values)
 {
 	check(StateComponent);
 
-	// 이동 입력 가능 상태인지 체크.
-	if (StateComponent->MovementInputEnabled() == false)
+	if (!StateComponent->MovementInputEnabled())
 	{
 		return;
 	}
 
-	FVector2D MovementVector = Values.Get<FVector2D>();
+	const FVector2D MovementVector = Values.Get<FVector2D>();
 
-	if (Controller != nullptr)
-	{
-		const FRotator Rotation = Controller->GetControlRotation();
-		const FRotator YawRotator(0, Rotation.Yaw, 0);
-
-		const FVector ForwardVector = FRotationMatrix(YawRotator).GetUnitAxis(EAxis::X);
-		const FVector RightVector = FRotationMatrix(YawRotator).GetUnitAxis(EAxis::Y);
-
-		// 주어진 월드 방향 벡터(보통 정규화됨)를 따라 'ScaleValue'만큼 스케일된 이동 입력을 추가합니다. 
-		// ScaleValue가 0보다 작으면, 이동은 반대 방향으로 이루어집니다.
-		// ScaleValue는 아날로그 입력에 사용될 수 있습니다. 
-		// 예를 들어, 0.5 값은 정상 값의 절반을 적용하고, -1.0은 방향을 반대로 합니다.
-		AddMovementInput(ForwardVector, MovementVector.Y);
-		AddMovementInput(RightVector, MovementVector.X);
-		
-	}
-}
-
-void ADS1Character::Look(const FInputActionValue& Values)
-{
-	// LockedOn 상태에서는 입력 차단.
-	if (TargetingComponent && TargetingComponent->IsLockOn())
-	{
-		return;
-	}
-
-	FVector2D LookDirection = Values.Get<FVector2D>();
-
-	if (Controller != nullptr)
-	{
-		AddControllerYawInput(LookDirection.X);
-		AddControllerPitchInput(LookDirection.Y);
-	}
+	// 쿼터뷰: 카메라 yaw 0 고정이므로 월드 방향 직접 사용
+	AddMovementInput(FVector::ForwardVector, MovementVector.Y);
+	AddMovementInput(FVector::RightVector, MovementVector.X);
 }
 
 void ADS1Character::Sprinting()
@@ -641,21 +604,6 @@ void ADS1Character::HeavyAttack()
 	{
 		ExecuteComboAttack(AttackTypeTag);
 	}
-}
-
-void ADS1Character::LockOnTarget()
-{
-	TargetingComponent->ToggleLockOn();
-}
-
-void ADS1Character::LeftTarget()
-{
-	TargetingComponent->SwitchingLockedOnActor(ESwitchingDirection::Left);
-}
-
-void ADS1Character::RightTarget()
-{
-	TargetingComponent->SwitchingLockedOnActor(ESwitchingDirection::Right);
 }
 
 void ADS1Character::Blocking()

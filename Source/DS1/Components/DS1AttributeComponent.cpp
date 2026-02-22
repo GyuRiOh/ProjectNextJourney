@@ -43,9 +43,10 @@ void UDS1AttributeComponent::ToggleStaminaRegeneration(bool bEnabled, float Star
 {
 	if (bEnabled)
 	{
+		const float Delay = StartDelay < 0.f ? StaminaRegenDelay : StartDelay;
 		if (GetWorld()->GetTimerManager().IsTimerActive(StaminaRegenTimerHandle) == false)
 		{
-			GetWorld()->GetTimerManager().SetTimer(StaminaRegenTimerHandle, this, &ThisClass::RegenerateStaminaHandler, 0.1f, true, StartDelay);
+			GetWorld()->GetTimerManager().SetTimer(StaminaRegenTimerHandle, this, &ThisClass::RegenerateStaminaHandler, 0.1f, true, Delay);
 		}
 	}
 	else

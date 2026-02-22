@@ -29,8 +29,10 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Stamina")
 	float MaxStamina = 100.f;
 
-	UPROPERTY(EditAnywhere, Category = "Stamina")
 	float StaminaRegenRate = 0.2f;
+
+	/** 스태미나 회복 시작 전 대기 시간 */
+	float StaminaRegenDelay = 2.f;
 
 	UPROPERTY(EditAnywhere, Category = "Health")
 	float BaseHealth = 100.f;
@@ -54,6 +56,9 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 public:
+	FORCEINLINE void SetStaminaRegenRate(float Rate) { StaminaRegenRate = Rate; }
+	FORCEINLINE void SetStaminaRegenDelay(float Delay) { StaminaRegenDelay = Delay; }
+
 	FORCEINLINE float GetBaseStamina() const { return BaseStamina; };
 	FORCEINLINE float GetMaxStamina() const { return MaxStamina; };
 	FORCEINLINE float GetBaseHealth() const { return BaseHealth; };
@@ -79,8 +84,8 @@ public:
 	/** 스테미너 차감 */
 	void DecreaseStamina(float StaminaCost);
 
-	/** 스테미너 재충전/중지 토글 */
-	void ToggleStaminaRegeneration(bool bEnabled, float StartDelay = 2.f);
+	/** 스테미너 재충전/중지 토글. StartDelay < 0 이면 StaminaRegenDelay 사용 */
+	void ToggleStaminaRegeneration(bool bEnabled, float StartDelay = -1.f);
 
 	/** 스텟 변경을 통지하는 Broadcast Function */
 	void BroadcastAttributeChanged(EDS1AttributeType InAttributeType) const;

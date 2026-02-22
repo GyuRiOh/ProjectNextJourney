@@ -176,6 +176,14 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Stamina Cost")
 	float ParryingStaminaCost = 10.f;
 
+	/** 스태미나 틱당 회복량 */
+	UPROPERTY(EditAnywhere, Category = "Stamina Cost")
+	float StaminaRegenRate = 0.2f;
+
+	/** 스태미나 회복 시작 전 대기 시간 */
+	UPROPERTY(EditAnywhere, Category = "Stamina Cost")
+	float StaminaRegenDelay = 2.f;
+
 // Combo Section
 protected:
 	/** 콤보 시퀀스 진행중 */

@@ -307,7 +307,6 @@ void ADS1Enemy::PerformAttack(FGameplayTag& AttackTypeTag, FOnMontageEnded& Mont
 	{
 		StateComponent->SetState(DS1GameplayTags::Character_State_Attacking);
 		CombatComponent->SetLastAttackType(AttackTypeTag);
-		AttributeComponent->ToggleStaminaRegeneration(false);
 
 		if (UAnimMontage* Montage = Weapon->GetRandomMontageForTag(AttackTypeTag))
 		{
@@ -318,9 +317,6 @@ void ADS1Enemy::PerformAttack(FGameplayTag& AttackTypeTag, FOnMontageEnded& Mont
 			}
 		}
 
-		const float StaminaCost = Weapon->GetStaminaCost(AttackTypeTag);
-		AttributeComponent->DecreaseStamina(StaminaCost);
-		AttributeComponent->ToggleStaminaRegeneration(true, 1.5f);
 		}
 }
 

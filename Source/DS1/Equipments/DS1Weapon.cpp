@@ -21,11 +21,6 @@ ADS1Weapon::ADS1Weapon()
 	SecondWeaponCollision = CreateDefaultSubobject<UDS1WeaponCollisionComponent>("SecondCollision");
 	SecondWeaponCollision->OnHitActor.AddUObject(this, &ThisClass::OnHitActor);
 
-	StaminaCostMap.Add(DS1GameplayTags::Character_Attack_Light, 7.f);
-	StaminaCostMap.Add(DS1GameplayTags::Character_Attack_Running, 12.f);
-	StaminaCostMap.Add(DS1GameplayTags::Character_Attack_Special, 15.f);
-	StaminaCostMap.Add(DS1GameplayTags::Character_Attack_Heavy, 20.f);
-
 	DamageMultiplierMap.Add(DS1GameplayTags::Character_Attack_Heavy, 1.8f);
 	DamageMultiplierMap.Add(DS1GameplayTags::Character_Attack_Running, 1.8f);
 	DamageMultiplierMap.Add(DS1GameplayTags::Character_Attack_Special, 2.1f);
@@ -151,15 +146,6 @@ UAnimMontage* ADS1Weapon::GetHitReactMontage(const AActor* Attacker) const
 	}
 
 	return SelectedMontage;
-}
-
-float ADS1Weapon::GetStaminaCost(const FGameplayTag& InTag) const
-{
-	if (StaminaCostMap.Contains(InTag))
-	{
-		return StaminaCostMap[InTag];
-	}
-	return 0.f;
 }
 
 float ADS1Weapon::GetAttackDamage() const

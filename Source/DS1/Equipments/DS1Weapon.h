@@ -48,9 +48,6 @@ protected:
 
 // Data Section
 protected:
-	UPROPERTY(EditAnywhere)
-	TMap<FGameplayTag, float> StaminaCostMap;
-
 	/** 기본 데미지 */
 	UPROPERTY(EditAnywhere)
 	float BaseDamage = 15.f;
@@ -71,7 +68,6 @@ public:
 	UAnimMontage* GetRandomMontageForTag(const FGameplayTag& Tag) const;
 	UAnimMontage* GetHitReactMontage(const AActor* Attacker) const;
 
-	float GetStaminaCost(const FGameplayTag& InTag) const;
 	float GetAttackDamage() const;
 
 	FORCEINLINE FName GetEquipSocketName() const { return EquipSocketName; };

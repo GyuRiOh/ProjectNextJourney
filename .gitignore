@@ -1,6 +1,9 @@
 # Visual Studio 2015 user specific files
 .vs/
 
+# Claude Code local settings
+.claude/
+
 # Compiled Object files
 *.slo
 *.lo

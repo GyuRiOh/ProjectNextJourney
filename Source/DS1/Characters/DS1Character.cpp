@@ -82,6 +82,9 @@ void ADS1Character::BeginPlay()
 {
 	Super::BeginPlay();
 
+	AttributeComponent->SetStaminaRegenRate(StaminaRegenRate);
+	AttributeComponent->SetStaminaRegenDelay(StaminaRegenDelay);
+
 	// Player HUD를 생성
 	if (PlayerHUDWidgetClass)
 	{
@@ -409,11 +412,8 @@ bool ADS1Character::CanPerformAttack(const FGameplayTag& AttackTypeTag) const
 	CheckTags.AddTag(DS1GameplayTags::Character_State_DrinkingPotion);
 	CheckTags.AddTag(DS1GameplayTags::Character_State_Parrying);
 
-	const float StaminaCost = CombatComponent->GetMainWeapon()->GetStaminaCost(AttackTypeTag);
-
 	return StateComponent->IsCurrentStateEqualToAny(CheckTags) == false
-		&& CombatComponent->IsCombatEnabled()
-		&& AttributeComponent->CheckHasEnoughStamina(StaminaCost);
+		&& CombatComponent->IsCombatEnabled();
 }
 
 
@@ -496,7 +496,7 @@ void ADS1Character::Rolling()
 		StateComponent->SetState(DS1GameplayTags::Character_State_Rolling);
 
 		// 스태미나 재충전 시작
-		AttributeComponent->ToggleStaminaRegeneration(true, 1.5f);
+		AttributeComponent->ToggleStaminaRegeneration(true);
 	}
 }
 
@@ -658,7 +658,7 @@ void ADS1Character::Parrying()
 
 			PlayAnimMontage(ParryingMontage);
 
-			AttributeComponent->ToggleStaminaRegeneration(true, 1.5f);
+			AttributeComponent->ToggleStaminaRegeneration(true);
 		}
 	}
 }
@@ -699,8 +699,6 @@ void ADS1Character::DoAttack(const FGameplayTag& AttackTypeTag)
 		StateComponent->ToggleMovementInput(false);
 		CombatComponent->SetLastAttackType(AttackTypeTag);
 
-		AttributeComponent->ToggleStaminaRegeneration(false);
-
 		UAnimMontage* Montage = Weapon->GetMontageForTag(AttackTypeTag, ComboCounter);
 		if (!Montage)
 		{
@@ -710,10 +708,6 @@ void ADS1Character::DoAttack(const FGameplayTag& AttackTypeTag)
 		}
 
 		PlayAnimMontage(Montage);
-
-		const float StaminaCost = Weapon->GetStaminaCost(AttackTypeTag);
-		AttributeComponent->DecreaseStamina(StaminaCost);
-		AttributeComponent->ToggleStaminaRegeneration(true, 1.5f);
 	}
 }
 

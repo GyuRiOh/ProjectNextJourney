@@ -48,6 +48,9 @@ private:
 	UPROPERTY(EditAnywhere, Category="Input")
 	UInputAction* SprintRollingAction;
 
+	UPROPERTY(EditAnywhere, Category="Input")
+	UInputAction* SprintAction;
+
 	UPROPERTY(EditAnywhere, Category = "Input")
 	UInputAction* InteractAction;
 

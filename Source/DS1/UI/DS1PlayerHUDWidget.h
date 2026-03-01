@@ -9,6 +9,7 @@
 
 class UDS1WeaponWidget;
 class UDS1PotionWidget;
+class UDS1QuickSlotWidget;
 class UDS1StatBarWidget;
 /**
  * 
@@ -25,7 +26,11 @@ protected:
 	UPROPERTY(meta = (BindWidget), BlueprintReadWrite)
 	UDS1StatBarWidget* HealthBarWidget;
 
-	UPROPERTY(meta = (BindWidget), BlueprintReadWrite)
+	UPROPERTY(meta = (BindWidgetOptional), BlueprintReadWrite)
+	UDS1QuickSlotWidget* QuickSlotWidget;
+
+	// Backward-compatible binding for existing WBP_PlayerHUD layouts.
+	UPROPERTY(meta = (BindWidgetOptional), BlueprintReadWrite)
 	UDS1PotionWidget* PotionWidget;
 
 	UPROPERTY(meta = (BindWidget), BlueprintReadWrite)
@@ -45,8 +50,6 @@ public:
 
 protected:
 	void OnAttributeChanged(EDS1AttributeType AttributeType, float InValue);
-
-	void OnPotionQuantityChanged(int32 InAmount);
 
 	void OnWeaponChanged();
 };

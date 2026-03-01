@@ -204,6 +204,25 @@ int32 UDS1InventoryComponent::GetItemCount(UDS1ItemData* ItemData) const
 	return Total;
 }
 
+int32 UDS1InventoryComponent::FindFirstSlotByItemData(UDS1ItemData* ItemData) const
+{
+	if (!ItemData)
+	{
+		return -1;
+	}
+
+	for (int32 i = 0; i < InventorySlots.Num(); ++i)
+	{
+		const FDS1ItemInstance& Slot = InventorySlots[i];
+		if (Slot.IsValid() && Slot.ItemData == ItemData)
+		{
+			return i;
+		}
+	}
+
+	return -1;
+}
+
 // ── 장비 연동 ──
 
 bool UDS1InventoryComponent::EquipFromSlot(int32 SlotIndex)
@@ -360,6 +379,17 @@ bool UDS1InventoryComponent::UseConsumableFromSlot(int32 SlotIndex)
 
 	RemoveItemFromSlot(SlotIndex, 1);
 	return true;
+}
+
+bool UDS1InventoryComponent::UseConsumableByItemData(UDS1ItemData* ItemData)
+{
+	const int32 SlotIndex = FindFirstSlotByItemData(ItemData);
+	if (SlotIndex == -1)
+	{
+		return false;
+	}
+
+	return UseConsumableFromSlot(SlotIndex);
 }
 
 bool UDS1InventoryComponent::DropItemFromSlot(int32 SlotIndex, int32 Count)

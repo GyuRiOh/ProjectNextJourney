@@ -64,6 +64,9 @@ public:
 	void SetWeapon(ADS1Weapon* NewWeapon);
 	void SetArmour(ADS1Armour* NewArmour);
 	void SetShield(ADS1Shield* NewShield);
+	void ClearWeapon();
+	void ClearShield();
+	void ClearArmour(EDS1ArmourType ArmourType);
 
 public:
 	FORCEINLINE bool IsCombatEnabled() const { return bCombatEnabled; }

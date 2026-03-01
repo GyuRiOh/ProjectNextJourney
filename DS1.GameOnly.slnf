@@ -1,0 +1,8 @@
+{
+  "solution": {
+    "path": "DS1.sln",
+    "projects": [
+      "Intermediate\\ProjectFiles\\DS1.vcxproj"
+    ]
+  }
+}

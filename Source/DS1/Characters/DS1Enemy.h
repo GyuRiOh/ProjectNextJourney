@@ -16,6 +16,8 @@ class UWidgetComponent;
 class USphereComponent;
 class UDS1StateComponent;
 class UDS1AttributeComponent;
+class USoundCue;
+class UParticleSystem;
 
 UCLASS()
 class DS1_API ADS1Enemy : public ACharacter, public IDS1Targeting, public IDS1CombatInterface
@@ -71,6 +73,9 @@ protected:
 	FTimerHandle ParriedDelayTimerHandle;
 	FTimerHandle StunnedDelayTimerHandle;
 
+	/** 플레이어에게 현재 보이는 상태인지 */
+	bool bIsVisibleToPlayer = true;
+
 	/** 피격시 스턴 확률 */
 	UPROPERTY(EditAnywhere)
 	int StunnedRate = 0;
@@ -113,6 +118,9 @@ public:
 	void ToggleHealthBarVisibility(bool bVisibility);
 	// 타겟 본다.
 	virtual void SeesTarget(AActor* InTargetActor);
+
+	// 플레이어 시야 기반 렌더링 표시/숨김
+	void SetVisibleToPlayer(bool bVisible);
 
 public:
 	FORCEINLINE ATargetPoint* GetPatrolPoint()

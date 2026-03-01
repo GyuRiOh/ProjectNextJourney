@@ -17,6 +17,7 @@
 #include "Components/SphereComponent.h"
 #include "Components/WidgetComponent.h"
 #include "Engine/DamageEvents.h"
+#include "Equipments/DS1Shield.h"
 #include "Equipments/DS1Weapon.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
@@ -357,4 +358,43 @@ void ADS1Enemy::ToggleHealthBarVisibility(bool bVisibility)
 
 void ADS1Enemy::SeesTarget(AActor* InTargetActor)
 {
+}
+
+void ADS1Enemy::SetVisibleToPlayer(bool bVisible)
+{
+	// 사망 상태의 적은 ragdoll이 남아있으므로 항상 표시
+	if (StateComponent)
+	{
+		FGameplayTagContainer DeathTag;
+		DeathTag.AddTag(DS1GameplayTags::Character_State_Death);
+		if (StateComponent->IsCurrentStateEqualToAny(DeathTag))
+		{
+			return;
+		}
+	}
+
+	if (bIsVisibleToPlayer == bVisible)
+	{
+		return;
+	}
+
+	bIsVisibleToPlayer = bVisible;
+
+	// Actor 레벨 hidden flag — 렌더링만 끄고 Collision/AI/Physics는 유지됨
+	SetActorHiddenInGame(!bVisible);
+
+	// UE5에서 Owner->IsHidden() 전파로 이미 숨겨지지만, 명시적으로 처리해
+	// 무기/방패 Actor가 확실히 플레이어 시야와 동기화되도록 한다
+	if (CombatComponent)
+	{
+		if (ADS1Weapon* MainWeapon = CombatComponent->GetMainWeapon())
+		{
+			MainWeapon->SetActorHiddenInGame(!bVisible);
+		}
+
+		if (ADS1Shield* Shield = CombatComponent->GetShield())
+		{
+			Shield->SetActorHiddenInGame(!bVisible);
+		}
+	}
 }

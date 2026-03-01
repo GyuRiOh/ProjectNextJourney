@@ -1,0 +1,4 @@
+-p:TreatWarningsAsErrors=false
+-p:WarningsAsErrors=
+-p:WarningsNotAsErrors=NU1701
+-p:NoWarn=NU1701

@@ -84,10 +84,33 @@ void UDS1CombatComponent::SetShield(ADS1Shield* NewShield)
 
     Shield = NewShield;
 
-    if (OnChangedWeapon.IsBound())
-    {
-        OnChangedWeapon.Broadcast();
-    }
+	if (OnChangedWeapon.IsBound())
+	{
+		OnChangedWeapon.Broadcast();
+	}
+}
+
+void UDS1CombatComponent::ClearWeapon()
+{
+	MainWeapon = nullptr;
+	if (OnChangedWeapon.IsBound())
+	{
+		OnChangedWeapon.Broadcast();
+	}
+}
+
+void UDS1CombatComponent::ClearShield()
+{
+	Shield = nullptr;
+	if (OnChangedWeapon.IsBound())
+	{
+		OnChangedWeapon.Broadcast();
+	}
+}
+
+void UDS1CombatComponent::ClearArmour(EDS1ArmourType ArmourType)
+{
+	ArmourMap.Remove(ArmourType);
 }
 
 void UDS1CombatComponent::SetCombatEnabled(const bool bEnabled)

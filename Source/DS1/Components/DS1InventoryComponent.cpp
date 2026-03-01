@@ -250,16 +250,22 @@ bool UDS1InventoryComponent::EquipFromSlot(int32 SlotIndex)
 		return false;
 	}
 
-	// 인벤토리에서 아이템 제거
-	RemoveItemFromSlot(SlotIndex, 1);
-
 	// 장비 스폰 & 장착
 	FActorSpawnParameters SpawnParams;
 	SpawnParams.Owner = OwnerActor;
 	ADS1Equipment* SpawnedEquip = GetWorld()->SpawnActor<ADS1Equipment>(EquipClass, OwnerActor->GetActorTransform(), SpawnParams);
-	if (SpawnedEquip)
+	if (!SpawnedEquip)
 	{
-		SpawnedEquip->EquipItem();
+		return false;
+	}
+
+	SpawnedEquip->EquipItem();
+
+	// 장착이 성공한 뒤에만 인벤토리에서 제거한다.
+	if (RemoveItemFromSlot(SlotIndex, 1) <= 0)
+	{
+		SpawnedEquip->Destroy();
+		return false;
 	}
 
 	return true;
@@ -279,7 +285,8 @@ bool UDS1InventoryComponent::UnequipToInventory(EDS1EquipSlotType SlotType)
 		return false;
 	}
 
-	// 현재 장착 중인 장비의 클래스를 가져옴
+	// 현재 장착 중인 장비를 가져옴
+	ADS1Equipment* EquippedItem = nullptr;
 	TSubclassOf<ADS1Equipment> EquipClass = nullptr;
 
 	switch (SlotType)
@@ -287,42 +294,48 @@ bool UDS1InventoryComponent::UnequipToInventory(EDS1EquipSlotType SlotType)
 	case EDS1EquipSlotType::Weapon:
 		if (ADS1Weapon* Weapon = CombatComp->GetMainWeapon())
 		{
+			EquippedItem = Weapon;
 			EquipClass = Weapon->GetClass();
 		}
 		break;
 	case EDS1EquipSlotType::Shield:
 		if (ADS1Shield* Shield = CombatComp->GetShield())
 		{
+			EquippedItem = Shield;
 			EquipClass = Shield->GetClass();
 		}
 		break;
 	case EDS1EquipSlotType::Chest:
 		if (ADS1Armour* Armour = CombatComp->GetArmour(EDS1ArmourType::Chest))
 		{
+			EquippedItem = Armour;
 			EquipClass = Armour->GetClass();
 		}
 		break;
 	case EDS1EquipSlotType::Pants:
 		if (ADS1Armour* Armour = CombatComp->GetArmour(EDS1ArmourType::Pants))
 		{
+			EquippedItem = Armour;
 			EquipClass = Armour->GetClass();
 		}
 		break;
 	case EDS1EquipSlotType::Boots:
 		if (ADS1Armour* Armour = CombatComp->GetArmour(EDS1ArmourType::Boots))
 		{
+			EquippedItem = Armour;
 			EquipClass = Armour->GetClass();
 		}
 		break;
 	case EDS1EquipSlotType::Gloves:
 		if (ADS1Armour* Armour = CombatComp->GetArmour(EDS1ArmourType::Gloves))
 		{
+			EquippedItem = Armour;
 			EquipClass = Armour->GetClass();
 		}
 		break;
 	}
 
-	if (!EquipClass)
+	if (!EquipClass || !EquippedItem)
 	{
 		return false;
 	}
@@ -346,7 +359,37 @@ bool UDS1InventoryComponent::UnequipToInventory(EDS1EquipSlotType SlotType)
 		return false;
 	}
 
-	AddItem(ItemData, 1);
+	if (AddItem(ItemData, 1) <= 0)
+	{
+		return false;
+	}
+
+	// 전투 컴포넌트 레퍼런스 정리 + 실제 장착 해제
+	switch (SlotType)
+	{
+	case EDS1EquipSlotType::Weapon:
+		CombatComp->ClearWeapon();
+		break;
+	case EDS1EquipSlotType::Shield:
+		CombatComp->ClearShield();
+		break;
+	case EDS1EquipSlotType::Chest:
+		CombatComp->ClearArmour(EDS1ArmourType::Chest);
+		break;
+	case EDS1EquipSlotType::Pants:
+		CombatComp->ClearArmour(EDS1ArmourType::Pants);
+		break;
+	case EDS1EquipSlotType::Boots:
+		CombatComp->ClearArmour(EDS1ArmourType::Boots);
+		break;
+	case EDS1EquipSlotType::Gloves:
+		CombatComp->ClearArmour(EDS1ArmourType::Gloves);
+		break;
+	}
+
+	EquippedItem->UnequipItem();
+	EquippedItem->Destroy();
+
 	return true;
 }
 

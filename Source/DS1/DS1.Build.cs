@@ -19,7 +19,8 @@ public class DS1 : ModuleRules
 			"EnhancedInput",
 			"GameplayTags",
 			"AnimGraphRuntime",
-            "NavigationSystem"
+            "NavigationSystem",
+            "AIModule"
         });
 
 		PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });

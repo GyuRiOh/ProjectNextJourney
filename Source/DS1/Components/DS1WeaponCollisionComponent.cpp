@@ -62,6 +62,16 @@ bool UDS1WeaponCollisionComponent::CanHitActor(AActor* Actor) const
 
 void UDS1WeaponCollisionComponent::CollisionTrace()
 {
+    if (!IsValid(WeaponMesh))
+    {
+        return;
+    }
+
+    if (!WeaponMesh->DoesSocketExist(TraceStartSocketName) || !WeaponMesh->DoesSocketExist(TraceEndSocketName))
+    {
+        return;
+    }
+
     TArray<FHitResult> OutHits;
 
     const FVector Start = WeaponMesh->GetSocketLocation(TraceStartSocketName);

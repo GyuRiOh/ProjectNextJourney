@@ -4,6 +4,8 @@
 
 #define COLLISION_OBJECT_INTERACTION ECC_GameTraceChannel1
 #define COLLISION_OBJECT_TARGETING ECC_GameTraceChannel2
+// 시야 차단 전용 채널 (에디터 Project Settings > Collision에서 GameTraceChannel3 추가 필요)
+#define COLLISION_OBJECT_VISION_BLOCKER ECC_GameTraceChannel3
 
 UENUM(BlueprintType)
 enum class EDS1AttributeType : uint8

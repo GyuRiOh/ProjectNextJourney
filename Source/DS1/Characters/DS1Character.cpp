@@ -27,6 +27,8 @@
 #include "Player/DS1PlayerController.h"
 #include "Sound/SoundCue.h"
 #include "UI/DS1PlayerHUDWidget.h"
+#include "UI/DS1VisionOverlayWidget.h"
+#include "Components/DS1VisibilityComponent.h"
 
 ADS1Character::ADS1Character()
 {
@@ -76,6 +78,9 @@ ADS1Character::ADS1Character()
 
 	// 아이템 인벤토리
 	InventoryComponent = CreateDefaultSubobject<UDS1InventoryComponent>(TEXT("Inventory"));
+
+	// NPC 가시성 관리
+	VisibilityComponent = CreateDefaultSubobject<UDS1VisibilityComponent>(TEXT("Visibility"));
 }
 
 void ADS1Character::BeginPlay()
@@ -85,13 +90,23 @@ void ADS1Character::BeginPlay()
 	AttributeComponent->SetStaminaRegenRate(StaminaRegenRate);
 	AttributeComponent->SetStaminaRegenDelay(StaminaRegenDelay);
 
-	// Player HUD를 생성
+	// 시야 음영 오버레이 - ZOrder 0 (HUD 아래, 씬 위)
+	if (VisionOverlayWidgetClass)
+	{
+		VisionOverlayWidget = CreateWidget<UDS1VisionOverlayWidget>(GetWorld(), VisionOverlayWidgetClass);
+		if (VisionOverlayWidget)
+		{
+			VisionOverlayWidget->AddToViewport(0);
+		}
+	}
+
+	// Player HUD를 생성 - ZOrder 1 (오버레이 위)
 	if (PlayerHUDWidgetClass)
 	{
 		PlayerHUDWidget = CreateWidget<UDS1PlayerHUDWidget>(GetWorld(), PlayerHUDWidgetClass);
 		if (PlayerHUDWidget)
 		{
-			PlayerHUDWidget->AddToViewport();
+			PlayerHUDWidget->AddToViewport(1);
 		}
 	}
 

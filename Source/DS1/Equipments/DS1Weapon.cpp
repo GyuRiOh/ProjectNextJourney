@@ -42,6 +42,7 @@ void ADS1Weapon::EquipItem()
 
 		// 무기의 충돌 트레이스 컴포넌트에 무기 메쉬 컴포넌트를 설정합니다.
 		WeaponCollision->SetWeaponMesh(Mesh);
+		SecondWeaponCollision->SetWeaponMesh(Mesh);
 
 		// 장착한 무기의 CombatType으로 업데이트.
 		if (ACharacter* OwnerCharacter = Cast<ACharacter>(GetOwner()))
@@ -97,6 +98,11 @@ UAnimMontage* ADS1Weapon::GetRandomMontageForTag(const FGameplayTag& Tag) const
 
 UAnimMontage* ADS1Weapon::GetHitReactMontage(const AActor* Attacker) const
 {
+	if (!IsValid(Attacker) || !IsValid(GetOwner()))
+	{
+		return nullptr;
+	}
+
 	// LookAt 회전값을 구합니다. (현재 Actor가 공격자를 바라보는 회전값)
 	const FRotator LookAtRotation = UKismetMathLibrary::FindLookAtRotation(GetOwner()->GetActorLocation(), Attacker->GetActorLocation());
 	// 현재 Actor의 회전값과 LookAt 회전값의 차이를 구합니다.

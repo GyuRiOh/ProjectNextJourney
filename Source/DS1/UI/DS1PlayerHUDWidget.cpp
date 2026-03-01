@@ -3,12 +3,13 @@
 
 #include "UI/DS1PlayerHUDWidget.h"
 
+#include "DS1QuickSlotWidget.h"
 #include "DS1PotionWidget.h"
 #include "DS1StatBarWidget.h"
 #include "DS1WeaponWidget.h"
 #include "Components/DS1AttributeComponent.h"
 #include "Components/DS1CombatComponent.h"
-#include "Components/DS1PotionInventoryComponent.h"
+#include "Components/DS1QuickSlotComponent.h"
 #include "Equipments/DS1Shield.h"
 #include "Equipments/DS1Weapon.h"
 
@@ -31,11 +32,16 @@ void UDS1PlayerHUDWidget::NativeConstruct()
 			Attribute->BroadcastAttributeChanged(EDS1AttributeType::Health);
 		}
 
-		if (UDS1PotionInventoryComponent* PotionInventory = OwningPawn->GetComponentByClass<UDS1PotionInventoryComponent>())
+		if (UDS1QuickSlotComponent* QuickSlotComponent = OwningPawn->GetComponentByClass<UDS1QuickSlotComponent>())
 		{
-			// 포션인벤토리 델리게이트 바인딩
-			PotionInventory->OnUpdatePotionAmount.AddUObject(this, &ThisClass::OnPotionQuantityChanged);
-			PotionInventory->BroadcastPotionUpdate();
+			if (QuickSlotWidget)
+			{
+				QuickSlotWidget->BindQuickSlot(QuickSlotComponent);
+			}
+			else if (PotionWidget)
+			{
+				PotionWidget->BindQuickSlot(QuickSlotComponent);
+			}
 		}
 
 		if (UDS1CombatComponent* CombatComponent = OwningPawn->GetComponentByClass<UDS1CombatComponent>())
@@ -59,14 +65,6 @@ void UDS1PlayerHUDWidget::OnAttributeChanged(EDS1AttributeType AttributeType, fl
 	}
 }
 
-void UDS1PlayerHUDWidget::OnPotionQuantityChanged(int32 InAmount)
-{
-	if (PotionWidget)
-	{
-		PotionWidget->SetPotionQuantity(InAmount);
-	}
-}
-
 void UDS1PlayerHUDWidget::OnWeaponChanged()
 {
 	if (const APawn* OwningPawn = GetOwningPlayerPawn())
@@ -76,29 +74,29 @@ void UDS1PlayerHUDWidget::OnWeaponChanged()
 			UTexture2D* WeaponIconTexture = BlankIcon;
 			UTexture2D* ShieldIconTexture = BlankIcon;
 
-			// 무기의 아이콘을 골라준다.
+			// 臾닿린???꾩씠肄섏쓣 怨⑤씪以??
 			if (const ADS1Weapon* MainWeapon = CombatComponent->GetMainWeapon())
 			{
 				if (MainWeapon->GetCombatType() != ECombatType::MeleeFists)
 				{
-					// 무기 아이콘
+					// 臾닿린 ?꾩씠肄?
 					WeaponIconTexture = MainWeapon->GetEquipmentIcon();
 				}
 			}
 
-			// 방패 아이콘을 골라준다.
+			// 諛⑺뙣 ?꾩씠肄섏쓣 怨⑤씪以??
 			if (const ADS1Shield* Shield = CombatComponent->GetShield())
 			{
 				ShieldIconTexture = Shield->GetEquipmentIcon();
 			}
 
-			// 무기 아이콘 적용
+			// 臾닿린 ?꾩씠肄??곸슜
 			if (::IsValid(WeaponWidget))
 			{
 				WeaponWidget->SetWeaponImage(WeaponIconTexture);
 			}
 
-			// 방패 아이콘 적용
+			// 諛⑺뙣 ?꾩씠肄??곸슜
 			if (::IsValid(ShieldWidget))
 			{
 				ShieldWidget->SetWeaponImage(ShieldIconTexture);
@@ -106,3 +104,7 @@ void UDS1PlayerHUDWidget::OnWeaponChanged()
 		}
 	}
 }
+
+
+
+

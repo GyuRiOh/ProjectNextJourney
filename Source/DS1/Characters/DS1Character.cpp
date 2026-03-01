@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "Characters/DS1Character.h"
@@ -8,6 +8,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
+#include "InputCoreTypes.h"
 #include "Animation/DS1AnimInstance.h"
 #include "Blueprint/UserWidget.h"
 #include "Components/CapsuleComponent.h"
@@ -15,6 +16,7 @@
 #include "Components/DS1AttributeComponent.h"
 #include "Components/DS1InventoryComponent.h"
 #include "Components/DS1PotionInventoryComponent.h"
+#include "Components/DS1QuickSlotComponent.h"
 #include "Components/DS1StateComponent.h"
 #include "Engine/DamageEvents.h"
 #include "Equipments/DS1FistWeapon.h"
@@ -27,8 +29,6 @@
 #include "Player/DS1PlayerController.h"
 #include "Sound/SoundCue.h"
 #include "UI/DS1PlayerHUDWidget.h"
-#include "UI/DS1VisionOverlayWidget.h"
-#include "Components/DS1VisibilityComponent.h"
 
 ADS1Character::ADS1Character()
 {
@@ -41,7 +41,7 @@ ADS1Character::ADS1Character()
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	GetCharacterMovement()->RotationRate = FRotator(0.f, 500.f, 0.f);
 
-	/** 이동, 감속 속도 */
+	/** ?대룞, 媛먯냽 ?띾룄 */
 	GetCharacterMovement()->MaxWalkSpeed = 500.f;
 	GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
 
@@ -70,17 +70,17 @@ ADS1Character::ADS1Character()
 	AttributeComponent = CreateDefaultSubobject<UDS1AttributeComponent>(TEXT("Attribute"));
 	StateComponent = CreateDefaultSubobject<UDS1StateComponent>(TEXT("State"));
 	CombatComponent = CreateDefaultSubobject<UDS1CombatComponent>(TEXT("Combat"));
-	// OnDeath Delegate 함수 바인딩.
+	// OnDeath Delegate ?⑥닔 諛붿씤??
 	AttributeComponent->OnDeath.AddUObject(this, &ThisClass::OnDeath);
 
-	// 포션 인벤토리
+	// ?ъ뀡 ?몃깽?좊━
 	PotionInventoryComponent = CreateDefaultSubobject<UDS1PotionInventoryComponent>(TEXT("PotionInventory"));
 
-	// 아이템 인벤토리
+	// ?꾩씠???몃깽?좊━
 	InventoryComponent = CreateDefaultSubobject<UDS1InventoryComponent>(TEXT("Inventory"));
 
-	// NPC 가시성 관리
-	VisibilityComponent = CreateDefaultSubobject<UDS1VisibilityComponent>(TEXT("Visibility"));
+	// 퀵 슬롯
+	QuickSlotComponent = CreateDefaultSubobject<UDS1QuickSlotComponent>(TEXT("QuickSlot"));
 }
 
 void ADS1Character::BeginPlay()
@@ -90,27 +90,17 @@ void ADS1Character::BeginPlay()
 	AttributeComponent->SetStaminaRegenRate(StaminaRegenRate);
 	AttributeComponent->SetStaminaRegenDelay(StaminaRegenDelay);
 
-	// 시야 음영 오버레이 - ZOrder 0 (HUD 아래, 씬 위)
-	if (VisionOverlayWidgetClass)
-	{
-		VisionOverlayWidget = CreateWidget<UDS1VisionOverlayWidget>(GetWorld(), VisionOverlayWidgetClass);
-		if (VisionOverlayWidget)
-		{
-			VisionOverlayWidget->AddToViewport(0);
-		}
-	}
-
-	// Player HUD를 생성 - ZOrder 1 (오버레이 위)
+	// Player HUD瑜??앹꽦
 	if (PlayerHUDWidgetClass)
 	{
 		PlayerHUDWidget = CreateWidget<UDS1PlayerHUDWidget>(GetWorld(), PlayerHUDWidgetClass);
 		if (PlayerHUDWidget)
 		{
-			PlayerHUDWidget->AddToViewport(1);
+			PlayerHUDWidget->AddToViewport();
 		}
 	}
 
-	// 주먹 무기 장착
+	// 二쇰㉨ 臾닿린 ?μ갑
 	if (FistWeaponClass)
 	{
 		FActorSpawnParameters SpawnParams;
@@ -146,39 +136,45 @@ void ADS1Character::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 	{
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ThisClass::Move);
 
-		// 질주 (Shift)
+		// 吏덉＜ (Shift)
 		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Triggered, this, &ThisClass::Sprinting);
 		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Completed, this, &ThisClass::StopSprint);
-		// 구르기 (Space)
+		// 援щⅤ湲?(Space)
 		EnhancedInputComponent->BindAction(SprintRollingAction, ETriggerEvent::Started, this, &ThisClass::Rolling);
-		// 인터렉션
+		// ?명꽣?됱뀡
 		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Started, this, &ThisClass::Interact);
-		// 전투 활성/비활성
+		// ?꾪닾 ?쒖꽦/鍮꾪솢??
 		EnhancedInputComponent->BindAction(ToggleCombatAction, ETriggerEvent::Started, this, &ThisClass::ToggleCombat);
 
-		// Combat 상태로 자동 전환.
+		// Combat ?곹깭濡??먮룞 ?꾪솚.
 		EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Started, this, &ThisClass::AutoToggleCombat);
-		// 일반 공격
+		// ?쇰컲 怨듦꺽
 		EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Canceled, this, &ThisClass::Attack);
-		// 특수 공격
+		// ?뱀닔 怨듦꺽
 		EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Triggered, this, &ThisClass::SpecialAttack);
 		// HeavyAttack
 		EnhancedInputComponent->BindAction(HeavyAttackAction, ETriggerEvent::Started, this, &ThisClass::HeavyAttack);
 
-		// 방어 자세
+		// 諛⑹뼱 ?먯꽭
 		EnhancedInputComponent->BindAction(BlockAction, ETriggerEvent::Started, this, &ThisClass::Blocking);
 		EnhancedInputComponent->BindAction(BlockAction, ETriggerEvent::Completed, this, &ThisClass::BlockingEnd);
 
-		// 패링
+		// ?⑤쭅
 		EnhancedInputComponent->BindAction(ParryAction, ETriggerEvent::Started, this, &ThisClass::Parrying);
 
-		// 포션 마시기
+		// ?ъ뀡 留덉떆湲?
 		EnhancedInputComponent->BindAction(ConsumeAction, ETriggerEvent::Started, this, &ThisClass::Consume);
 
-		// 인벤토리 토글
+		// ?몃깽?좊━ ?좉?
 		EnhancedInputComponent->BindAction(ToggleInventoryAction, ETriggerEvent::Started, this, &ThisClass::ToggleInventory);
 	}
 
+	PlayerInputComponent->BindKey(EKeys::One, EInputEvent::IE_Pressed, this, &ThisClass::UseQuickSlot1);
+	PlayerInputComponent->BindKey(EKeys::Two, EInputEvent::IE_Pressed, this, &ThisClass::UseQuickSlot2);
+	PlayerInputComponent->BindKey(EKeys::Three, EInputEvent::IE_Pressed, this, &ThisClass::UseQuickSlot3);
+	PlayerInputComponent->BindKey(EKeys::Four, EInputEvent::IE_Pressed, this, &ThisClass::UseQuickSlot4);
+	PlayerInputComponent->BindKey(EKeys::Five, EInputEvent::IE_Pressed, this, &ThisClass::UseQuickSlot5);
+	PlayerInputComponent->BindKey(EKeys::Six, EInputEvent::IE_Pressed, this, &ThisClass::UseQuickSlot6);
 }
 
 bool ADS1Character::IsDeath() const
@@ -224,13 +220,13 @@ float ADS1Character::TakeDamage(float Damage, const FDamageEvent& DamageEvent, A
 	check(AttributeComponent);
 	check(StateComponent);
 
-	// 포션을 마시고 있으면 중단.
+	// ?ъ뀡??留덉떆怨??덉쑝硫?以묐떒.
 	InterruptWhileDrinkingPotion();
 
-	// 적과 대치중인 방향인지?
+	// ?곴낵 ?移섏쨷??諛⑺뼢?몄??
 	bFacingEnemy = UKismetMathLibrary::InRange_FloatFloat(GetDotProductTo(EventInstigator->GetPawn()), -0.1f, 1.f);
 
-	// 패링
+	// ?⑤쭅
 	if (ParriedAttackSucceed())
 	{
 		if (IDS1CombatInterface* CombatInterface = Cast<IDS1CombatInterface>(EventInstigator->GetPawn()))
@@ -249,11 +245,11 @@ float ADS1Character::TakeDamage(float Damage, const FDamageEvent& DamageEvent, A
 	}
 
 
-	// 방패 방어가 가능한지?
+	// 諛⑺뙣 諛⑹뼱媛 媛?ν븳吏?
 	if (CanPerformAttackBlocking())
 	{
 		AttributeComponent->TakeDamageAmount(0.f);
-		// 스테미나 차감
+		// ?ㅽ뀒誘몃굹 李④컧
 		AttributeComponent->DecreaseStamina(BlockingHitStaminaCost);
 		StateComponent->SetState(DS1GameplayTags::Character_State_Blocking);
 	}
@@ -263,20 +259,20 @@ float ADS1Character::TakeDamage(float Damage, const FDamageEvent& DamageEvent, A
 		StateComponent->SetState(DS1GameplayTags::Character_State_Hit);
 	}
 
-	// 움직이지 못하게 한다.
+	// ?吏곸씠吏 紐삵븯寃??쒕떎.
 	StateComponent->ToggleMovementInput(false);
 
 	if (DamageEvent.IsOfType(FPointDamageEvent::ClassID))
 	{
 		const FPointDamageEvent* PointDamageEvent = static_cast<const FPointDamageEvent*>(&DamageEvent);
 
-		// 데미지 방향
+		// ?곕?吏 諛⑺뼢
 		FVector ShotDirection = PointDamageEvent->ShotDirection;
-		// 히트 위치 (표면 접촉 관점)
+		// ?덊듃 ?꾩튂 (?쒕㈃ ?묒큺 愿??
 		FVector ImpactPoint = PointDamageEvent->HitInfo.ImpactPoint;
-		// 히트 방향
+		// ?덊듃 諛⑺뼢
 		FVector ImpactDirection = PointDamageEvent->HitInfo.ImpactNormal;
-		// 히트한 객체의 Location (객체 중심 관점)
+		// ?덊듃??媛앹껜??Location (媛앹껜 以묒떖 愿??
 		FVector HitLocation = PointDamageEvent->HitInfo.Location;
 
 		ImpactEffect(ImpactPoint);
@@ -443,7 +439,7 @@ void ADS1Character::Move(const FInputActionValue& Values)
 
 	const FVector2D MovementVector = Values.Get<FVector2D>();
 
-	// 쿼터뷰: 카메라 yaw 0 고정이므로 월드 방향 직접 사용
+	// 荑쇳꽣酉? 移대찓??yaw 0 怨좎젙?대?濡??붾뱶 諛⑺뼢 吏곸젒 ?ъ슜
 	AddMovementInput(FVector::ForwardVector, MovementVector.Y);
 	AddMovementInput(FVector::RightVector, MovementVector.X);
 }
@@ -496,21 +492,21 @@ void ADS1Character::Rolling()
 
 	if (AttributeComponent->CheckHasEnoughStamina(RollingStaminaCost))
 	{
-		// 스태미나 재충전 멈춤
+		// ?ㅽ깭誘몃굹 ?ъ땐??硫덉땄
 		AttributeComponent->ToggleStaminaRegeneration(false);
 
-		// 이동입력 처리 무시.
+		// ?대룞?낅젰 泥섎━ 臾댁떆.
 		StateComponent->ToggleMovementInput(false);
 
-		// 스태미나 차감.
+		// ?ㅽ깭誘몃굹 李④컧.
 		AttributeComponent->DecreaseStamina(RollingStaminaCost);
 
-		// 구르기 애니메이션 재생
+		// 援щⅤ湲??좊땲硫붿씠???ъ깮
 		PlayAnimMontage(RollingMontage);
 
 		StateComponent->SetState(DS1GameplayTags::Character_State_Rolling);
 
-		// 스태미나 재충전 시작
+		// ?ㅽ깭誘몃굹 ?ъ땐???쒖옉
 		AttributeComponent->ToggleStaminaRegeneration(true);
 	}
 }
@@ -541,7 +537,7 @@ void ADS1Character::Interact()
 
 	if (bHit)
 	{
-		// 감지한 Actor와 Interaction
+		// 媛먯???Actor? Interaction
 		if (AActor* HitActor = OutHit.GetActor())
 		{
 			if (IDS1Interact* Interaction = Cast<IDS1Interact>(HitActor))
@@ -717,7 +713,7 @@ void ADS1Character::DoAttack(const FGameplayTag& AttackTypeTag)
 		UAnimMontage* Montage = Weapon->GetMontageForTag(AttackTypeTag, ComboCounter);
 		if (!Montage)
 		{
-			// 콤보 한계 도달.
+			// 肄ㅻ낫 ?쒓퀎 ?꾨떖.
 			ComboCounter = 0;
 			Montage = Weapon->GetMontageForTag(AttackTypeTag, ComboCounter);
 		}
@@ -732,7 +728,7 @@ void ADS1Character::ExecuteComboAttack(const FGameplayTag& AttackTypeTag)
 	{
 		if (bComboSequenceRunning && bCanComboInput == false)
 		{
-			// 애니메이션은 끝났지만 아직 콤보 시퀀스가 유효할 때 - 추가 입력 기회
+			// ?좊땲硫붿씠?섏? ?앸궗吏留??꾩쭅 肄ㅻ낫 ?쒗?ㅺ? ?좏슚????- 異붽? ?낅젰 湲고쉶
 			ComboCounter++;
 			UE_LOG(LogTemp, Warning, TEXT("Additional input : Combo Counter = %d"), ComboCounter);
 		}
@@ -748,7 +744,7 @@ void ADS1Character::ExecuteComboAttack(const FGameplayTag& AttackTypeTag)
 	}
 	else if (bCanComboInput)
 	{
-		// 콤보 윈도우가 열려 있을 때 - 최적의 타이밍
+		// 肄ㅻ낫 ?덈룄?곌? ?대젮 ?덉쓣 ??- 理쒖쟻????대컢
 		bSavedComboInput = true;
 	}
 }
@@ -903,7 +899,7 @@ void ADS1Character::AttackFinished(const float ComboResetDelay)
 	{
 		StateComponent->ToggleMovementInput(true);
 	}
-	// ComboResetDelay 후에 콤보 시퀀스 종료
+	// ComboResetDelay ?꾩뿉 肄ㅻ낫 ?쒗??醫낅즺
 	GetWorld()->GetTimerManager().SetTimer(ComboResetTimerHandle, this, &ThisClass::ResetCombo, ComboResetDelay, false);
 }
 
@@ -938,4 +934,54 @@ void ADS1Character::ToggleInventory()
 		}
 	}
 }
+
+void ADS1Character::UseQuickSlot1()
+{
+	if (QuickSlotComponent)
+	{
+		QuickSlotComponent->UseQuickSlot(0);
+	}
+}
+
+void ADS1Character::UseQuickSlot2()
+{
+	if (QuickSlotComponent)
+	{
+		QuickSlotComponent->UseQuickSlot(1);
+	}
+}
+
+void ADS1Character::UseQuickSlot3()
+{
+	if (QuickSlotComponent)
+	{
+		QuickSlotComponent->UseQuickSlot(2);
+	}
+}
+
+void ADS1Character::UseQuickSlot4()
+{
+	if (QuickSlotComponent)
+	{
+		QuickSlotComponent->UseQuickSlot(3);
+	}
+}
+
+void ADS1Character::UseQuickSlot5()
+{
+	if (QuickSlotComponent)
+	{
+		QuickSlotComponent->UseQuickSlot(4);
+	}
+}
+
+void ADS1Character::UseQuickSlot6()
+{
+	if (QuickSlotComponent)
+	{
+		QuickSlotComponent->UseQuickSlot(5);
+	}
+}
+
+
 

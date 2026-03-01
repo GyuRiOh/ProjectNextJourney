@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -10,20 +10,17 @@
 
 class UDS1PotionInventoryComponent;
 class UDS1InventoryComponent;
-class UDS1VisionOverlayWidget;
+class UDS1QuickSlotComponent;
 class ADS1FistWeapon;
 class UDS1CombatComponent;
 class UDS1StateComponent;
 class UDS1PlayerHUDWidget;
-class UDS1VisibilityComponent;
 struct FInputActionValue;
 class USpringArmComponent;
 class UCameraComponent;
 class UInputMappingContext;
 class UInputAction;
 class UDS1AttributeComponent;
-class USoundCue;
-class UParticleSystem;
 
 UCLASS()
 class DS1_API ADS1Character : public ACharacter, public IDS1CombatInterface
@@ -54,7 +51,7 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Input")
 	UInputAction* InteractAction;
 
-	/** 전투 활성화/비활성화 토글 */
+	/** ?꾪닾 ?쒖꽦??鍮꾪솢?깊솕 ?좉? */
 	UPROPERTY(EditAnywhere, Category = "Input")
 	UInputAction* ToggleCombatAction;
 
@@ -66,46 +63,46 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Input")
 	UInputAction* HeavyAttackAction;
 
-	/** 방어 자세 */
+	/** 諛⑹뼱 ?먯꽭 */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* BlockAction;
 
-	/** 패링 */
+	/** ?⑤쭅 */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* ParryAction;
 
-	/** 포션마시기 */
+	/** ?ъ뀡留덉떆湲?*/
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* ConsumeAction;
 
-	/** 인벤토리 토글 */
+	/** ?몃깽?좊━ ?좉? */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* ToggleInventoryAction;
 
 private:
-	/** 캐릭터의 각종 스탯 관리 */
+	/** 罹먮┃?곗쓽 媛곸쥌 ?ㅽ꺈 愿由?*/
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	UDS1AttributeComponent* AttributeComponent;
 
-	/** 캐릭터의 상태 관리 */
+	/** 罹먮┃?곗쓽 ?곹깭 愿由?*/
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	UDS1StateComponent* StateComponent;
 
-	/** 무기, 전투 관리 */
+	/** 臾닿린, ?꾪닾 愿由?*/
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	UDS1CombatComponent* CombatComponent;
 
-	/** 포션 인벤토리 */
+	/** ?ъ뀡 ?몃깽?좊━ */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	UDS1PotionInventoryComponent* PotionInventoryComponent;
 
-	/** 아이템 인벤토리 */
+	/** ?꾩씠???몃깽?좊━ */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	UDS1InventoryComponent* InventoryComponent;
 
-	/** 주변 NPC 가시성 관리 */
+	/** 퀵 슬롯 */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
-	UDS1VisibilityComponent* VisibilityComponent;
+	UDS1QuickSlotComponent* QuickSlotComponent;
 
 // Body parts Mesh
 protected:
@@ -127,14 +124,7 @@ protected:
 	UPROPERTY()
 	UDS1PlayerHUDWidget* PlayerHUDWidget;
 
-	/** 시야 음영 오버레이 위젯 클래스 (블루프린트에서 지정) */
-	UPROPERTY(EditAnywhere, Category="UI")
-	TSubclassOf<UDS1VisionOverlayWidget> VisionOverlayWidgetClass;
-
-	UPROPERTY()
-	UDS1VisionOverlayWidget* VisionOverlayWidget;
-
-// 주먹 무기
+// 二쇰㉨ 臾닿린
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<ADS1FistWeapon> FistWeaponClass;
@@ -154,15 +144,15 @@ protected:
 	UParticleSystem* BlockingParticle;
 
 protected:
-	/** 질주 속도 */
+	/** 吏덉＜ ?띾룄 */
 	UPROPERTY(EditAnywhere, Category="Movement Speed")
 	float SprintingSpeed = 750.f;
 
-	/** 일반 속도 */
+	/** ?쇰컲 ?띾룄 */
 	UPROPERTY(EditAnywhere, Category = "Movement Speed")
 	float NormalSpeed = 500.f;
 
-	/** 방어자세 속도 */
+	/** 諛⑹뼱?먯꽭 ?띾룄 */
 	UPROPERTY(EditAnywhere, Category = "Movement Speed")
 	float BlockingSpeed = 250.f;
 
@@ -171,56 +161,56 @@ protected:
 
 // Stamina Cost Section
 protected:
-	/** 질주 중 틱당 소모 스태미나 */
+	/** 吏덉＜ 以??깅떦 ?뚮え ?ㅽ깭誘몃굹 */
 	UPROPERTY(EditAnywhere, Category = "Stamina Cost")
 	float SprintStaminaCostPerTick = 0.1f;
 
-	/** 질주 시작에 필요한 최소 스태미나 */
+	/** 吏덉＜ ?쒖옉???꾩슂??理쒖냼 ?ㅽ깭誘몃굹 */
 	UPROPERTY(EditAnywhere, Category = "Stamina Cost")
 	float SprintMinStamina = 5.f;
 
-	/** 구르기 스태미나 소모량 */
+	/** 援щⅤ湲??ㅽ깭誘몃굹 ?뚮え??*/
 	UPROPERTY(EditAnywhere, Category = "Stamina Cost")
 	float RollingStaminaCost = 15.f;
 
-	/** 방어 피격 시 스태미나 소모량 */
+	/** 諛⑹뼱 ?쇨꺽 ???ㅽ깭誘몃굹 ?뚮え??*/
 	UPROPERTY(EditAnywhere, Category = "Stamina Cost")
 	float BlockingHitStaminaCost = 20.f;
 
-	/** 패링 스태미나 소모량 */
+	/** ?⑤쭅 ?ㅽ깭誘몃굹 ?뚮え??*/
 	UPROPERTY(EditAnywhere, Category = "Stamina Cost")
 	float ParryingStaminaCost = 10.f;
 
-	/** 스태미나 틱당 회복량 */
+	/** ?ㅽ깭誘몃굹 ?깅떦 ?뚮났??*/
 	UPROPERTY(EditAnywhere, Category = "Stamina Cost")
 	float StaminaRegenRate = 0.2f;
 
-	/** 스태미나 회복 시작 전 대기 시간 */
+	/** ?ㅽ깭誘몃굹 ?뚮났 ?쒖옉 ???湲??쒓컙 */
 	UPROPERTY(EditAnywhere, Category = "Stamina Cost")
 	float StaminaRegenDelay = 2.f;
 
 // Combo Section
 protected:
-	/** 콤보 시퀀스 진행중 */
+	/** 肄ㅻ낫 ?쒗??吏꾪뻾以?*/
 	bool bComboSequenceRunning = false;
 
-	/** 콤보 입력 가능? */
+	/** 肄ㅻ낫 ?낅젰 媛?? */
 	bool bCanComboInput = false;
 
-	/** 콤보 카운터 */
+	/** 肄ㅻ낫 移댁슫??*/
 	int32 ComboCounter = 0;
 
-	/** 콤보 입력 여부 */
+	/** 肄ㅻ낫 ?낅젰 ?щ? */
 	bool bSavedComboInput = false;
 
-	/** 콤보 리셋 타이머 핸들 */
+	/** 肄ㅻ낫 由ъ뀑 ??대㉧ ?몃뱾 */
 	FTimerHandle ComboResetTimerHandle;
 
 protected:
-	/** 적과 대치중인 방향인지? */
+	/** ?곴낵 ?移섏쨷??諛⑺뼢?몄?? */
 	bool bFacingEnemy = false;
 
-	/** 무적프레임 활성화 여부 */
+	/** 臾댁쟻?꾨젅???쒖꽦???щ? */
 	bool bEnabledIFrames = false;
 
 // Montage Section
@@ -257,68 +247,74 @@ public:
 	void OnDeath();
 
 protected:
-	/** 캐릭터가 이동중인지 체크 */
+	/** 罹먮┃?곌? ?대룞以묒씤吏 泥댄겕 */
 	bool IsMoving() const;
 	bool CanToggleCombat() const;
 	FORCEINLINE bool IsSprinting() const { return bSprinting; }
 	FORCEINLINE bool CanReceiveDamage() const { return !bEnabledIFrames; }
 
-	/** 이동 */
+	/** ?대룞 */
 	void Move(const FInputActionValue& Values);
-	/** 질주 */
+	/** 吏덉＜ */
 	void Sprinting();
-	/** 질주 중단 */
+	/** 吏덉＜ 以묐떒 */
 	void StopSprint();
-	/** 구르기 */
+	/** 援щⅤ湲?*/
 	void Rolling();
-	/** 인터렉션 */
+	/** ?명꽣?됱뀡 */
 	void Interact();
-	/** 전투상태 전환 */
+	/** ?꾪닾?곹깭 ?꾪솚 */
 	void ToggleCombat();
 	void AutoToggleCombat();
 	/** Attack */
 	void Attack();
 	void SpecialAttack();
 	void HeavyAttack();
-	/** 방어 자세 */
+	/** 諛⑹뼱 ?먯꽭 */
 	void Blocking();
 	void BlockingEnd();
-	/** 패링 */
+	/** ?⑤쭅 */
 	void Parrying();
-	/** 포션 마시기 */
+	/** ?ъ뀡 留덉떆湲?*/
 	void Consume();
-	/** 인벤토리 토글 */
+	/** ?몃깽?좊━ ?좉? */
 	void ToggleInventory();
+	void UseQuickSlot1();
+	void UseQuickSlot2();
+	void UseQuickSlot3();
+	void UseQuickSlot4();
+	void UseQuickSlot5();
+	void UseQuickSlot6();
 
 protected:
-	/** 현재 상태에서 수행 가능한 일반공격 */
+	/** ?꾩옱 ?곹깭?먯꽌 ?섑뻾 媛?ν븳 ?쇰컲怨듦꺽 */
 	FGameplayTag GetAttackPerform() const;
 
-	/** 공격 가능 조건 체크 */
+	/** 怨듦꺽 媛??議곌굔 泥댄겕 */
 	bool CanPerformAttack(const FGameplayTag& AttackTypeTag) const;
-	/** 공격 실행 */
+	/** 怨듦꺽 ?ㅽ뻾 */
 	void DoAttack(const FGameplayTag& AttackTypeTag);
-	/** 콤보 실행 */
+	/** 肄ㅻ낫 ?ㅽ뻾 */
 	void ExecuteComboAttack(const FGameplayTag& AttackTypeTag);
-	/** 콤보 초기화 */
+	/** 肄ㅻ낫 珥덇린??*/
 	void ResetCombo();
 
-	/** 방어 자세 가능 여부 */
+	/** 諛⑹뼱 ?먯꽭 媛???щ? */
 	bool CanPlayerBlockStance() const;
 
-	/** 방패 막기 방어가 가능한지? */
+	/** 諛⑺뙣 留됯린 諛⑹뼱媛 媛?ν븳吏? */
 	bool CanPerformAttackBlocking() const;
 
-	/** 패링이 가능한지? */
+	/** ?⑤쭅??媛?ν븳吏? */
 	bool CanPerformParry() const;
 
-	/** 패링 성공 여부 */
+	/** ?⑤쭅 ?깃났 ?щ? */
 	bool ParriedAttackSucceed() const;
 
-	/** 포션을 마실수 있는지?*/
+	/** ?ъ뀡??留덉떎???덈뒗吏?*/
 	bool CanDrinkPotion()const;
 
-	/** 포션 마시기 중단 */
+	/** ?ъ뀡 留덉떆湲?以묐떒 */
 	void InterruptWhileDrinkingPotion() const;
 
 // Combo AnimNotify Section
@@ -332,3 +328,6 @@ public:
 	virtual void DeactivateWeaponCollision(EWeaponCollisionType WeaponCollisionType) override;
 	virtual void ToggleIFrames(const bool bEnabled) override;
 };
+
+
+

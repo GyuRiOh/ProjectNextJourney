@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "UI/DS1InventorySlotWidget.h"
 
@@ -6,10 +6,13 @@
 #include "Components/Image.h"
 #include "Components/TextBlock.h"
 #include "Components/DS1InventoryComponent.h"
+#include "Components/DS1QuickSlotComponent.h"
 #include "Data/DS1ItemData.h"
 #include "UI/DS1InventoryDragDropOp.h"
 #include "UI/DS1ItemTooltipWidget.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
+#include "GameFramework/Pawn.h"
+#include "GameFramework/PlayerController.h"
 
 void UDS1InventorySlotWidget::InitSlot(UDS1InventoryComponent* InInventoryComponent, int32 InSlotIndex)
 {
@@ -77,7 +80,23 @@ FReply UDS1InventorySlotWidget::NativeOnMouseButtonDown(const FGeometry& InGeome
 	}
 	else if (InMouseEvent.GetEffectingButton() == EKeys::RightMouseButton)
 	{
-		// 우클릭: 소비 아이템 사용 또는 장비 장착
+		// Ctrl + RightClick: register to the first empty quick slot.
+		if (InMouseEvent.IsControlDown())
+		{
+			if (APlayerController* PC = GetOwningPlayer())
+			{
+				if (APawn* Pawn = PC->GetPawn())
+				{
+					if (UDS1QuickSlotComponent* QuickSlotComp = Pawn->FindComponentByClass<UDS1QuickSlotComponent>())
+					{
+						QuickSlotComp->RegisterToFirstEmptySlot(SlotIndex);
+						return FReply::Handled();
+					}
+				}
+			}
+		}
+
+		// ?고겢由? ?뚮퉬 ?꾩씠???ъ슜 ?먮뒗 ?λ퉬 ?μ갑
 		if (InventoryComponent && InventoryComponent->GetInventorySlots().IsValidIndex(SlotIndex))
 		{
 			const FDS1ItemInstance& SlotItem = InventoryComponent->GetSlot(SlotIndex);
@@ -116,7 +135,7 @@ void UDS1InventorySlotWidget::NativeOnDragDetected(const FGeometry& InGeometry, 
 	DragOp->bFromEquipSlot = false;
 	DragOp->DraggedItem = SlotItem;
 
-	// 드래그 비주얼로 아이콘 표시
+	// ?쒕옒洹?鍮꾩＜?쇰줈 ?꾩씠肄??쒖떆
 	if (SlotItem.ItemData->Icon)
 	{
 		UImage* DragVisual = NewObject<UImage>();
@@ -138,7 +157,7 @@ bool UDS1InventorySlotWidget::NativeOnDrop(const FGeometry& InGeometry, const FD
 
 	if (DragOp->bFromEquipSlot)
 	{
-		// 장비 슬롯에서 그리드로 — 장착 해제
+		// ?λ퉬 ?щ’?먯꽌 洹몃━?쒕줈 ???μ갑 ?댁젣
 		if (InventoryComponent->UnequipToInventory(DragOp->EquipSlotType))
 		{
 			return true;
@@ -146,7 +165,7 @@ bool UDS1InventorySlotWidget::NativeOnDrop(const FGeometry& InGeometry, const FD
 		return false;
 	}
 
-	// 그리드 → 그리드 이동/교환
+	// 洹몃━????洹몃━???대룞/援먰솚
 	if (DragOp->SourceSlotIndex != SlotIndex)
 	{
 		InventoryComponent->MoveItem(DragOp->SourceSlotIndex, SlotIndex);
@@ -160,7 +179,7 @@ void UDS1InventorySlotWidget::NativeOnDragCancelled(const FDragDropEvent& InDrag
 {
 	Super::NativeOnDragCancelled(InDragDropEvent, InOperation);
 
-	// 드래그가 어떤 위젯에도 드롭되지 않음 — 월드에 아이템 버리기
+	// ?쒕옒洹멸? ?대뼡 ?꾩젽?먮룄 ?쒕∼?섏? ?딆쓬 ???붾뱶???꾩씠??踰꾨━湲?
 	UDS1InventoryDragDropOp* DragOp = Cast<UDS1InventoryDragDropOp>(InOperation);
 	if (DragOp && InventoryComponent && !DragOp->bFromEquipSlot)
 	{
@@ -194,3 +213,6 @@ void UDS1InventorySlotWidget::NativeOnMouseLeave(const FPointerEvent& InMouseEve
 	Super::NativeOnMouseLeave(InMouseEvent);
 	SetToolTip(nullptr);
 }
+
+
+

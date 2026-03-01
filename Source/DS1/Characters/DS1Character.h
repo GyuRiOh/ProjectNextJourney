@@ -1,4 +1,4 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
+// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -15,12 +15,16 @@ class ADS1FistWeapon;
 class UDS1CombatComponent;
 class UDS1StateComponent;
 class UDS1PlayerHUDWidget;
+class UDS1VisionOverlayWidget;
+class UDS1VisibilityComponent;
 struct FInputActionValue;
 class USpringArmComponent;
 class UCameraComponent;
 class UInputMappingContext;
 class UInputAction;
 class UDS1AttributeComponent;
+class USoundCue;
+class UParticleSystem;
 
 UCLASS()
 class DS1_API ADS1Character : public ACharacter, public IDS1CombatInterface
@@ -104,6 +108,10 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	UDS1QuickSlotComponent* QuickSlotComponent;
 
+	/** NPC 가시성(시야 판정) 관리 컴포넌트 */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	UDS1VisibilityComponent* VisibilityComponent;
+
 // Body parts Mesh
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
@@ -123,6 +131,13 @@ protected:
 
 	UPROPERTY()
 	UDS1PlayerHUDWidget* PlayerHUDWidget;
+
+	/** 시야 음영 오버레이 위젯 클래스 (블루프린트에서 지정) */
+	UPROPERTY(EditAnywhere, Category = "UI")
+	TSubclassOf<UDS1VisionOverlayWidget> VisionOverlayWidgetClass;
+
+	UPROPERTY()
+	UDS1VisionOverlayWidget* VisionOverlayWidget;
 
 // 二쇰㉨ 臾닿린
 protected:

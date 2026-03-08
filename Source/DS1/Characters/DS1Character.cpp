@@ -170,12 +170,11 @@ void ADS1Character::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 		// HeavyAttack
 		EnhancedInputComponent->BindAction(HeavyAttackAction, ETriggerEvent::Started, this, &ThisClass::HeavyAttack);
 
-		// 諛⑹뼱 ?먯꽭
-		EnhancedInputComponent->BindAction(BlockAction, ETriggerEvent::Started, this, &ThisClass::Blocking);
+		// 패리 / 방어 (RMB)
+		// 누르는 순간 패리 시도, 유지하면 블로킹
+		EnhancedInputComponent->BindAction(BlockAction, ETriggerEvent::Started, this, &ThisClass::Parrying);
+		EnhancedInputComponent->BindAction(BlockAction, ETriggerEvent::Triggered, this, &ThisClass::Blocking);
 		EnhancedInputComponent->BindAction(BlockAction, ETriggerEvent::Completed, this, &ThisClass::BlockingEnd);
-
-		// ?⑤쭅
-		EnhancedInputComponent->BindAction(ParryAction, ETriggerEvent::Started, this, &ThisClass::Parrying);
 
 		// ?ъ뀡 留덉떆湲?
 		EnhancedInputComponent->BindAction(ConsumeAction, ETriggerEvent::Started, this, &ThisClass::Consume);
@@ -241,7 +240,28 @@ float ADS1Character::TakeDamage(float Damage, const FDamageEvent& DamageEvent, A
 	// ?곴낵 ?移섏쨷??諛⑺뼢?몄??
 	bFacingEnemy = UKismetMathLibrary::InRange_FloatFloat(GetDotProductTo(EventInstigator->GetPawn()), -0.1f, 1.f);
 
-	// ?⑤쭅
+	// 퍼펙트 패리 체크 (짧은 윈도우, 우선 체크)
+	if (PerfectParriedAttackSucceed())
+	{
+		if (IDS1CombatInterface* CombatInterface = Cast<IDS1CombatInterface>(EventInstigator->GetPawn()))
+		{
+			// 3. 적 무방비 리액션
+			CombatInterface->PerfectParried();
+
+			ADS1Weapon* MainWeapon = CombatComponent->GetMainWeapon();
+			if (IsValid(MainWeapon))
+			{
+				const FVector Location = MainWeapon->GetActorLocation();
+
+				// 1. 이펙트 피드백 + 2. 슬로모
+				PerfectParryEffect(Location);
+			}
+		}
+
+		return ActualDamage;
+	}
+
+	// 일반 패리 체크
 	if (ParriedAttackSucceed())
 	{
 		if (IDS1CombatInterface* CombatInterface = Cast<IDS1CombatInterface>(EventInstigator->GetPawn()))
@@ -339,6 +359,31 @@ void ADS1Character::ShieldBlockingEffect(const FVector& Location) const
 	{
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), BlockingParticle, Location);
 	}
+}
+
+void ADS1Character::PerfectParryEffect(const FVector& Location)
+{
+	// --- 1. Sound / Particle (assign in BP) ---
+	if (PerfectParrySound)
+	{
+		UGameplayStatics::PlaySoundAtLocation(GetWorld(), PerfectParrySound, Location);
+	}
+	if (PerfectParryParticle)
+	{
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), PerfectParryParticle, Location);
+	}
+
+	// --- 2. Slow-mo ---
+	GetWorldTimerManager().ClearTimer(SlowMoTimerHandle);
+	UGameplayStatics::SetGlobalTimeDilation(GetWorld(), PerfectParryTimeDilation);
+
+	FTimerDelegate RestoreDelegate;
+	RestoreDelegate.BindLambda([this]()
+	{
+		UGameplayStatics::SetGlobalTimeDilation(GetWorld(), 1.f);
+	});
+	// TimeDilation충 차사: 코드 타이머 시간은 dilated world time조 혜아대, SetTimerForNextTick조조 체크 안함
+	GetWorldTimerManager().SetTimer(SlowMoTimerHandle, RestoreDelegate, PerfectParrySlowDuration, false);
 }
 
 void ADS1Character::HitReaction(const AActor* Attacker, const EDS1DamageType InDamageType)
@@ -661,7 +706,14 @@ void ADS1Character::BlockingEnd()
 	if (UDS1AnimInstance* AnimInstance = Cast<UDS1AnimInstance>(GetMesh()->GetAnimInstance()))
 	{
 		AnimInstance->UpdateBlocking(false);
-		StateComponent->ClearState();
+
+		// 패리 중에는 state 밀지 않음 (AnimNotifyStateꬌ 정리시킴)
+		FGameplayTagContainer ParryingCheck;
+		ParryingCheck.AddTag(DS1GameplayTags::Character_State_Parrying);
+		if (!StateComponent->IsCurrentStateEqualToAny(ParryingCheck))
+		{
+			StateComponent->ClearState();
+		}
 	}
 	GetCharacterMovement()->MaxWalkSpeed = NormalSpeed;
 }
@@ -674,6 +726,9 @@ void ADS1Character::Parrying()
 
 	if (CanPerformParry())
 	{
+		// Blocking() 충돌 방지: 같은 프레임에 Triggered가 발생해도 블로킹 차단
+		StateComponent->SetState(DS1GameplayTags::Character_State_Parrying);
+
 		if (const ADS1Weapon* MainWeapon = CombatComponent->GetMainWeapon())
 		{
 			UAnimMontage* ParryingMontage = MainWeapon->GetMontageForTag(DS1GameplayTags::Character_State_Parrying);
@@ -847,6 +902,11 @@ bool ADS1Character::ParriedAttackSucceed() const
 	CheckTags.AddTag(DS1GameplayTags::Character_State_Parrying);
 
 	return StateComponent->IsCurrentStateEqualToAny(CheckTags) && bFacingEnemy;
+}
+
+bool ADS1Character::PerfectParriedAttackSucceed() const
+{
+	return ParriedAttackSucceed() && bInPerfectParryWindow;
 }
 
 bool ADS1Character::CanDrinkPotion() const

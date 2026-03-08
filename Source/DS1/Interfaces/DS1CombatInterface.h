@@ -33,5 +33,7 @@ public:
 
 	virtual void Parried() {}
 
+	virtual void PerfectParried() {}
+
 	virtual void ToggleIFrames(const bool bEnabled) {}
 };

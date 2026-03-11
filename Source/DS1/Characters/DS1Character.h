@@ -71,10 +71,6 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* BlockAction;
 
-	/** ?⑤쭅 */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-	UInputAction* ParryAction;
-
 	/** ?ъ뀡留덉떆湲?*/
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* ConsumeAction;
@@ -158,6 +154,25 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Effect")
 	UParticleSystem* BlockingParticle;
 
+	/** Perfect Parry slow-mo duration (sec) */
+	UPROPERTY(EditAnywhere, Category = "Perfect Parry")
+	float PerfectParrySlowDuration = 0.3f;
+
+	/** Perfect Parry time dilation (closer to 0 = slower) */
+	UPROPERTY(EditAnywhere, Category = "Perfect Parry", meta = (ClampMin = "0.01", ClampMax = "1.0"))
+	float PerfectParryTimeDilation = 0.15f;
+
+	/** Perfect Parry particle effect (placeholder - assign in BP) */
+	UPROPERTY(EditAnywhere, Category = "Perfect Parry")
+	UParticleSystem* PerfectParryParticle;
+
+	/** Perfect Parry sound effect (placeholder - assign in BP) */
+	UPROPERTY(EditAnywhere, Category = "Perfect Parry")
+	USoundCue* PerfectParrySound;
+
+	/** Slow-mo restore timer */
+	FTimerHandle SlowMoTimerHandle;
+
 protected:
 	/** 吏덉＜ ?띾룄 */
 	UPROPERTY(EditAnywhere, Category="Movement Speed")
@@ -228,6 +243,9 @@ protected:
 	/** 臾댁쟻?꾨젅???쒖꽦???щ? */
 	bool bEnabledIFrames = false;
 
+	/** 퍼펙트 패리 윈도우 활성 상태 (AnimNotifyState_DS1PerfectParry에서 관리) */
+	bool bInPerfectParryWindow = false;
+
 // Montage Section
 protected:
 	UPROPERTY(EditAnywhere, Category="Montage")
@@ -253,11 +271,15 @@ public:
 	FORCEINLINE UDS1StateComponent* GetStateComponent() const { return StateComponent; };
 	bool IsDeath() const;
 
+	/** AnimNotifyState_DS1PerfectParry찬한들에서 플렘그 세팅 */
+	void SetPerfectParryWindow(bool bEnabled) { bInPerfectParryWindow = bEnabled; }
+
 	void SetBodyPartActive(const EDS1ArmourType ArmourType, const bool bActive) const;
 
 	virtual float TakeDamage(float Damage, const FDamageEvent& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 	void ImpactEffect(const FVector& Location);
 	void ShieldBlockingEffect(const FVector& Location) const;
+	void PerfectParryEffect(const FVector& Location);
 	void HitReaction(const AActor* Attacker, const EDS1DamageType InDamageType);
 	void OnDeath();
 
@@ -325,6 +347,9 @@ protected:
 
 	/** ?⑤쭅 ?깃났 ?щ? */
 	bool ParriedAttackSucceed() const;
+
+	/** 퍼펙트 패리 성공 체크 (퍼펙트 윈도우 + 패리 충책조건) */
+	bool PerfectParriedAttackSucceed() const;
 
 	/** ?ъ뀡??留덉떎???덈뒗吏?*/
 	bool CanDrinkPotion()const;

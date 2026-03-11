@@ -21,6 +21,7 @@ namespace DS1GameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(Character_Action_HitReaction, "Character.Action.HitReaction");
 	UE_DEFINE_GAMEPLAY_TAG(Character_Action_BlockingHit, "Character.Action.BlockingHit");
 	UE_DEFINE_GAMEPLAY_TAG(Character_Action_ParriedHit, "Character.Action.ParriedHit");
+	UE_DEFINE_GAMEPLAY_TAG(Character_Action_PerfectParriedHit, "Character.Action.PerfectParriedHit");
 	UE_DEFINE_GAMEPLAY_TAG(Character_Action_KnockBackHit, "Character.Action.KnockBackHit");
 
 	UE_DEFINE_GAMEPLAY_TAG(Character_Attack_Light, "Character.Attack.Light");

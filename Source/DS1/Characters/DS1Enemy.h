@@ -71,6 +71,7 @@ protected:
 
 protected:
 	FTimerHandle ParriedDelayTimerHandle;
+	FTimerHandle PerfectParriedDelayTimerHandle;
 	FTimerHandle StunnedDelayTimerHandle;
 
 	/** 플레이어에게 현재 보이는 상태인지 */
@@ -113,6 +114,7 @@ public:
 	virtual void DeactivateWeaponCollision(EWeaponCollisionType WeaponCollisionType) override;
 	virtual void PerformAttack(FGameplayTag& AttackTypeTag, FOnMontageEnded& MontageEndedDelegate) override;
 	virtual void Parried() override;
+	virtual void PerfectParried() override;
 
 	// 체력바 토글
 	void ToggleHealthBarVisibility(bool bVisibility);

@@ -22,6 +22,7 @@ namespace DS1GameplayTags
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Character_Action_HitReaction);
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Character_Action_BlockingHit);
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Character_Action_ParriedHit);
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Character_Action_PerfectParriedHit);
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Character_Action_KnockBackHit);
 
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Character_Attack_Light);

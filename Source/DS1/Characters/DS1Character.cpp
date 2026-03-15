@@ -171,9 +171,9 @@ void ADS1Character::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 		EnhancedInputComponent->BindAction(HeavyAttackAction, ETriggerEvent::Started, this, &ThisClass::HeavyAttack);
 
 		// 패리 / 방어 (RMB)
-		// 누르는 순간 패리 시도, 유지하면 블로킹
-		EnhancedInputComponent->BindAction(BlockAction, ETriggerEvent::Started, this, &ThisClass::Parrying);
-		EnhancedInputComponent->BindAction(BlockAction, ETriggerEvent::Triggered, this, &ThisClass::Blocking);
+		// 누르는 순간 방어 자세 + 패리 윈도우 오픈, 짧게 탭 → Canceled(패리), 길게 유지 → Completed(방어 종료)
+		EnhancedInputComponent->BindAction(BlockAction, ETriggerEvent::Started,   this, &ThisClass::Parrying);
+		EnhancedInputComponent->BindAction(BlockAction, ETriggerEvent::Canceled,  this, &ThisClass::ParryingEnd);
 		EnhancedInputComponent->BindAction(BlockAction, ETriggerEvent::Completed, this, &ThisClass::BlockingEnd);
 
 		// ?ъ뀡 留덉떆湲?
@@ -667,6 +667,26 @@ void ADS1Character::BlockingEnd()
 		StateComponent->ClearState();
 	}
 	GetCharacterMovement()->MaxWalkSpeed = NormalSpeed;
+}
+
+void ADS1Character::ParryingEnd()
+{
+	if (bInParryWindow)
+	{
+		// 패리 윈도우가 아직 열려 있음 — 타이머가 만료될 때 BlockingEnd 호출
+		const float Remaining = FMath::Max(GetWorldTimerManager().GetTimerRemaining(ParryWindowTimerHandle), 0.01f);
+		GetWorldTimerManager().ClearTimer(ParryWindowTimerHandle);
+		GetWorldTimerManager().SetTimer(ParryWindowTimerHandle, FTimerDelegate::CreateWeakLambda(this, [this]()
+		{
+			bInParryWindow = false;
+			BlockingEnd();
+		}), Remaining, false);
+	}
+	else
+	{
+		// 패리 윈도우가 이미 닫혔으면 즉시 종료
+		BlockingEnd();
+	}
 }
 
 void ADS1Character::Parrying()

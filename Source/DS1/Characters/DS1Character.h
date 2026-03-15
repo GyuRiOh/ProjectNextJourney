@@ -298,6 +298,8 @@ protected:
 	void BlockingEnd();
 	/** ?⑤쭅 */
 	void Parrying();
+	/** 패리 탭 후 종료 — 윈도우가 남아 있으면 타이머 만료까지 포즈 유지 */
+	void ParryingEnd();
 	/** ?ъ뀡 留덉떆湲?*/
 	void Consume();
 	/** ?몃깽?좊━ ?좉? */

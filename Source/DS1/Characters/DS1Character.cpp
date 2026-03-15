@@ -657,18 +657,14 @@ void ADS1Character::BlockingEnd()
 	check(CombatComponent);
 	check(StateComponent);
 
+	bInParryWindow = false;
+	GetWorldTimerManager().ClearTimer(ParryWindowTimerHandle);
+
 	CombatComponent->SetBlockingEnabled(false);
 	if (UDS1AnimInstance* AnimInstance = Cast<UDS1AnimInstance>(GetMesh()->GetAnimInstance()))
 	{
 		AnimInstance->UpdateBlocking(false);
-
-		// 패리 중에는 state 밀지 않음 (AnimNotifyStateꬌ 정리시킴)
-		FGameplayTagContainer ParryingCheck;
-		ParryingCheck.AddTag(DS1GameplayTags::Character_State_Parrying);
-		if (!StateComponent->IsCurrentStateEqualToAny(ParryingCheck))
-		{
-			StateComponent->ClearState();
-		}
+		StateComponent->ClearState();
 	}
 	GetCharacterMovement()->MaxWalkSpeed = NormalSpeed;
 }
@@ -679,23 +675,32 @@ void ADS1Character::Parrying()
 	check(StateComponent);
 	check(AttributeComponent);
 
+	// 이미 방어/패리 윈도우 중이면 재진입 방지
+	if (CombatComponent->IsBlockingEnabled())
+	{
+		return;
+	}
+
 	if (CanPerformParry())
 	{
-		// Blocking() 충돌 방지: 같은 프레임에 Triggered가 발생해도 블로킹 차단
-		StateComponent->SetState(DS1GameplayTags::Character_State_Parrying);
-
-		if (const ADS1Weapon* MainWeapon = CombatComponent->GetMainWeapon())
+		// 방어 자세 진입 (Blocking과 동일한 비주얼)
+		GetCharacterMovement()->MaxWalkSpeed = BlockingSpeed;
+		CombatComponent->SetBlockingEnabled(true);
+		if (UDS1AnimInstance* AnimInstance = Cast<UDS1AnimInstance>(GetMesh()->GetAnimInstance()))
 		{
-			UAnimMontage* ParryingMontage = MainWeapon->GetMontageForTag(DS1GameplayTags::Character_State_Parrying);
-
-			StateComponent->ToggleMovementInput(false);
-			AttributeComponent->ToggleStaminaRegeneration(false);
-			AttributeComponent->DecreaseStamina(ParryingStaminaCost);
-
-			PlayAnimMontage(ParryingMontage);
-
-			AttributeComponent->ToggleStaminaRegeneration(true);
+			AnimInstance->UpdateBlocking(true);
+			StateComponent->SetState(DS1GameplayTags::Character_State_Blocking);
 		}
+
+		AttributeComponent->DecreaseStamina(ParryingStaminaCost);
+
+		// 패리 윈도우 오픈 (짧은 시간 동안만 패리 판정 활성)
+		bInParryWindow = true;
+		GetWorldTimerManager().ClearTimer(ParryWindowTimerHandle);
+		GetWorldTimerManager().SetTimer(ParryWindowTimerHandle, FTimerDelegate::CreateLambda([this]()
+		{
+			bInParryWindow = false;
+		}), ParryWindowDuration, false);
 	}
 }
 
@@ -841,7 +846,6 @@ bool ADS1Character::CanPerformParry() const
 	CheckTags.AddTag(DS1GameplayTags::Character_State_Hit);
 	CheckTags.AddTag(DS1GameplayTags::Character_State_Blocking);
 	CheckTags.AddTag(DS1GameplayTags::Character_State_Death);
-	CheckTags.AddTag(DS1GameplayTags::Character_State_Parrying);
 	CheckTags.AddTag(DS1GameplayTags::Character_State_DrinkingPotion);
 
 	return StateComponent->IsCurrentStateEqualToAny(CheckTags) == false &&
@@ -851,12 +855,9 @@ bool ADS1Character::CanPerformParry() const
 
 bool ADS1Character::ParriedAttackSucceed() const
 {
-	check(StateComponent);
+	check(CombatComponent);
 
-	FGameplayTagContainer CheckTags;
-	CheckTags.AddTag(DS1GameplayTags::Character_State_Parrying);
-
-	return StateComponent->IsCurrentStateEqualToAny(CheckTags) && bFacingEnemy;
+	return bInParryWindow && bFacingEnemy && CombatComponent->IsBlockingEnabled();
 }
 
 

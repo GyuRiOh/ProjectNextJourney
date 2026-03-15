@@ -131,7 +131,6 @@ float ADS1Enemy::TakeDamage(float Damage, const FDamageEvent& DamageEvent, ACont
 void ADS1Enemy::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
 	GetWorld()->GetTimerManager().ClearTimer(ParriedDelayTimerHandle);
-	GetWorld()->GetTimerManager().ClearTimer(PerfectParriedDelayTimerHandle);
 	GetWorld()->GetTimerManager().ClearTimer(StunnedDelayTimerHandle);
 	Super::EndPlay(EndPlayReason);
 }
@@ -349,39 +348,6 @@ void ADS1Enemy::Parried()
 	}
 }
 
-void ADS1Enemy::PerfectParried()
-{
-	check(StateComponent);
-	check(CombatComponent);
-
-	StopAnimMontage();
-	StateComponent->SetState(DS1GameplayTags::Character_State_Parried);
-
-	if (const ADS1Weapon* MainWeapon = CombatComponent->GetMainWeapon())
-	{
-		// Character_Action_PerfectParriedHit 몽타주가 없으면 기존 ParriedHit 사용
-		UAnimMontage* PerfectParriedMontage = MainWeapon->GetMontageForTag(DS1GameplayTags::Character_Action_PerfectParriedHit);
-		if (!PerfectParriedMontage)
-		{
-			PerfectParriedMontage = MainWeapon->GetMontageForTag(DS1GameplayTags::Character_Action_ParriedHit);
-		}
-
-		// 퍼펙트 패리는 일반��다 더 긴 무방비 상태 유지 (+ 2.0s)
-		const float Delay = PlayAnimMontage(PerfectParriedMontage) + 2.0f;
-
-		FTimerDelegate TimerDelegate;
-		TimerDelegate.BindLambda([this]()
-			{
-				FGameplayTagContainer CheckTags;
-				CheckTags.AddTag(DS1GameplayTags::Character_State_Death);
-				if (StateComponent->IsCurrentStateEqualToAny(CheckTags) == false)
-				{
-					StateComponent->ClearState();
-				}
-			});
-		GetWorld()->GetTimerManager().SetTimer(PerfectParriedDelayTimerHandle, TimerDelegate, Delay, false);
-	}
-}
 
 void ADS1Enemy::ToggleHealthBarVisibility(bool bVisibility)
 {

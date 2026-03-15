@@ -240,28 +240,7 @@ float ADS1Character::TakeDamage(float Damage, const FDamageEvent& DamageEvent, A
 	// ?곴낵 ?移섏쨷??諛⑺뼢?몄??
 	bFacingEnemy = UKismetMathLibrary::InRange_FloatFloat(GetDotProductTo(EventInstigator->GetPawn()), -0.1f, 1.f);
 
-	// 퍼펙트 패리 체크 (짧은 윈도우, 우선 체크)
-	if (PerfectParriedAttackSucceed())
-	{
-		if (IDS1CombatInterface* CombatInterface = Cast<IDS1CombatInterface>(EventInstigator->GetPawn()))
-		{
-			// 3. 적 무방비 리액션
-			CombatInterface->PerfectParried();
-
-			ADS1Weapon* MainWeapon = CombatComponent->GetMainWeapon();
-			if (IsValid(MainWeapon))
-			{
-				const FVector Location = MainWeapon->GetActorLocation();
-
-				// 1. 이펙트 피드백 + 2. 슬로모
-				PerfectParryEffect(Location);
-			}
-		}
-
-		return ActualDamage;
-	}
-
-	// 일반 패리 체크
+	// 패리 체크
 	if (ParriedAttackSucceed())
 	{
 		if (IDS1CombatInterface* CombatInterface = Cast<IDS1CombatInterface>(EventInstigator->GetPawn()))
@@ -271,7 +250,7 @@ float ADS1Character::TakeDamage(float Damage, const FDamageEvent& DamageEvent, A
 			ADS1Weapon* MainWeapon = CombatComponent->GetMainWeapon();
 			if (IsValid(MainWeapon))
 			{
-				FVector Location = MainWeapon->GetActorLocation();
+				const FVector Location = MainWeapon->GetActorLocation();
 				ShieldBlockingEffect(Location);
 			}
 		}
@@ -361,30 +340,6 @@ void ADS1Character::ShieldBlockingEffect(const FVector& Location) const
 	}
 }
 
-void ADS1Character::PerfectParryEffect(const FVector& Location)
-{
-	// --- 1. Sound / Particle (assign in BP) ---
-	if (PerfectParrySound)
-	{
-		UGameplayStatics::PlaySoundAtLocation(GetWorld(), PerfectParrySound, Location);
-	}
-	if (PerfectParryParticle)
-	{
-		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), PerfectParryParticle, Location);
-	}
-
-	// --- 2. Slow-mo ---
-	GetWorldTimerManager().ClearTimer(SlowMoTimerHandle);
-	UGameplayStatics::SetGlobalTimeDilation(GetWorld(), PerfectParryTimeDilation);
-
-	FTimerDelegate RestoreDelegate;
-	RestoreDelegate.BindLambda([this]()
-	{
-		UGameplayStatics::SetGlobalTimeDilation(GetWorld(), 1.f);
-	});
-	// TimeDilation충 차사: 코드 타이머 시간은 dilated world time조 혜아대, SetTimerForNextTick조조 체크 안함
-	GetWorldTimerManager().SetTimer(SlowMoTimerHandle, RestoreDelegate, PerfectParrySlowDuration, false);
-}
 
 void ADS1Character::HitReaction(const AActor* Attacker, const EDS1DamageType InDamageType)
 {
@@ -904,10 +859,6 @@ bool ADS1Character::ParriedAttackSucceed() const
 	return StateComponent->IsCurrentStateEqualToAny(CheckTags) && bFacingEnemy;
 }
 
-bool ADS1Character::PerfectParriedAttackSucceed() const
-{
-	return ParriedAttackSucceed() && bInPerfectParryWindow;
-}
 
 bool ADS1Character::CanDrinkPotion() const
 {

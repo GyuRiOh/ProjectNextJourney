@@ -263,8 +263,6 @@ float ADS1Character::TakeDamage(float Damage, const FDamageEvent& DamageEvent, A
 	if (CanPerformAttackBlocking())
 	{
 		AttributeComponent->TakeDamageAmount(0.f);
-		// ?ㅽ뀒誘몃굹 李④컧
-		AttributeComponent->DecreaseStamina(BlockingHitStaminaCost);
 		StateComponent->SetState(DS1GameplayTags::Character_State_Blocking);
 	}
 	else
@@ -675,6 +673,7 @@ void ADS1Character::BlockingEnd()
 		StateComponent->ClearState();
 	}
 	GetCharacterMovement()->MaxWalkSpeed = NormalSpeed;
+	AttributeComponent->ToggleStaminaRegeneration(true);
 }
 
 void ADS1Character::ParryingEnd()
@@ -719,8 +718,6 @@ void ADS1Character::Parrying()
 			AnimInstance->UpdateBlocking(true);
 			StateComponent->SetState(DS1GameplayTags::Character_State_Blocking);
 		}
-
-		AttributeComponent->DecreaseStamina(ParryingStaminaCost);
 
 		// 패리 윈도우 오픈 (짧은 시간 동안만 패리 판정 활성)
 		bInParryWindow = true;
@@ -852,7 +849,7 @@ bool ADS1Character::CanPerformAttackBlocking() const
 	check(CombatComponent);
 	check(AttributeComponent);
 
-	return bFacingEnemy && CombatComponent->IsBlockingEnabled() && AttributeComponent->CheckHasEnoughStamina(BlockingHitStaminaCost);
+	return bFacingEnemy && CombatComponent->IsBlockingEnabled();
 }
 
 bool ADS1Character::CanPerformParry() const
@@ -877,8 +874,7 @@ bool ADS1Character::CanPerformParry() const
 	CheckTags.AddTag(DS1GameplayTags::Character_State_DrinkingPotion);
 
 	return StateComponent->IsCurrentStateEqualToAny(CheckTags) == false &&
-		MainWeapon->GetCombatType() == ECombatType::SwordShield &&
-		AttributeComponent->CheckHasEnoughStamina(1.f);
+		MainWeapon->GetCombatType() == ECombatType::SwordShield;
 }
 
 bool ADS1Character::ParriedAttackSucceed() const

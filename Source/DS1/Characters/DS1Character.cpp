@@ -251,7 +251,7 @@ float ADS1Character::TakeDamage(float Damage, const FDamageEvent& DamageEvent, A
 			if (IsValid(MainWeapon))
 			{
 				const FVector Location = MainWeapon->GetActorLocation();
-				ShieldBlockingEffect(Location);
+				ParryEffect(Location);
 			}
 		}
 
@@ -337,6 +337,14 @@ void ADS1Character::ShieldBlockingEffect(const FVector& Location) const
 	if (BlockingParticle)
 	{
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), BlockingParticle, Location);
+	}
+}
+
+void ADS1Character::ParryEffect(const FVector& Location) const
+{
+	if (ParryParticle)
+	{
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ParryParticle, Location);
 	}
 }
 

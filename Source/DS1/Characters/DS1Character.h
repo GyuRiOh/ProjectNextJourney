@@ -154,6 +154,9 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Effect")
 	UParticleSystem* BlockingParticle;
 
+	UPROPERTY(EditAnywhere, Category = "Effect")
+	UParticleSystem* ParryParticle;
+
 
 protected:
 	/** 吏덉＜ ?띾룄 */
@@ -266,6 +269,7 @@ public:
 	virtual float TakeDamage(float Damage, const FDamageEvent& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 	void ImpactEffect(const FVector& Location);
 	void ShieldBlockingEffect(const FVector& Location) const;
+	void ParryEffect(const FVector& Location) const;
 	void HitReaction(const AActor* Attacker, const EDS1DamageType InDamageType);
 	void OnDeath();
 

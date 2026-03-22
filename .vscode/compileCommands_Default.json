@@ -1,0 +1,1018 @@
+[
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\AI\\DS1EnemyAIController.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\AI\\DS1EnemyAIController.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\AI\\Decorator\\BTDecorator_Chance.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\AI\\Decorator\\BTDecorator_Chance.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\AI\\Decorator\\BTDecorator_InRangeCheck.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\AI\\Decorator\\BTDecorator_InRangeCheck.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\AI\\Service\\BTService_SelectBehavior.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\AI\\Service\\BTService_SelectBehavior.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\AI\\Service\\BTService_SelectBehaviorBoss.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\AI\\Service\\BTService_SelectBehaviorBoss.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\AI\\Service\\BTService_Strafe.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\AI\\Service\\BTService_Strafe.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\AI\\Task\\BTTask_FindPatrolPoint.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\AI\\Task\\BTTask_FindPatrolPoint.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\AI\\Task\\BTTask_PerformAttack.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\AI\\Task\\BTTask_PerformAttack.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\AI\\Task\\BTTask_UpdateMoveSpeed.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\AI\\Task\\BTTask_UpdateMoveSpeed.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Animation\\AnimNotifyState_DS1ComboWindow.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Animation\\AnimNotifyState_DS1ComboWindow.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Animation\\AnimNotifyState_DS1Flying.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Animation\\AnimNotifyState_DS1Flying.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Animation\\AnimNotifyState_DS1IFrames.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Animation\\AnimNotifyState_DS1IFrames.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Animation\\AnimNotifyState_DS1Parry.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Animation\\AnimNotifyState_DS1Parry.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Animation\\AnimNotifyState_DS1PerfectParry.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Animation\\AnimNotifyState_DS1PerfectParry.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Animation\\AnimNotifyState_DS1PotionSpawn.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Animation\\AnimNotifyState_DS1PotionSpawn.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Animation\\AnimNotifyState_DS1RotateTo.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Animation\\AnimNotifyState_DS1RotateTo.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Animation\\AnimNotifyState_DS1WeaponCollision.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Animation\\AnimNotifyState_DS1WeaponCollision.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Animation\\AnimNotify_DS1AttackFinished.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Animation\\AnimNotify_DS1AttackFinished.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Animation\\AnimNotify_DS1EquipWeapon.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Animation\\AnimNotify_DS1EquipWeapon.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Animation\\AnimNotify_DS1KnockBack.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Animation\\AnimNotify_DS1KnockBack.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Animation\\AnimNotify_DS1PotionDrink.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Animation\\AnimNotify_DS1PotionDrink.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Animation\\DS1AnimInstance.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Animation\\DS1AnimInstance.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Characters\\DS1Character.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Characters\\DS1Character.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Characters\\DS1Enemy.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Characters\\DS1Enemy.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Characters\\DS1EnemyBoss.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Characters\\DS1EnemyBoss.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Components\\DS1AttributeComponent.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Components\\DS1AttributeComponent.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Components\\DS1CombatComponent.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Components\\DS1CombatComponent.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Components\\DS1InventoryComponent.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Components\\DS1InventoryComponent.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Components\\DS1PotionInventoryComponent.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Components\\DS1PotionInventoryComponent.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Components\\DS1QuickSlotComponent.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Components\\DS1QuickSlotComponent.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Components\\DS1RotationComponent.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Components\\DS1RotationComponent.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Components\\DS1StateComponent.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Components\\DS1StateComponent.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Components\\DS1TargetingComponent.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Components\\DS1TargetingComponent.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Components\\DS1VisibilityComponent.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Components\\DS1VisibilityComponent.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Components\\DS1WeaponCollisionComponent.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Components\\DS1WeaponCollisionComponent.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\DS1.Build.cs",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\DS1.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\DS1.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\DS1Define.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\DS1Define.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\DS1GameplayTags.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\DS1GameplayTags.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Data\\DS1ItemData.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Data\\DS1ItemDataRegistry.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Data\\DS1ItemDataRegistry.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Data\\DS1ItemInstance.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Data\\DS1MontageActionData.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Data\\DS1MontageActionData.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Equipments\\DS1Armour.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Equipments\\DS1Armour.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Equipments\\DS1Equipment.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Equipments\\DS1Equipment.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Equipments\\DS1FistWeapon.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Equipments\\DS1FistWeapon.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Equipments\\DS1Shield.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Equipments\\DS1Shield.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Equipments\\DS1Weapon.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Equipments\\DS1Weapon.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\GameModes\\DS1GameMode.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\GameModes\\DS1GameMode.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Interfaces\\DS1CombatInterface.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Interfaces\\DS1CombatInterface.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Interfaces\\DS1Interact.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Interfaces\\DS1Interact.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Interfaces\\DS1Targeting.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Interfaces\\DS1Targeting.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Items\\DS1PickupItem.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Items\\DS1PickupItem.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Items\\DS1Potion.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Items\\DS1Potion.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Player\\DS1PlayerController.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\Player\\DS1PlayerController.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\UI\\DS1BossHealthBarWidget.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\UI\\DS1BossHealthBarWidget.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\UI\\DS1InventoryDragDropOp.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\UI\\DS1InventorySlotWidget.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\UI\\DS1InventorySlotWidget.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\UI\\DS1InventoryWidget.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\UI\\DS1InventoryWidget.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\UI\\DS1ItemTooltipWidget.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\UI\\DS1ItemTooltipWidget.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\UI\\DS1PlayerHUDWidget.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\UI\\DS1PlayerHUDWidget.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\UI\\DS1PotionWidget.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\UI\\DS1PotionWidget.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\UI\\DS1QuickSlotWidget.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\UI\\DS1StatBarWidget.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\UI\\DS1StatBarWidget.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\UI\\DS1VisionOverlayWidget.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\UI\\DS1VisionOverlayWidget.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\UI\\DS1WeaponWidget.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\Source\\DS1\\UI\\DS1WeaponWidget.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\Hostx64\\x64\\cl.exe",
+			"@C:\\Users\\Kang\\Desktop\\Project_NJ\\ProjectNextJourney\\ProjectNextJourney\\.vscode\\compileCommands_Default\\DS1.1.rsp"
+		],
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.6\\Engine\\Source"
+	}
+]

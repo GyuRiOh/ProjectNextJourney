@@ -193,6 +193,10 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Stamina Cost")
 	float ParryingStaminaCost = 10.f;
 
+	/** 패리 판정 윈도우 지속 시간 (초) — BP에서 조정 가능 */
+	UPROPERTY(EditAnywhere, Category = "Parry")
+	float ParryWindowDuration = 0.3f;
+
 	/** ?ㅽ깭誘몃굹 ?깅떦 ?뚮났??*/
 	UPROPERTY(EditAnywhere, Category = "Stamina Cost")
 	float StaminaRegenRate = 0.2f;
@@ -224,6 +228,12 @@ protected:
 
 	/** 臾댁쟻?꾨젅???쒖꽦???щ? */
 	bool bEnabledIFrames = false;
+
+	/** 패리 판정 윈도우 활성 여부 (RMB 누른 직후 짧은 구간) */
+	bool bInParryWindow = false;
+
+	/** 패리 윈도우 타이머 */
+	FTimerHandle ParryWindowTimerHandle;
 
 
 // Montage Section
@@ -288,6 +298,8 @@ protected:
 	void BlockingEnd();
 	/** ?⑤쭅 */
 	void Parrying();
+	/** 패리 탭 후 종료 — 윈도우가 남아 있으면 타이머 만료까지 포즈 유지 */
+	void ParryingEnd();
 	/** ?ъ뀡 留덉떆湲?*/
 	void Consume();
 	/** ?몃깽?좊━ ?좉? */

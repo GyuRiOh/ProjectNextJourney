@@ -28,7 +28,7 @@ EnhancedInputComponent->BindAction(BlockAction, ETriggerEvent::Completed, this, 
 
 ### 동작 흐름
 | 입력 | 이벤트 흐름 | 결과 |
-|---|---|---|
+| --- | --- | --- |
 | RMB 탭 (< 0.2초) | Started → Canceled | 패리 윈도우 오픈 → ParryingEnd() → 윈도우 만료 후 BlockingEnd() |
 | RMB 홀드 (≥ 0.2초) | Started → Completed | 패리 윈도우 오픈 → 홀드 유지 → BlockingEnd() |
 
@@ -114,7 +114,7 @@ FTimerHandle StunnedDelayTimerHandle;
 ## 5) 스태미나 정책
 
 | 행동 | 스태미나 소모 |
-|---|---|
+| --- | --- |
 | 패리 | **없음** |
 | 방어 피격 | **없음** |
 | 달리기 | 있음 (매 틱) |
@@ -129,7 +129,7 @@ FTimerHandle StunnedDelayTimerHandle;
 ## 6) Gameplay Tags
 
 | Tag | 용도 |
-|---|---|
+| --- | --- |
 | `Character.State.Blocking` | 방어/패리 중 (통합 사용) |
 | `Character.State.Parried` | 적이 패리 당한 무방비 상태 |
 | `Character.Action.ParriedHit` | 적 패리 리액션 몽타주 키 |
@@ -165,7 +165,7 @@ float BlockingHitStaminaCost = 20.f;
 
 ### ⚠️ 미완 (에디터 작업 필요)
 | 항목 | 내용 |
-|---|---|
+| --- | --- |
 | **BP_Character `ParryParticle` 에셋 할당** | Effect 카테고리 > Parry Particle 슬롯에 파티클 에셋 지정 |
 | **패리 몽타주 AnimNotifyState 등록** | `AnimNotifyState_DS1Parry` — 패리 판정 구간에 배치 (현재 타이머로 대체 중) |
 | **패리 후 State 클리어 Notify** | 패리 몽타주 끝에 State 클리어 AnimNotify 등록 필요 |
@@ -173,6 +173,7 @@ float BlockingHitStaminaCost = 20.f;
 | **`IA_Parry` 정리** | IMC에서 미사용 Action 삭제 |
 
 ### ❌ 미구현 (향후 필요 시)
+
 - 퍼펙트 패리 (슬로우모션, 전용 파티클/사운드)
 - 퍼펙트 패리 적 리액션 (`PerfectParried()`, 전용 몽타주)
 
@@ -181,7 +182,7 @@ float BlockingHitStaminaCost = 20.f;
 ## 9) 현재 상태 요약
 
 | 항목 | 상태 |
-|---|---|
+| --- | --- |
 | C++ 패리 로직 | ✅ 완료 |
 | IMC Hold 트리거 설정 | ✅ 완료 |
 | 스태미나 소모 제거 | ✅ 완료 |

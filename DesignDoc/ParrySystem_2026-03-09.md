@@ -1,6 +1,7 @@
 # Parry System Implementation Log (2026-03-09, 최종 업데이트: 2026-03-22)
 
 ## Summary
+
 - **일반 패리(Parry)** 시스템 구현 (단일 티어)
 - 입력: RMB 탭(0.2초 미만) → 패리 / RMB 홀드(0.2초 이상) → 방어
 - 패리 판정: `bInParryWindow` 플래그 + 타이머 기반
@@ -16,10 +17,12 @@
 ## 1) 입력 구조 — RMB 탭/홀드 통합
 
 ### IMC 설정 (IA_Blocking)
+
 - `IA_Blocking` — RMB, 트리거: **길게 누르기(Hold)**, 한계치 `0.2초`
 - `IA_Parry` — 미사용 (삭제해도 무방)
 
 ### C++ 바인딩 (DS1Character.cpp)
+
 ```cpp
 EnhancedInputComponent->BindAction(BlockAction, ETriggerEvent::Started,   this, &ThisClass::Parrying);    // RMB 누르는 순간
 EnhancedInputComponent->BindAction(BlockAction, ETriggerEvent::Canceled,  this, &ThisClass::ParryingEnd); // 0.2초 미만 탭 → 패리
@@ -27,6 +30,7 @@ EnhancedInputComponent->BindAction(BlockAction, ETriggerEvent::Completed, this, 
 ```
 
 ### 동작 흐름
+
 | 입력 | 이벤트 흐름 | 결과 |
 | --- | --- | --- |
 | RMB 탭 (< 0.2초) | Started → Canceled | 패리 윈도우 오픈 → ParryingEnd() → 윈도우 만료 후 BlockingEnd() |
@@ -37,6 +41,7 @@ EnhancedInputComponent->BindAction(BlockAction, ETriggerEvent::Completed, this, 
 ## 2) 패리 (Parry)
 
 ### 발동 조건 — `CanPerformParry()`
+
 - 메인 무기가 존재할 것
 - 전투 타입이 `ECombatType::SwordShield`일 것
 - 차단 상태 목록에 없을 것:
@@ -44,6 +49,7 @@ EnhancedInputComponent->BindAction(BlockAction, ETriggerEvent::Completed, this, 
 - **스태미나 조건 없음** (스태미나 소모 없음)
 
 ### 실행 흐름 — `Parrying()`
+
 1. 이미 방어/패리 중이면 재진입 방지 (`IsBlockingEnabled()` 체크)
 2. 이동 속도 → `BlockingSpeed`
 3. `SetBlockingEnabled(true)` + AnimInstance 방어 자세 + State → `Character.State.Blocking`
@@ -51,16 +57,19 @@ EnhancedInputComponent->BindAction(BlockAction, ETriggerEvent::Completed, this, 
 5. 타이머 만료 시 `bInParryWindow = false`
 
 ### 패리 판정 — `ParriedAttackSucceed()`
+
 ```cpp
 return bInParryWindow && bFacingEnemy && CombatComponent->IsBlockingEnabled();
 ```
 
 ### 패리 성공 시 처리 (TakeDamage)
+
 1. 적에게 `IDS1CombatInterface::Parried()` 호출
 2. `ParryEffect(MainWeapon->GetActorLocation())` — 무기 위치에 파티클 스폰
 3. 실제 데미지 0 (return)
 
 ### ParryEffect()
+
 ```cpp
 void ADS1Character::ParryEffect(const FVector& Location) const
 {
@@ -68,9 +77,11 @@ void ADS1Character::ParryEffect(const FVector& Location) const
         UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ParryParticle, Location);
 }
 ```
+
 - `ParryParticle` — `UPROPERTY(EditAnywhere, Category="Effect")`, BP_Character에서 에셋 할당
 
 ### 종료 흐름 — `ParryingEnd()` / `BlockingEnd()`
+
 - `ParryingEnd()`: 윈도우가 열려 있으면 남은 타이머 만료 후 `BlockingEnd()` 호출
 - `BlockingEnd()`: 방어 해제 + 상태 클리어 + **`ToggleStaminaRegeneration(true)`** (재충전 시작)
 
@@ -79,16 +90,20 @@ void ADS1Character::ParryEffect(const FVector& Location) const
 ## 3) 방어 (Blocking)
 
 ### 방어 가능 판정 — `CanPerformAttackBlocking()`
+
 ```cpp
 return bFacingEnemy && CombatComponent->IsBlockingEnabled();
 ```
+
 - **스태미나 조건 없음** (방어 피격 시 스태미나 소모 없음)
 
 ### 방어 피격 처리 (TakeDamage)
+
 - 데미지 0 처리
 - State → `Character.State.Blocking`
 
 ### 방어 가능 조건 — `CanPlayerBlockStance()`
+
 - 차단 상태: `Attacking, GeneralAction, Hit, Rolling, DrinkingPotion, Parrying`
 - 무기 존재 + `ECombatType::SwordShield` + 스태미나 1 이상
 
@@ -97,16 +112,19 @@ return bFacingEnemy && CombatComponent->IsBlockingEnabled();
 ## 4) 적 리액션 — ADS1Enemy
 
 ### `Parried()` — 패리 당했을 때
+
 1. 현재 몽타주 즉시 중단
 2. State → `Character.State.Parried`
 3. `Character.Action.ParriedHit` 몽타주 재생
 4. `(몽타주 길이 + 1.0초)` 후 State 클리어
 
 ### 타이머 핸들
+
 ```cpp
 FTimerHandle ParriedDelayTimerHandle;
 FTimerHandle StunnedDelayTimerHandle;
 ```
+
 - `EndPlay()`에서 모두 ClearTimer 처리
 
 ---
@@ -121,6 +139,7 @@ FTimerHandle StunnedDelayTimerHandle;
 | 구르기 | 있음 (1회) |
 
 ### 재충전
+
 - `BlockingEnd()` 호출 시 `ToggleStaminaRegeneration(true)` 자동 호출
 - 재충전 딜레이: `StaminaRegenDelay = 2.f` (DS1Character.cpp에서 AttributeComponent에 주입)
 
@@ -159,11 +178,13 @@ float BlockingHitStaminaCost = 20.f;
 ## 8) 에디터에서 해야 할 남은 작업
 
 ### ✅ 완료
+
 - IMC `IA_Blocking` Hold 트리거 설정 (0.2초)
 - 패리/방어 스태미나 소모 제거
 - 방어/패리 후 스태미나 재충전 수정
 
 ### ⚠️ 미완 (에디터 작업 필요)
+
 | 항목 | 내용 |
 | --- | --- |
 | **BP_Character `ParryParticle` 에셋 할당** | Effect 카테고리 > Parry Particle 슬롯에 파티클 에셋 지정 |

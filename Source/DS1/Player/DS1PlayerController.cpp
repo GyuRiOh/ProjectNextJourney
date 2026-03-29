@@ -2,17 +2,16 @@
 
 #include "Player/DS1PlayerController.h"
 
-#include "Blueprint/UserWidget.h"
+#include "Blueprint/WidgetBlueprintLibrary.h"
+#include "Components/DS1InventoryComponent.h"
+#include "GameFramework/Pawn.h"
 #include "UI/DS1InventoryWidget.h"
 
 void ADS1PlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (InventoryWidgetClass)
-	{
-		InventoryWidget = CreateWidget<UDS1InventoryWidget>(this, InventoryWidgetClass);
-	}
+	InventoryWidget = CreateWidget<UDS1InventoryWidget>(this, UDS1InventoryWidget::StaticClass());
 }
 
 void ADS1PlayerController::ToggleInventory()
@@ -22,25 +21,49 @@ void ADS1PlayerController::ToggleInventory()
 		return;
 	}
 
+	TArray<UUserWidget*> ExistingInventoryWidgets;
+	UWidgetBlueprintLibrary::GetAllWidgetsOfClass(this, ExistingInventoryWidgets, UDS1InventoryWidget::StaticClass(), false);
+
 	if (bInventoryOpen)
 	{
-		// 인벤토리 닫기
+		for (UUserWidget* Widget : ExistingInventoryWidgets)
+		{
+			if (Widget)
+			{
+				Widget->RemoveFromParent();
+			}
+		}
+
 		InventoryWidget->RemoveFromParent();
 		bInventoryOpen = false;
 
 		SetShowMouseCursor(false);
 		SetInputMode(FInputModeGameOnly());
+		return;
 	}
-	else
-	{
-		// 인벤토리 열기
-		InventoryWidget->AddToViewport(10);
-		bInventoryOpen = true;
 
-		SetShowMouseCursor(true);
-		FInputModeGameAndUI InputMode;
-		InputMode.SetWidgetToFocus(InventoryWidget->TakeWidget());
-		InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
-		SetInputMode(InputMode);
+	for (UUserWidget* Widget : ExistingInventoryWidgets)
+	{
+		if (Widget)
+		{
+			Widget->RemoveFromParent();
+		}
 	}
+
+	InventoryWidget->AddToViewport(10);
+	bInventoryOpen = true;
+
+	if (APawn* ControlledPawn = GetPawn())
+	{
+		if (UDS1InventoryComponent* InventoryComponent = ControlledPawn->FindComponentByClass<UDS1InventoryComponent>())
+		{
+			InventoryWidget->InitInventory(InventoryComponent);
+		}
+	}
+
+	SetShowMouseCursor(true);
+	FInputModeGameAndUI InputMode;
+	InputMode.SetWidgetToFocus(InventoryWidget->TakeWidget());
+	InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+	SetInputMode(InputMode);
 }

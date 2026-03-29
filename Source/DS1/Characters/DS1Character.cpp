@@ -30,7 +30,9 @@
 #include "Sound/SoundCue.h"
 #include "UI/DS1PlayerHUDWidget.h"
 #include "UI/DS1VisionOverlayWidget.h"
+#include "UI/DS1StaminaRingWidget.h"
 #include "Components/DS1VisibilityComponent.h"
+#include "Components/WidgetComponent.h"
 
 ADS1Character::ADS1Character()
 {
@@ -86,6 +88,18 @@ ADS1Character::ADS1Character()
 
 	// NPC 가시성 관리
 	VisibilityComponent = CreateDefaultSubobject<UDS1VisibilityComponent>(TEXT("Visibility"));
+
+	// 발 아래 원형 스태미나 링
+	StaminaRingComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("StaminaRing"));
+	StaminaRingComponent->SetupAttachment(RootComponent);
+	StaminaRingComponent->SetWidgetSpace(EWidgetSpace::World);
+	// 위치는 Tick에서 카메라 기준으로 동적 계산하므로 초기값은 0
+	StaminaRingComponent->SetRelativeLocation(FVector::ZeroVector);
+	// 회전은 Tick에서 카메라 방향으로 고정함
+	// 월드 단위 기준 링 크기 (150x150 언리얼 유닛)
+	StaminaRingComponent->SetDrawSize(FVector2D(75.f, 75.f));
+	StaminaRingComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	StaminaRingComponent->SetCastShadow(false);
 }
 
 void ADS1Character::BeginPlay()
@@ -115,6 +129,26 @@ void ADS1Character::BeginPlay()
 		}
 	}
 
+	// 발 아래 원형 스태미나 링 위젯 초기화
+	if (StaminaRingWidgetClass)
+	{
+		StaminaRingComponent->SetWidgetClass(StaminaRingWidgetClass);
+		StaminaRingComponent->InitWidget();
+
+		if (UDS1StaminaRingWidget* RingWidget = Cast<UDS1StaminaRingWidget>(StaminaRingComponent->GetWidget()))
+		{
+			AttributeComponent->OnAttributeChanged.AddLambda([RingWidget](EDS1AttributeType Type, float Ratio)
+			{
+				if (Type == EDS1AttributeType::Stamina)
+				{
+					RingWidget->SetStaminaRatio(Ratio);
+				}
+			});
+			// 초기값 동기화
+			RingWidget->SetStaminaRatio(AttributeComponent->GetStaminaRatio());
+		}
+	}
+
 	// 二쇰㉨ 臾닿린 ?μ갑
 	if (FistWeaponClass)
 	{
@@ -128,6 +162,19 @@ void ADS1Character::BeginPlay()
 void ADS1Character::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	// 스태미나 링: 캐릭터가 어느 방향을 보더라도 항상 카메라 좌측에 위치
+	if (StaminaRingComponent && FollowCamera)
+	{
+		// 카메라 좌측 방향(월드) = -RightVector
+		const FVector CameraLeft = -FollowCamera->GetRightVector();
+		const FVector Origin     = GetActorLocation();
+		StaminaRingComponent->SetWorldLocation(Origin + CameraLeft * 130.f + FVector(0.f, 40.f, 20.f));
+
+		// 링 면이 카메라를 향하도록: 카메라 Rotation에서 Pitch 반전, Yaw+180
+		const FRotator CamRot = FollowCamera->GetComponentRotation();
+		StaminaRingComponent->SetWorldRotation(FRotator(-CamRot.Pitch, CamRot.Yaw + 180.f, 0.f));
+	}
 }
 
 void ADS1Character::NotifyControllerChanged()

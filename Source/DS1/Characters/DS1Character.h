@@ -17,6 +17,8 @@ class UDS1StateComponent;
 class UDS1PlayerHUDWidget;
 class UDS1VisionOverlayWidget;
 class UDS1VisibilityComponent;
+class UDS1StaminaRingWidget;
+class UWidgetComponent;
 struct FInputActionValue;
 class USpringArmComponent;
 class UCameraComponent;
@@ -108,6 +110,10 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	UDS1VisibilityComponent* VisibilityComponent;
 
+	/** 발 아래 원형 스태미나 링 위젯 컴포넌트 */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	UWidgetComponent* StaminaRingComponent;
+
 // Body parts Mesh
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
@@ -134,6 +140,10 @@ protected:
 
 	UPROPERTY()
 	UDS1VisionOverlayWidget* VisionOverlayWidget;
+
+	/** 발 아래 원형 스태미나 링 위젯 클래스 (블루프린트에서 지정) */
+	UPROPERTY(EditAnywhere, Category = "UI")
+	TSubclassOf<UDS1StaminaRingWidget> StaminaRingWidgetClass;
 
 // 二쇰㉨ 臾닿린
 protected:

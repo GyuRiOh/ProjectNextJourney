@@ -109,6 +109,10 @@ void ADS1Character::BeginPlay()
 	AttributeComponent->SetStaminaRegenRate(StaminaRegenRate);
 	AttributeComponent->SetStaminaRegenDelay(StaminaRegenDelay);
 
+	// 플레이어 메시를 Custom Depth Stencil로 마킹 → Post Process에서 벽 뒤 실루엣 표시
+	GetMesh()->SetRenderCustomDepth(true);
+	GetMesh()->SetCustomDepthStencilValue(1);
+
 	// 시야 음영 오버레이 - HUD 아래 레이어
 	if (VisionOverlayWidgetClass)
 	{

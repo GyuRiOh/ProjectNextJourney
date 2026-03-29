@@ -248,6 +248,9 @@ protected:
 	/** 패리 윈도우 타이머 */
 	FTimerHandle ParryWindowTimerHandle;
 
+	/** 스태미나 링 자동 숨김 타이머 (스태미나 최대 회복 후 N초 뒤 숨김) */
+	FTimerHandle StaminaRingHideTimerHandle;
+
 
 // Montage Section
 protected:

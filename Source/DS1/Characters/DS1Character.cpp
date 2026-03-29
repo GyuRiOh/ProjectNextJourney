@@ -135,13 +135,29 @@ void ADS1Character::BeginPlay()
 		StaminaRingComponent->SetWidgetClass(StaminaRingWidgetClass);
 		StaminaRingComponent->InitWidget();
 
+		// 초기 상태: 스태미나 풀이면 숨김
+		StaminaRingComponent->SetVisibility(false);
+
 		if (UDS1StaminaRingWidget* RingWidget = Cast<UDS1StaminaRingWidget>(StaminaRingComponent->GetWidget()))
 		{
-			AttributeComponent->OnAttributeChanged.AddLambda([RingWidget](EDS1AttributeType Type, float Ratio)
+			AttributeComponent->OnAttributeChanged.AddLambda([this, RingWidget](EDS1AttributeType Type, float Ratio)
 			{
-				if (Type == EDS1AttributeType::Stamina)
+				if (Type != EDS1AttributeType::Stamina)
+					return;
+
+				RingWidget->SetStaminaRatio(Ratio);
+
+				// 변동 시 링 표시 + 숨김 타이머 리셋
+				StaminaRingComponent->SetVisibility(true);
+				GetWorldTimerManager().ClearTimer(StaminaRingHideTimerHandle);
+
+				// 스태미나가 꽉 찼으면 1.5초 후 숨김
+				if (FMath::IsNearlyEqual(Ratio, 1.f, 0.01f))
 				{
-					RingWidget->SetStaminaRatio(Ratio);
+					GetWorldTimerManager().SetTimer(StaminaRingHideTimerHandle, [this]()
+					{
+						StaminaRingComponent->SetVisibility(false);
+					}, 1.5f, false);
 				}
 			});
 			// 초기값 동기화

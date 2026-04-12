@@ -32,6 +32,7 @@
 #include "UI/DS1VisionOverlayWidget.h"
 #include "UI/DS1StaminaRingWidget.h"
 #include "Components/DS1VisibilityComponent.h"
+#include "Components/DS1CutawayComponent.h"
 #include "Components/WidgetComponent.h"
 
 ADS1Character::ADS1Character()
@@ -88,6 +89,9 @@ ADS1Character::ADS1Character()
 
 	// NPC 가시성 관리
 	VisibilityComponent = CreateDefaultSubobject<UDS1VisibilityComponent>(TEXT("Visibility"));
+
+	// 오브젝트 컷어웨이 (벽 뒤 플레이어 표시)
+	CutawayComponent = CreateDefaultSubobject<UDS1CutawayComponent>(TEXT("Cutaway"));
 
 	// 발 아래 원형 스태미나 링
 	StaminaRingComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("StaminaRing"));

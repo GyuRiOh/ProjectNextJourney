@@ -18,6 +18,7 @@ class UDS1PlayerHUDWidget;
 class UDS1VisionOverlayWidget;
 class UDS1VisibilityComponent;
 class UDS1StaminaRingWidget;
+class UDS1CutawayComponent;
 class UWidgetComponent;
 struct FInputActionValue;
 class USpringArmComponent;
@@ -109,6 +110,10 @@ private:
 	/** NPC 가시성(시야 판정) 관리 컴포넌트 */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	UDS1VisibilityComponent* VisibilityComponent;
+
+	/** 오브젝트 컷어웨이(벽 뒤 플레이어 표시) 컴포넌트 */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	UDS1CutawayComponent* CutawayComponent;
 
 	/** 발 아래 원형 스태미나 링 위젯 컴포넌트 */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))

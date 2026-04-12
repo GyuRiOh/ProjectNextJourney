@@ -1,5 +1,11 @@
 # Occlusion Reveal System (2026-03-29)
 
+## Status
+
+- 2026-04-12 기준 미사용 설계
+- `Source/DS1/Characters/DS1Character.cpp`의 `CustomDepth/Stencil` 초기화 코드는 제거됨
+- 레벨/에셋에 남아 있는 Post Process Material 또는 프로젝트 렌더링 설정은 필요 시 에디터에서 별도 정리
+
 ## Summary
 
 - 플레이어 캐릭터가 벽/오브젝트 뒤에 있어도 항상 표시되는 시스템

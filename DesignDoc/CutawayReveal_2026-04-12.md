@@ -55,31 +55,31 @@ EFT(Escape from Tarkov) 스타일 컷어웨이 시스템.
 
 #### 노드 그래프 — 단계별 설명
 
-**Step 1 — 씬 색 가져오기**
+#### Step 1 — 씬 색 가져오기
 
-```
+```text
 [SceneTexture: PostProcessInput0] → SceneColor (RGB)
 ```
 
-**Step 2 — 플레이어 캡처 색 가져오기**
+#### Step 2 — 플레이어 캡처 색 가져오기
 
-```
+```text
 [TextureSampleParameter2D "PlayerCaptureTex"]
     UV 입력: [ScreenPosition (Normalized 0-1)]
 → PlayerColor (RGB)
 ```
 
-**Step 3 — 깊이·스텐실 가져오기**
+#### Step 3 — 깊이·스텐실 가져오기
 
-```
+```text
 [SceneTexture: SceneDepth]   → SceneDepth
 [SceneTexture: CustomDepth]  → CustomDepth
 [SceneTexture: CustomStencil] → CustomStencil
 ```
 
-**Step 4 — FOV 원형 마스크 계산**
+#### Step 4 — FOV 원형 마스크 계산
 
-```
+```text
 [ScreenPosition (Normalized)]           → PixelUV
 
 [VectorParameter "PlayerScreenPos"]
@@ -108,9 +108,9 @@ Add(R, S)                               → EdgeOuter
   (1 = 원 안, 0 = 원 밖)
 ```
 
-**Step 5 — FOV 밖 다크닝**
+#### Step 5 — FOV 밖 다크닝
 
-```
+```text
 [ScalarParameter "DarkOutside"]         → D
 OneMinus(FOVMask)                       → OutsideFactor
 Multiply(OutsideFactor, D)              → DarkAmount
@@ -118,9 +118,9 @@ OneMinus(DarkAmount)                    → DarkMultiplier
   (FOV 안 = 1.0, FOV 밖 = 1-D)
 ```
 
-**Step 6 — 플레이어 가려짐 감지**
+#### Step 6 — 플레이어 가려짐 감지
 
-```
+```text
 [If] A=CustomStencil, B=1.5
     A > B → 1.0
     A ≤ B → 0.0
@@ -136,9 +136,9 @@ Multiply(tempReveal, FOVMask)           → shouldReveal
   (FOV 원 안 + 플레이어가 가려진 픽셀에서만 1)
 ```
 
-**Step 7 — 최종 합성**
+#### Step 7 — 최종 합성
 
-```
+```text
 [Lerp] A=SceneColor, B=PlayerColor, Alpha=shouldReveal
 → RevealedColor
   (가려진 픽셀에서 플레이어 캡처 색으로 대체)
@@ -172,7 +172,7 @@ FinalColor → [Emissive Color 출력 핀]
 
 ## 동작 원리 요약
 
-```
+```text
 메인 카메라 렌더 ─────────────────────────────┐
                                               │
 SceneCaptureComponent2D                       │  PostProcess 머티리얼

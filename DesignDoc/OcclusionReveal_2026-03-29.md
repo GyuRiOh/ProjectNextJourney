@@ -45,7 +45,7 @@ GetMesh()->SetCustomDepthStencilValue(1);
 
 노드 구성:
 
-```
+```text
 SceneTexture(PostProcessInput0) ──────────────────── If(A>=B) ──┐
 SceneTexture(CustomDepth)       ── A ─┐                          ├── Emissive Color
 SceneTexture(SceneDepth)        ── B ─┴── If ── A<B → 실루엣색 ──┘

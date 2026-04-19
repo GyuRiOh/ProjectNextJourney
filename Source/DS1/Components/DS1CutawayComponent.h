@@ -11,6 +11,7 @@ class UTextureRenderTarget2D;
 class UPostProcessComponent;
 class UMaterialInterface;
 class UMaterialInstanceDynamic;
+class UDS1VisibilityComponent;
 
 /**
  * 플레이어 캐릭터에 부착하는 컷어웨이(Cutaway) 시스템 컴포넌트.
@@ -43,11 +44,14 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Cutaway")
 	TObjectPtr<UMaterialInterface> CutawayMaterial;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Cutaway")
+	bool bUseVisibilityNearRadiusForReveal = true;
+
 	/**
 	 * FOV 원형 마스크 반지름 (화면 높이 대비 비율, 0~1).
 	 * 0.35 = 화면 높이의 35% 반지름 원.
 	 */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Cutaway", meta=(ClampMin="0.05", ClampMax="1.0"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Cutaway", meta=(ClampMin="0.05", ClampMax="1.0", EditCondition="!bUseVisibilityNearRadiusForReveal", EditConditionHides))
 	float FOVRadiusFraction = 0.35f;
 
 	/** FOV 원 경계 페이드 폭 (0=날카로움, 클수록 그라데이션 부드러움) */
@@ -55,7 +59,10 @@ public:
 	float FOVEdgeSoftness = 0.06f;
 
 	/** FOV 밖 다크닝 강도 (0=없음, 1=완전 검정) */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Cutaway", meta=(ClampMin="0.0", ClampMax="1.0"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Cutaway")
+	bool bEnableCutawayDarkening = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Cutaway", meta=(ClampMin="0.0", ClampMax="1.0", EditCondition="bEnableCutawayDarkening", EditConditionHides))
 	float DarkOutsideFOV = 0.65f;
 
 	/**
@@ -84,6 +91,10 @@ private:
 	/** PostProcessComponent 를 생성하고 동적 머티리얼 인스턴스를 등록 */
 	void SetupPostProcess();
 
+	float ResolveRevealRadiusFraction(class APlayerController* PC, const FVector& PlayerCenter, const FVector2D& ScreenPos, int32 ViewY);
+
+	float ResolveDarkOutsideAmount() const;
+
 	/** 매 프레임 머티리얼 파라미터(플레이어 스크린 좌표, FOV 크기 등) 갱신 */
 	void UpdateMaterialParameters();
 
@@ -100,6 +111,8 @@ private:
 
 	UPROPERTY()
 	TObjectPtr<UMaterialInstanceDynamic> CutawayMID;
+
+	TWeakObjectPtr<UDS1VisibilityComponent> CachedVisibilityComponent;
 
 	// ── M_CutawayReveal 파라미터 이름 (머티리얼 쪽과 동일해야 함) ──────────
 	static const FName PN_PlayerCaptureTex;  // Texture2D  param

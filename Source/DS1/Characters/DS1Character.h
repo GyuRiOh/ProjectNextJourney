@@ -150,6 +150,18 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "UI")
 	TSubclassOf<UDS1StaminaRingWidget> StaminaRingWidgetClass;
 
+	UPROPERTY()
+	UDS1StaminaRingWidget* StaminaRingWidget;
+
+	UPROPERTY(EditAnywhere, Category = "UI")
+	FVector2D StaminaRingViewportSize = FVector2D(70.f, 70.f);
+
+	UPROPERTY(EditAnywhere, Category = "UI")
+	float StaminaRingCameraLeftOffset = 140.f;
+
+	UPROPERTY(EditAnywhere, Category = "UI")
+	FVector StaminaRingViewportOffset = FVector(0.f, 40.f, 20.f);
+
 // 二쇰㉨ 臾닿린
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -255,6 +267,8 @@ protected:
 
 	/** 스태미나 링 자동 숨김 타이머 (스태미나 최대 회복 후 N초 뒤 숨김) */
 	FTimerHandle StaminaRingHideTimerHandle;
+
+	void UpdateStaminaRingScreenPosition();
 
 
 // Montage Section

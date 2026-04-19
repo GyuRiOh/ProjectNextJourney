@@ -11,6 +11,7 @@
 #include "InputCoreTypes.h"
 #include "Animation/DS1AnimInstance.h"
 #include "Blueprint/UserWidget.h"
+#include "Blueprint/WidgetLayoutLibrary.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/DS1CombatComponent.h"
 #include "Components/DS1AttributeComponent.h"
@@ -93,17 +94,16 @@ ADS1Character::ADS1Character()
 	// 오브젝트 컷어웨이 (벽 뒤 플레이어 표시)
 	CutawayComponent = CreateDefaultSubobject<UDS1CutawayComponent>(TEXT("Cutaway"));
 
-	// 발 아래 원형 스태미나 링
+	// BP 호환용 더미 컴포넌트. 실제 스태미나 링 렌더링은 뷰포트 위젯으로 처리한다.
 	StaminaRingComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("StaminaRing"));
 	StaminaRingComponent->SetupAttachment(RootComponent);
 	StaminaRingComponent->SetWidgetSpace(EWidgetSpace::World);
-	// 위치는 Tick에서 카메라 기준으로 동적 계산하므로 초기값은 0
 	StaminaRingComponent->SetRelativeLocation(FVector::ZeroVector);
-	// 회전은 Tick에서 카메라 방향으로 고정함
-	// 월드 단위 기준 링 크기 (150x150 언리얼 유닛)
 	StaminaRingComponent->SetDrawSize(FVector2D(75.f, 75.f));
 	StaminaRingComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	StaminaRingComponent->SetCastShadow(false);
+	StaminaRingComponent->SetVisibility(false);
+	StaminaRingComponent->SetHiddenInGame(true);
 }
 
 void ADS1Character::BeginPlay()
@@ -133,26 +133,48 @@ void ADS1Character::BeginPlay()
 		}
 	}
 
+	if (StaminaRingComponent)
+	{
+		StaminaRingComponent->SetVisibility(false);
+		StaminaRingComponent->SetHiddenInGame(true);
+	}
+
 	// 발 아래 원형 스태미나 링 위젯 초기화
 	if (StaminaRingWidgetClass)
 	{
-		StaminaRingComponent->SetWidgetClass(StaminaRingWidgetClass);
-		StaminaRingComponent->InitWidget();
-
-		// 초기 상태: 스태미나 풀이면 숨김
-		StaminaRingComponent->SetVisibility(false);
-
-		if (UDS1StaminaRingWidget* RingWidget = Cast<UDS1StaminaRingWidget>(StaminaRingComponent->GetWidget()))
+		if (APlayerController* PC = Cast<APlayerController>(GetController()))
 		{
-			AttributeComponent->OnAttributeChanged.AddLambda([this, RingWidget](EDS1AttributeType Type, float Ratio)
+			StaminaRingWidget = CreateWidget<UDS1StaminaRingWidget>(PC, StaminaRingWidgetClass);
+		}
+		else
+		{
+			StaminaRingWidget = CreateWidget<UDS1StaminaRingWidget>(GetWorld(), StaminaRingWidgetClass);
+		}
+
+		if (StaminaRingWidget)
+		{
+			const float InitialStaminaRatio = AttributeComponent->GetStaminaRatio();
+
+			StaminaRingWidget->AddToViewport(2);
+			StaminaRingWidget->SetDesiredSizeInViewport(StaminaRingViewportSize);
+			StaminaRingWidget->SetAlignmentInViewport(FVector2D(0.5f, 0.5f));
+			StaminaRingWidget->SetStaminaRatio(InitialStaminaRatio);
+			StaminaRingWidget->SetVisibility(
+				FMath::IsNearlyEqual(InitialStaminaRatio, 1.f, 0.01f)
+					? ESlateVisibility::Hidden
+					: ESlateVisibility::SelfHitTestInvisible);
+			UpdateStaminaRingScreenPosition();
+
+			AttributeComponent->OnAttributeChanged.AddLambda([this](EDS1AttributeType Type, float Ratio)
 			{
-				if (Type != EDS1AttributeType::Stamina)
+				if (Type != EDS1AttributeType::Stamina || !StaminaRingWidget)
 					return;
 
-				RingWidget->SetStaminaRatio(Ratio);
+				StaminaRingWidget->SetStaminaRatio(Ratio);
+				StaminaRingWidget->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
+				UpdateStaminaRingScreenPosition();
 
 				// 변동 시 링 표시 + 숨김 타이머 리셋
-				StaminaRingComponent->SetVisibility(true);
 				GetWorldTimerManager().ClearTimer(StaminaRingHideTimerHandle);
 
 				// 스태미나가 꽉 찼으면 1.5초 후 숨김
@@ -160,12 +182,13 @@ void ADS1Character::BeginPlay()
 				{
 					GetWorldTimerManager().SetTimer(StaminaRingHideTimerHandle, [this]()
 					{
-						StaminaRingComponent->SetVisibility(false);
+						if (StaminaRingWidget)
+						{
+							StaminaRingWidget->SetVisibility(ESlateVisibility::Hidden);
+						}
 					}, 1.5f, false);
 				}
 			});
-			// 초기값 동기화
-			RingWidget->SetStaminaRatio(AttributeComponent->GetStaminaRatio());
 		}
 	}
 
@@ -183,17 +206,31 @@ void ADS1Character::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	// 스태미나 링: 캐릭터가 어느 방향을 보더라도 항상 카메라 좌측에 위치
-	if (StaminaRingComponent && FollowCamera)
-	{
-		// 카메라 좌측 방향(월드) = -RightVector
-		const FVector CameraLeft = -FollowCamera->GetRightVector();
-		const FVector Origin     = GetActorLocation();
-		StaminaRingComponent->SetWorldLocation(Origin + CameraLeft * 130.f + FVector(0.f, 40.f, 20.f));
+	UpdateStaminaRingScreenPosition();
+}
 
-		// 링 면이 카메라를 향하도록: 카메라 Rotation에서 Pitch 반전, Yaw+180
-		const FRotator CamRot = FollowCamera->GetComponentRotation();
-		StaminaRingComponent->SetWorldRotation(FRotator(-CamRot.Pitch, CamRot.Yaw + 180.f, 0.f));
+void ADS1Character::UpdateStaminaRingScreenPosition()
+{
+	if (!StaminaRingWidget || !FollowCamera)
+	{
+		return;
+	}
+
+	APlayerController* PC = Cast<APlayerController>(GetController());
+	if (!PC)
+	{
+		return;
+	}
+
+	const FVector CameraLeft = -FollowCamera->GetRightVector();
+	const FVector AnchorWorldPosition = GetActorLocation()
+		+ CameraLeft * StaminaRingCameraLeftOffset
+		+ StaminaRingViewportOffset;
+
+	FVector2D ScreenPosition;
+	if (UWidgetLayoutLibrary::ProjectWorldLocationToWidgetPosition(PC, AnchorWorldPosition, ScreenPosition, true))
+	{
+		StaminaRingWidget->SetPositionInViewport(ScreenPosition, false);
 	}
 }
 
@@ -1100,5 +1137,3 @@ void ADS1Character::UseQuickSlot6()
 		QuickSlotComponent->UseQuickSlot(5);
 	}
 }
-
-

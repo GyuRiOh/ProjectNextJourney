@@ -67,10 +67,10 @@ public:
 
 	/**
 	 * 플레이어 캡처 렌더타깃 해상도 배율 (메인 뷰포트 대비).
-	 * 0.5 = 절반 해상도 (성능↑, 품질 약간↓).
+	 * 0.5 = 절반 해상도 (성능↑, 품질 약간↓), 2.0 = 2배 슈퍼샘플링 (품질↑, 성능↓).
 	 */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Cutaway", meta=(ClampMin="0.25", ClampMax="1.0"))
-	float CaptureResolutionFraction = 0.5f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Cutaway", meta=(ClampMin="0.25", ClampMax="2.0"))
+	float CaptureResolutionFraction = 1.0f;
 
 	/** 컷어웨이 시스템 활성 여부 (런타임 토글 가능) */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Cutaway")

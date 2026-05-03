@@ -196,3 +196,66 @@ SceneCaptureComponent2D                       │  PostProcess 머티리얼
 - `Source/DS1/Components/DS1CutawayComponent.h/.cpp` — 시스템 핵심 컴포넌트
 - `Source/DS1/Characters/DS1Character.cpp` — `CutawayComponent` 생성 (생성자)
 - `Content/_Game/Materials/M_CutawayReveal` — Post Process 머티리얼 (에디터 생성)
+
+---
+
+## 디버깅 기록 (2026-05-03)
+
+### 최초 증상 (3가지)
+
+1. **자글거림 (shimmer)** — 캐릭터 실루엣이 매 프레임 떨림
+2. **특정 부위 어둡게** — 팔·다리·발이 검게 표시됨
+3. **머리카락 날아감** — reveal 영역에서 헤어가 분리되어 표시
+
+---
+
+### 해결된 것: 자글거림
+
+**원인**: SceneCapture에 `SetAntiAliasing(true)` 설정 시 TAA 히스토리 없이 매 프레임 픽셀 지터 발생.
+추가로 머티리얼의 `CustomDepth > SceneDepth` 비교에 tolerance 없이 경계 픽셀이 매 프레임 occluded/non-occluded를 오가며 플리커.
+
+**적용된 수정**:
+
+- `DS1CutawayComponent.cpp` — `SetAntiAliasing(false)`, `SetMotionBlur(false)`
+- `M_CutawayReveal` (머티리얼) — Step 6 occlusion 판정을 `CustomDepth > SceneDepth` 에서
+  `Subtract(CustomDepth, SceneDepth) → Add B=5.0 → If A > B` 로 변경 (5cm 깊이 허용치 추가)
+
+---
+
+### 미해결: 팔·다리·발 검정 표시
+
+**증상**: 캐릭터가 벽 뒤로 들어가 reveal될 때 상체(빨간 셔츠)는 정상이지만 하체(어두운 바지·발)가 검정으로 표시됨.
+
+**원인 분석 (결론 미확정)**: `shouldReveal=1` 인데 `PlayerCaptureRT`가 해당 UV에서 검정을 반환하는 것으로 추정.
+즉 SceneCapture가 하체 메시를 정상 렌더링하지 못하고 있을 가능성이 높음.
+
+**시도했으나 효과 없는 것들**:
+
+| 시도 | 결과 |
+| --- | --- |
+| `RTF_RGBA8` → `RTF_RGBA16f` | 오히려 악화. `SCS_FinalColorLDR`와 float16 조합 시 gamma mismatch로 어두운 색상이 블랙으로 수렴. **RGBA8으로 복원** |
+| `PostProcessComponent(bUnbound)` → `Camera->AddOrUpdateBlendable` | 효과 없음. 복원 |
+| `bAlwaysPersistRenderingState = true` 추가 | 효과 없음. 제거 |
+| `StaticMeshComponent` 스텐실 마킹 추가 | 효과 없음. 제거 |
+
+**다음 세션에서 시도할 것**:
+
+- PIE 중 Content Browser에서 `PlayerCutawayRT` 렌더타깃 미리보기로 SceneCapture 출력 직접 확인
+  → RT에서도 검정이면 SceneCapture 렌더 문제, 정상이면 머티리얼 depth/stencil 판정 문제
+- `DS1Character`의 `LegsMesh` / `FeetMesh` 가 `SetMasterPoseComponent` 사용 여부 확인
+  → SceneCapture에서 MasterPose 컴포넌트(`GetMesh()`)가 올바르게 포함되는지 점검
+- SceneCapture `ShowFlags`에 추가로 비활성화해야 할 플래그 확인 (Lumen GI, Ray Tracing 등)
+  → `SCS_FinalColorLDR`가 Lumen GI를 SceneCapture에서 올바르게 처리하지 못할 경우 하체 암부 발생 가능
+- 머티리얼에서 `shouldReveal` 마스크를 상시 1로 고정 후 `PlayerCaptureTex`를 전체 화면에 출력,
+  SceneCapture 내용 확인 (디버그용 임시 수정)
+
+**현재 코드 상태 (2026-05-03 기준)**:
+
+```text
+RTF_RGBA8 (원복)
+SetAntiAliasing(false)     ← 추가됨 (자글거림 수정)
+SetMotionBlur(false)       ← 추가됨
+PostProcessComponent bUnbound Priority=5 (원복)
+SkeletalMeshComponent 스텐실 마킹만 유지 (StaticMesh 마킹 제거)
+M_CutawayReveal Step6: depth bias 5.0 적용 (자글거림 수정)
+```

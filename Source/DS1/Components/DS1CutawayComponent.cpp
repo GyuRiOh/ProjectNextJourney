@@ -96,6 +96,7 @@ void UDS1CutawayComponent::SetupPlayerCustomDepth()
 	{
 		MarkMesh(SkeletalMesh);
 	}
+
 }
 
 void UDS1CutawayComponent::SetupSceneCapture()
@@ -125,6 +126,7 @@ void UDS1CutawayComponent::SetupSceneCapture()
 	PlayerCaptureRT->RenderTargetFormat = ETextureRenderTargetFormat::RTF_RGBA8;
 	PlayerCaptureRT->ClearColor = FLinearColor::Black;
 	PlayerCaptureRT->bAutoGenerateMips = false;
+	PlayerCaptureRT->Filter = TF_Bilinear;
 	PlayerCaptureRT->InitAutoFormat(RTW, RTH);
 	PlayerCaptureRT->UpdateResourceImmediate(true);
 
@@ -142,7 +144,9 @@ void UDS1CutawayComponent::SetupSceneCapture()
 	PlayerCapture->ShowFlags.SetBloom(false);
 	PlayerCapture->ShowFlags.SetAmbientOcclusion(false);
 	PlayerCapture->ShowFlags.SetDynamicShadows(false);
+	// SceneCapture는 TAA 히스토리가 없어 AntiAliasing 활성화 시 매 프레임 지터 발생 → 비활성화
 	PlayerCapture->ShowFlags.SetAntiAliasing(false);
+	PlayerCapture->ShowFlags.SetMotionBlur(false);
 	PlayerCapture->ShowFlags.SetLensFlares(false);
 	PlayerCapture->ShowFlags.SetVignette(false);
 

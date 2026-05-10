@@ -85,6 +85,8 @@ private:
 	/** 플레이어 메시 전체에 CustomDepth Stencil(2) 설정 */
 	void SetupPlayerCustomDepth();
 
+	void RefreshCutawayPrimitives();
+
 	/** SceneCaptureComponent2D 를 카메라에 부착하고 설정 */
 	void SetupSceneCapture();
 

@@ -5,6 +5,7 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/DS1VisibilityComponent.h"
+#include "Components/MeshComponent.h"
 #include "Components/PostProcessComponent.h"
 #include "Components/SceneCaptureComponent2D.h"
 #include "Components/SkeletalMeshComponent.h"
@@ -64,10 +65,16 @@ void UDS1CutawayComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 void UDS1CutawayComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	RefreshCutawayPrimitives();
 	UpdateMaterialParameters();
 }
 
 void UDS1CutawayComponent::SetupPlayerCustomDepth()
+{
+	RefreshCutawayPrimitives();
+}
+
+void UDS1CutawayComponent::RefreshCutawayPrimitives()
 {
 	ACharacter* Owner = Cast<ACharacter>(GetOwner());
 	if (!Owner)
@@ -77,26 +84,50 @@ void UDS1CutawayComponent::SetupPlayerCustomDepth()
 
 	constexpr int32 CutawayStencil = 2;
 
-	auto MarkMesh = [CutawayStencil](UPrimitiveComponent* Primitive)
+	if (PlayerCapture)
 	{
-		if (!Primitive)
+		PlayerCapture->ClearShowOnlyComponents();
+	}
+
+	auto AddCutawayMesh = [this, CutawayStencil](UMeshComponent* MeshComp)
+	{
+		if (!MeshComp || !MeshComp->IsRegistered() || !MeshComp->IsVisible())
 		{
 			return;
 		}
 
-		Primitive->SetRenderCustomDepth(true);
-		Primitive->SetCustomDepthStencilValue(CutawayStencil);
+		MeshComp->SetRenderCustomDepth(true);
+		MeshComp->SetCustomDepthStencilValue(CutawayStencil);
+
+		if (PlayerCapture)
+		{
+			PlayerCapture->ShowOnlyComponent(MeshComp);
+		}
 	};
 
-	MarkMesh(Owner->GetMesh());
-
-	TArray<USkeletalMeshComponent*> SkeletalMeshes;
-	Owner->GetComponents<USkeletalMeshComponent>(SkeletalMeshes);
-	for (USkeletalMeshComponent* SkeletalMesh : SkeletalMeshes)
+	TArray<UMeshComponent*> OwnerMeshes;
+	Owner->GetComponents<UMeshComponent>(OwnerMeshes);
+	for (UMeshComponent* MeshComp : OwnerMeshes)
 	{
-		MarkMesh(SkeletalMesh);
+		AddCutawayMesh(MeshComp);
 	}
 
+	TArray<AActor*> AttachedActors;
+	Owner->GetAttachedActors(AttachedActors);
+	for (AActor* AttachedActor : AttachedActors)
+	{
+		if (!AttachedActor)
+		{
+			continue;
+		}
+
+		TArray<UMeshComponent*> AttachedMeshes;
+		AttachedActor->GetComponents<UMeshComponent>(AttachedMeshes);
+		for (UMeshComponent* MeshComp : AttachedMeshes)
+		{
+			AddCutawayMesh(MeshComp);
+		}
+	}
 }
 
 void UDS1CutawayComponent::SetupSceneCapture()
@@ -135,9 +166,9 @@ void UDS1CutawayComponent::SetupSceneCapture()
 	PlayerCapture->RegisterComponent();
 
 	PlayerCapture->TextureTarget = PlayerCaptureRT;
-	PlayerCapture->CaptureSource = ESceneCaptureSource::SCS_FinalColorLDR;
+	PlayerCapture->CaptureSource = ESceneCaptureSource::SCS_FinalToneCurveHDR;
 	PlayerCapture->PrimitiveRenderMode = ESceneCapturePrimitiveRenderMode::PRM_UseShowOnlyList;
-	PlayerCapture->ShowOnlyActors.Add(Owner);
+	RefreshCutawayPrimitives();
 
 	PlayerCapture->ShowFlags.SetAtmosphere(false);
 	PlayerCapture->ShowFlags.SetFog(false);

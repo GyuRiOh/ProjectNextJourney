@@ -259,3 +259,302 @@ PostProcessComponent bUnbound Priority=5 (원복)
 SkeletalMeshComponent 스텐실 마킹만 유지 (StaticMesh 마킹 제거)
 M_CutawayReveal Step6: depth bias 5.0 적용 (자글거림 수정)
 ```
+
+---
+
+## 디버깅 기록 (2026-05-10)
+
+### 상태 요약
+
+오늘 테스트 기준으로 기존 Cutaway Reveal 방식은 아직 만족스럽게 해결되지 않았다.
+
+현재 구조:
+
+```text
+SceneCaptureComponent2D
+  -> PlayerCaptureRT
+  -> M_CutawayReveal에서 PlayerCaptureTex로 샘플링
+  -> CustomDepth/CustomStencil/FOVMask로 벽 뒤 플레이어 픽셀에 합성
+```
+
+남은 문제:
+
+```text
+플레이어가 벽 뒤에서 reveal될 때 팔, 다리, 머리 주변 외곽이 자글자글하거나 검게 먹는 느낌이 남는다.
+밝기, RT 해상도, SceneCapture AA, 단순 depth SmoothStep 보정으로는 해결되지 않았다.
+```
+
+### 오늘 적용한 C++ 변경
+
+파일:
+
+```text
+Source/DS1/Components/DS1CutawayComponent.h
+Source/DS1/Components/DS1CutawayComponent.cpp
+```
+
+#### 1. 장비/부착 액터 메시 포함
+
+`RefreshCutawayPrimitives()`를 추가했다.
+
+동작:
+
+```text
+Owner의 모든 UMeshComponent 수집
+Owner에 Attach된 Actor들의 모든 UMeshComponent 수집
+각 MeshComponent에 CustomDepth Stencil = 2 적용
+SceneCapture ShowOnlyComponent 목록에 추가
+```
+
+목적:
+
+```text
+ADS1Armour처럼 별도 액터로 붙는 방어구, 무기, 방패가 PlayerCaptureRT에 빠지는 문제를 막기 위함.
+```
+
+결과:
+
+```text
+장비 누락 가능성은 줄였지만, 자글자글한 외곽 문제 자체는 해결되지 않음.
+```
+
+#### 2. CaptureSource 변경 실험
+
+기존:
+
+```cpp
+PlayerCapture->CaptureSource = ESceneCaptureSource::SCS_FinalColorLDR;
+```
+
+실험:
+
+```cpp
+PlayerCapture->CaptureSource = ESceneCaptureSource::SCS_BaseColor;
+```
+
+결과:
+
+```text
+캐릭터는 밝아졌지만 팔/장갑 일부가 하얗게 튀는 문제가 생김.
+BaseColor는 최종 컷어웨이용으로 부적합.
+```
+
+현재 유지 후보:
+
+```cpp
+PlayerCapture->CaptureSource = ESceneCaptureSource::SCS_FinalToneCurveHDR;
+```
+
+결과:
+
+```text
+SCS_FinalColorLDR보다 덜 어둡고, SCS_BaseColor의 하얀 튐도 줄어듦.
+오늘 테스트 중 가장 나은 CaptureSource.
+```
+
+#### 3. SceneCapture AA 재실험
+
+실험:
+
+```cpp
+PlayerCapture->ShowFlags.SetAntiAliasing(true);
+PlayerCapture->bAlwaysPersistRenderingState = true;
+```
+
+결과:
+
+```text
+자글자글함 변화 없음.
+이전 shimmer 위험도 있으므로 다시 SetAntiAliasing(false)로 되돌림.
+```
+
+### 오늘 적용/시도한 머티리얼 변경
+
+파일:
+
+```text
+Content/_Game/Materials/M_CutawayReveal
+```
+
+#### 1. PlayerCaptureTex 직접 출력
+
+목적:
+
+```text
+PlayerCaptureRT 원본이 찍히는지 확인.
+```
+
+확인:
+
+```text
+PlayerCaptureTex에는 캐릭터가 찍히고 있었음.
+다만 검은 배경 + 플레이어 구조라 외곽에서 검은 배경이 섞일 가능성이 있음.
+```
+
+#### 2. PlayerCaptureTex 밝기 보정
+
+구조:
+
+```text
+PlayerCaptureTex RGB
+  -> Multiply 1.08 ~ 1.5
+  -> Lerp B
+```
+
+결과:
+
+```text
+밝기만 변함.
+자글자글한 외곽/검은 픽셀 문제는 해결되지 않음.
+```
+
+#### 3. isOccluded depth 판정 softening 시도
+
+기존:
+
+```text
+CustomDepth > SceneDepth + 5 ? 1 : 0
+```
+
+시도:
+
+```text
+CustomDepth - SceneDepth
+  -> SmoothStep(Min, Max)
+  -> isOccludedSoft
+```
+
+테스트 값:
+
+```text
+Min=5 Max=20
+Min=0 Max=5
+Min=0 Max=10
+```
+
+결과:
+
+```text
+컷어웨이가 꺼진 것처럼 보임.
+값을 바꿔도 reveal이 복구되지 않음.
+현재 그래프의 depth 값 범위/방향/비선형성 때문에 단순 SmoothStep 치환은 실패.
+원래 If 방식으로 복구 필요.
+```
+
+#### 4. 검은 RT 배경 완화용 Max 보정 시도
+
+구조:
+
+```text
+SceneColor RGB -> Lerp A
+
+PlayerCaptureTex RGB * 1.08 -> Max A
+SceneColor RGB * 0.25       -> Max B
+Max Output                  -> Lerp B
+
+shouldReveal -> Lerp Alpha
+```
+
+목적:
+
+```text
+PlayerCaptureTex의 검은 배경이 캐릭터 외곽에 섞일 때 완전 검정으로 떨어지지 않게 함.
+```
+
+결론:
+
+```text
+근본 해결책은 아님.
+검은 테두리 강도 완화는 가능할 수 있으나, 자글자글한 외곽 자체를 제거하지는 못함.
+```
+
+### 오늘 결론
+
+현재 방식의 근본 한계:
+
+```text
+PlayerCaptureRT는 검은 배경 위에 플레이어만 렌더링한다.
+M_CutawayReveal은 CustomDepth/Stencil 마스크로 그 RT를 벽 위에 합성한다.
+캐릭터 외곽에서는 RT의 검은 배경과 캐릭터 색이 섞인다.
+CustomDepth/Stencil 마스크와 PlayerCaptureTex 실루엣도 완벽히 일치하지 않는다.
+그 결과 팔/다리/머리 주변에 검은 픽셀 또는 자글자글한 외곽이 남는다.
+```
+
+### 다음 재설계 후보
+
+#### 후보 A: CustomStencil 기반 단색/림 reveal
+
+```text
+CustomDepth/Stencil로 가려진 플레이어 영역 감지
+-> 부드러운 실루엣/림/반투명 단색으로 표시
+```
+
+장점:
+
+```text
+검은 RT 배경 문제 없음
+SceneCapture 비용 없음
+외곽 자글자글함을 스타일로 감출 수 있음
+구현과 디버깅이 단순
+```
+
+단점:
+
+```text
+실제 캐릭터 색/장비 색이 보이지 않음
+```
+
+#### 후보 B: 벽/장애물 쪽을 투명화하는 cutaway
+
+```text
+카메라-플레이어 사이 장애물 검출
+-> 해당 장애물 머티리얼을 dither/fade/cutout
+-> 실제 메인 렌더의 플레이어를 그대로 보이게 함
+```
+
+장점:
+
+```text
+플레이어 색/장비/머리카락이 원래 렌더 그대로 보임
+RT 합성 불일치 없음
+```
+
+단점:
+
+```text
+장애물 머티리얼 교체/관리 필요
+레벨 오브젝트 처리 규칙 필요
+```
+
+#### 후보 C: SceneCapture + Alpha Mask를 별도 생성
+
+```text
+PlayerColorRT: 플레이어 색
+PlayerMaskRT: 플레이어 실루엣 alpha
+합성: Lerp(SceneColor, PlayerColor, PlayerMask * isOccluded * FOVMask)
+```
+
+장점:
+
+```text
+검은 배경 RGB가 외곽에 섞이는 문제를 줄일 수 있음
+```
+
+단점:
+
+```text
+RT/머티리얼/SceneCapture 구성이 더 복잡
+UE PostProcess에서 안정적인 mask 생성 방식 검토 필요
+```
+
+### 현재 권장 임시 상태
+
+```text
+CaptureSource = SCS_FinalToneCurveHDR
+ShowFlags AntiAliasing = false
+MotionBlur = false
+RenderTargetFormat = RTF_RGBA8
+CustomDepth/Stencil 판정은 기존 If 방식 유지
+PlayerCaptureTex 밝기 보정은 1.0 ~ 1.08 정도만 사용
+SmoothStep depth softening은 사용하지 않음
+```

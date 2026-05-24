@@ -46,6 +46,52 @@ protected:
 	/** 스태미나 재충전 타이머 핸들 */
 	FTimerHandle StaminaRegenTimerHandle;
 
+	// ── 배고픔 ──
+
+	UPROPERTY(EditAnywhere, Category = "Hunger")
+	float MaxHunger = 100.f;
+
+	UPROPERTY(VisibleAnywhere, Category = "Hunger")
+	float CurrentHunger = 100.f;
+
+	UPROPERTY(EditAnywhere, Category = "Hunger")
+	float HungerDecayRate = 0.5f;
+
+	// ── 갈증 ──
+
+	UPROPERTY(EditAnywhere, Category = "Thirst")
+	float MaxThirst = 100.f;
+
+	UPROPERTY(VisibleAnywhere, Category = "Thirst")
+	float CurrentThirst = 100.f;
+
+	UPROPERTY(EditAnywhere, Category = "Thirst")
+	float ThirstDecayRate = 0.8f;
+
+	// ── 패널티 설정 ──
+
+	/** 이 비율 이하면 low 상태로 간주 (기본 30%) */
+	UPROPERTY(EditAnywhere, Category = "HungerThirst")
+	float LowThreshold = 0.3f;
+
+	/** 갈증 low 시 초당 HP 감소량 */
+	UPROPERTY(EditAnywhere, Category = "HungerThirst")
+	float ThirstHPDrainPerSecond = 2.f;
+
+	/** 배고픔 low 시 이동속도 배율 */
+	UPROPERTY(EditAnywhere, Category = "HungerThirst")
+	float HungerSpeedPenaltyMultiplier = 0.7f;
+
+	// ── 내부 상태 ──
+
+	FTimerHandle HungerThirstDecayHandle;
+
+	float CachedBaseMaxWalkSpeed = 0.f;
+
+	bool bHungerLow = false;
+	bool bThirstLow = false;
+	bool bStaminaRegenSuppressed = false;
+
 public:	
 	UDS1AttributeComponent();
 
@@ -95,8 +141,23 @@ public:
 	/** 체력 회복 */
 	void HealPlayer(float HealAmount);
 
+	/** 배고픔 회복 */
+	void RestoreHunger(float Amount);
+
+	/** 갈증 회복 */
+	void RestoreThirst(float Amount);
+
+	FORCEINLINE float GetHungerRatio() const { return CurrentHunger / MaxHunger; }
+	FORCEINLINE float GetThirstRatio() const { return CurrentThirst / MaxThirst; }
+
 private:
 	/** 스태미나 재충전 처리 핸들링 함수 */
 	void RegenerateStaminaHandler();
+
+	/** 1초마다 배고픔/갈증 감소 및 패널티 평가 */
+	void HungerThirstDecayTick();
+
+	/** 배고픔/갈증 수치에 따른 패널티 상태 적용 */
+	void ApplyHungerThirstEffects();
 		
 };

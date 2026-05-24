@@ -61,6 +61,10 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Item | Consumable", meta = (EditCondition = "ItemType == EDS1ItemType::Consumable"))
 	float EffectValue = 0.f;
 
+	/** 소비 효과 유형 (HP/배고픔/갈증 회복) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Item | Consumable", meta = (EditCondition = "ItemType == EDS1ItemType::Consumable"))
+	EDS1ConsumableEffectType ConsumableEffectType = EDS1ConsumableEffectType::RestoreHP;
+
 	// ── 월드 드롭 ──
 
 	/** 바닥에 드롭 시 사용할 메시 */

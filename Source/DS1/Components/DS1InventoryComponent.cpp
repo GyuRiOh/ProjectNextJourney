@@ -414,10 +414,20 @@ bool UDS1InventoryComponent::UseConsumableFromSlot(int32 SlotIndex)
 		return false;
 	}
 
-	// 체력 회복 적용
 	if (UDS1AttributeComponent* AttribComp = OwnerActor->FindComponentByClass<UDS1AttributeComponent>())
 	{
-		AttribComp->HealPlayer(Slot.ItemData->EffectValue);
+		switch (Slot.ItemData->ConsumableEffectType)
+		{
+		case EDS1ConsumableEffectType::RestoreHP:
+			AttribComp->HealPlayer(Slot.ItemData->EffectValue);
+			break;
+		case EDS1ConsumableEffectType::RestoreHunger:
+			AttribComp->RestoreHunger(Slot.ItemData->EffectValue);
+			break;
+		case EDS1ConsumableEffectType::RestoreThirst:
+			AttribComp->RestoreThirst(Slot.ItemData->EffectValue);
+			break;
+		}
 	}
 
 	RemoveItemFromSlot(SlotIndex, 1);

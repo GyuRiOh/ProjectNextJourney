@@ -7,6 +7,7 @@
 #include "DS1PotionWidget.h"
 #include "DS1StatBarWidget.h"
 #include "DS1WeaponWidget.h"
+#include "DS1NutritionWidget.h"
 #include "Components/DS1AttributeComponent.h"
 #include "Components/DS1CombatComponent.h"
 #include "Components/DS1QuickSlotComponent.h"
@@ -30,6 +31,8 @@ void UDS1PlayerHUDWidget::NativeConstruct()
 			Attribute->OnAttributeChanged.AddUObject(this, &ThisClass::OnAttributeChanged);
 			Attribute->BroadcastAttributeChanged(EDS1AttributeType::Stamina);
 			Attribute->BroadcastAttributeChanged(EDS1AttributeType::Health);
+			Attribute->BroadcastAttributeChanged(EDS1AttributeType::Hunger);
+			Attribute->BroadcastAttributeChanged(EDS1AttributeType::Thirst);
 		}
 
 		if (UDS1QuickSlotComponent* QuickSlotComponent = OwningPawn->GetComponentByClass<UDS1QuickSlotComponent>())
@@ -61,6 +64,12 @@ void UDS1PlayerHUDWidget::OnAttributeChanged(EDS1AttributeType AttributeType, fl
 		break;
 	case EDS1AttributeType::Health:
 		HealthBarWidget->SetRatio(InValue);
+		break;
+	case EDS1AttributeType::Hunger:
+		if (HungerBarWidget) HungerBarWidget->SetRatio(InValue);
+		break;
+	case EDS1AttributeType::Thirst:
+		if (ThirstBarWidget) ThirstBarWidget->SetRatio(InValue);
 		break;
 	}
 }

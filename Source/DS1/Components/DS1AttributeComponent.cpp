@@ -5,6 +5,7 @@
 
 #include "DS1GameplayTags.h"
 #include "DS1StateComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 UDS1AttributeComponent::UDS1AttributeComponent()
 {
@@ -17,7 +18,9 @@ void UDS1AttributeComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	
+	GetWorld()->GetTimerManager().SetTimer(
+		HungerThirstDecayHandle, this,
+		&ThisClass::HungerThirstDecayTick, 1.f, true);
 }
 
 
@@ -43,6 +46,10 @@ void UDS1AttributeComponent::ToggleStaminaRegeneration(bool bEnabled, float Star
 {
 	if (bEnabled)
 	{
+		if (bStaminaRegenSuppressed)
+		{
+			return;
+		}
 		const float Delay = StartDelay < 0.f ? StaminaRegenDelay : StartDelay;
 		if (GetWorld()->GetTimerManager().IsTimerActive(StaminaRegenTimerHandle) == false)
 		{
@@ -69,6 +76,14 @@ void UDS1AttributeComponent::BroadcastAttributeChanged(EDS1AttributeType InAttri
 
 		case EDS1AttributeType::Health:
 			Ratio = GetHealthRatio();
+			break;
+
+		case EDS1AttributeType::Hunger:
+			Ratio = GetHungerRatio();
+			break;
+
+		case EDS1AttributeType::Thirst:
+			Ratio = GetThirstRatio();
 			break;
 		}
 
@@ -121,5 +136,86 @@ void UDS1AttributeComponent::RegenerateStaminaHandler()
 	{
 		ToggleStaminaRegeneration(false);
 	}
+}
+
+void UDS1AttributeComponent::HungerThirstDecayTick()
+{
+	CurrentHunger = FMath::Clamp(CurrentHunger - HungerDecayRate, 0.f, MaxHunger);
+	CurrentThirst = FMath::Clamp(CurrentThirst - ThirstDecayRate, 0.f, MaxThirst);
+
+	BroadcastAttributeChanged(EDS1AttributeType::Hunger);
+	BroadcastAttributeChanged(EDS1AttributeType::Thirst);
+
+	ApplyHungerThirstEffects();
+}
+
+void UDS1AttributeComponent::ApplyHungerThirstEffects()
+{
+	const bool bHungerNowLow = GetHungerRatio() <= LowThreshold;
+	const bool bThirstNowLow  = GetThirstRatio()  <= LowThreshold;
+
+	// ── 이동속도 패널티 (배고픔) ──
+	if (bHungerNowLow != bHungerLow)
+	{
+		bHungerLow = bHungerNowLow;
+		if (UCharacterMovementComponent* MoveComp = GetOwner()->FindComponentByClass<UCharacterMovementComponent>())
+		{
+			if (bHungerLow)
+			{
+				CachedBaseMaxWalkSpeed = MoveComp->MaxWalkSpeed;
+				MoveComp->MaxWalkSpeed *= HungerSpeedPenaltyMultiplier;
+			}
+			else
+			{
+				MoveComp->MaxWalkSpeed = CachedBaseMaxWalkSpeed;
+			}
+		}
+	}
+
+	// ── HP 드레인 (갈증) ──
+	if (bThirstNowLow)
+	{
+		BaseHealth = FMath::Clamp(BaseHealth - ThirstHPDrainPerSecond, 0.f, MaxHealth);
+		BroadcastAttributeChanged(EDS1AttributeType::Health);
+
+		if (BaseHealth <= 0.f)
+		{
+			if (OnDeath.IsBound())
+			{
+				OnDeath.Broadcast();
+			}
+			if (UDS1StateComponent* StateComp = GetOwner()->FindComponentByClass<UDS1StateComponent>())
+			{
+				StateComp->SetState(DS1GameplayTags::Character_State_Death);
+			}
+		}
+	}
+	bThirstLow = bThirstNowLow;
+
+	// ── 스태미나 회복 정지 (둘 다 낮을 때) ──
+	const bool bBothLow = bHungerNowLow && bThirstNowLow;
+	if (bBothLow && !bStaminaRegenSuppressed)
+	{
+		bStaminaRegenSuppressed = true;
+		ToggleStaminaRegeneration(false);
+	}
+	else if (!bBothLow && bStaminaRegenSuppressed)
+	{
+		bStaminaRegenSuppressed = false;
+	}
+}
+
+void UDS1AttributeComponent::RestoreHunger(float Amount)
+{
+	CurrentHunger = FMath::Clamp(CurrentHunger + Amount, 0.f, MaxHunger);
+	BroadcastAttributeChanged(EDS1AttributeType::Hunger);
+	ApplyHungerThirstEffects();
+}
+
+void UDS1AttributeComponent::RestoreThirst(float Amount)
+{
+	CurrentThirst = FMath::Clamp(CurrentThirst + Amount, 0.f, MaxThirst);
+	BroadcastAttributeChanged(EDS1AttributeType::Thirst);
+	ApplyHungerThirstEffects();
 }
 

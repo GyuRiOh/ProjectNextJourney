@@ -11,6 +11,7 @@ class UDS1WeaponWidget;
 class UDS1PotionWidget;
 class UDS1QuickSlotWidget;
 class UDS1StatBarWidget;
+class UDS1NutritionWidget;
 /**
  * 
  */
@@ -25,6 +26,12 @@ protected:
 
 	UPROPERTY(meta = (BindWidget), BlueprintReadWrite)
 	UDS1StatBarWidget* HealthBarWidget;
+
+	UPROPERTY(meta = (BindWidgetOptional), BlueprintReadWrite)
+	UDS1NutritionWidget* HungerBarWidget;
+
+	UPROPERTY(meta = (BindWidgetOptional), BlueprintReadWrite)
+	UDS1NutritionWidget* ThirstBarWidget;
 
 	UPROPERTY(meta = (BindWidgetOptional), BlueprintReadWrite)
 	UDS1QuickSlotWidget* QuickSlotWidget;

@@ -12,6 +12,8 @@ enum class EDS1AttributeType : uint8
 {
 	Stamina,
 	Health,
+	Hunger,
+	Thirst,
 };
 
 UENUM(BlueprintType)
@@ -89,6 +91,15 @@ enum class EDS1ItemType : uint8
 	Equipment,
 	Consumable,
 	Misc,
+};
+
+/** 소비 아이템 효과 유형 */
+UENUM(BlueprintType)
+enum class EDS1ConsumableEffectType : uint8
+{
+	RestoreHP,
+	RestoreHunger,
+	RestoreThirst,
 };
 
 /** 장비 슬롯 유형 */

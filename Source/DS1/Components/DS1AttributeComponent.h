@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "DS1Define.h"
 #include "Components/ActorComponent.h"
+#include "Data/DS1CharacterStatData.h"
 #include "DS1AttributeComponent.generated.h"
 
 DECLARE_MULTICAST_DELEGATE_TwoParams(FDelegateOnAttributeChanged, EDS1AttributeType, float);
@@ -22,64 +23,42 @@ public:
 	FOnDeath OnDeath;
 
 protected:
+	/** 캐릭터 스탯 데이터 에셋. 미설정 시 코드 기본값 사용 */
+	UPROPERTY(EditAnywhere, Category = "Stats")
+	UDS1CharacterStatData* StatData;
 
-	UPROPERTY(EditAnywhere, Category="Stamina")
 	float BaseStamina = 100.f;
-
-	UPROPERTY(EditAnywhere, Category = "Stamina")
 	float MaxStamina = 100.f;
-
 	float StaminaRegenRate = 0.2f;
-
-	/** 스태미나 회복 시작 전 대기 시간 */
 	float StaminaRegenDelay = 2.f;
 
-	UPROPERTY(EditAnywhere, Category = "Health")
 	float BaseHealth = 100.f;
-
-	UPROPERTY(EditAnywhere, Category = "Health")
 	float MaxHealth = 100.f;
 
 	UPROPERTY()
 	float DefenseStat = 0.f;
 
-	/** 스태미나 재충전 타이머 핸들 */
 	FTimerHandle StaminaRegenTimerHandle;
 
 	// ── 배고픔 ──
-
-	UPROPERTY(EditAnywhere, Category = "Hunger")
 	float MaxHunger = 100.f;
 
-	UPROPERTY(VisibleAnywhere, Category = "Hunger")
+	UPROPERTY(VisibleAnywhere, Category = "Stats|Debug")
 	float CurrentHunger = 100.f;
 
-	UPROPERTY(EditAnywhere, Category = "Hunger")
-	float HungerDecayRate = 0.5f;
+	float SecondsPerHungerDecay = 2.0f;
 
 	// ── 갈증 ──
-
-	UPROPERTY(EditAnywhere, Category = "Thirst")
 	float MaxThirst = 100.f;
 
-	UPROPERTY(VisibleAnywhere, Category = "Thirst")
+	UPROPERTY(VisibleAnywhere, Category = "Stats|Debug")
 	float CurrentThirst = 100.f;
 
-	UPROPERTY(EditAnywhere, Category = "Thirst")
-	float ThirstDecayRate = 0.8f;
+	float SecondsPerThirstDecay = 1.25f;
 
-	// ── 패널티 설정 ──
-
-	/** 이 비율 이하면 low 상태로 간주 (기본 30%) */
-	UPROPERTY(EditAnywhere, Category = "HungerThirst")
+	// ── 패널티 ──
 	float LowThreshold = 0.3f;
-
-	/** 갈증 low 시 초당 HP 감소량 */
-	UPROPERTY(EditAnywhere, Category = "HungerThirst")
 	float ThirstHPDrainPerSecond = 2.f;
-
-	/** 배고픔 low 시 이동속도 배율 */
-	UPROPERTY(EditAnywhere, Category = "HungerThirst")
 	float HungerSpeedPenaltyMultiplier = 0.7f;
 
 	// ── 내부 상태 ──

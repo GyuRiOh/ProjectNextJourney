@@ -20,8 +20,9 @@
 | --- | --- |
 | `Source/DS1/DS1Define.h` | `EDS1AttributeType`에 `Hunger`/`Thirst` 추가, `EDS1ConsumableEffectType` enum 신규 추가 |
 | `Source/DS1/Data/DS1ItemData.h` | `ConsumableEffectType` 필드 추가 |
-| `Source/DS1/Components/DS1AttributeComponent.h` | 배고픔/갈증 프로퍼티, 패널티 파라미터, 내부 상태 플래그, 메서드 선언 추가 |
-| `Source/DS1/Components/DS1AttributeComponent.cpp` | 1초 감소 타이머, 패널티 적용 로직, `RestoreHunger`/`RestoreThirst` 구현 |
+| `Source/DS1/Data/DS1CharacterStatData.h/.cpp` | 스탯 파라미터 전용 DataAsset 클래스 신규 추가 |
+| `Source/DS1/Components/DS1AttributeComponent.h` | 배고픔/갈증 프로퍼티, 패널티 파라미터, 내부 상태 플래그, 메서드 선언 추가. `StatData` 레퍼런스로 에디터 조정 |
+| `Source/DS1/Components/DS1AttributeComponent.cpp` | 1초 감소 타이머, 패널티 적용 로직, `RestoreHunger`/`RestoreThirst` 구현. BeginPlay에서 StatData 값 적용 |
 | `Source/DS1/Components/DS1InventoryComponent.cpp` | `UseConsumableFromSlot()`에 EffectType 분기 추가 |
 | `Source/DS1/UI/DS1PlayerHUDWidget.h` | `HungerBarWidget`, `ThirstBarWidget` BindWidgetOptional 추가 |
 | `Source/DS1/UI/DS1PlayerHUDWidget.cpp` | NativeConstruct 초기 Broadcast, OnAttributeChanged switch 확장 |
@@ -60,13 +61,13 @@ enum class EDS1ConsumableEffectType : uint8
 ```cpp
 // 배고픔
 float MaxHunger = 100.f;
-float CurrentHunger = 100.f;
-float HungerDecayRate = 0.5f;   // 초당 감소량
+float CurrentHunger = 100.f;   // BeginPlay에서 MaxHunger로 초기화
+float SecondsPerHungerDecay = 2.0f;   // 배고픔 1이 감소하는 데 걸리는 시간(초)
 
 // 갈증
 float MaxThirst = 100.f;
-float CurrentThirst = 100.f;
-float ThirstDecayRate = 0.8f;   // 초당 감소량
+float CurrentThirst = 100.f;   // BeginPlay에서 MaxThirst로 초기화
+float SecondsPerThirstDecay = 1.25f;  // 갈증 1이 감소하는 데 걸리는 시간(초)
 
 // 패널티 임계값
 float LowThreshold = 0.3f;              // 30% 이하 = low 상태
@@ -81,7 +82,7 @@ bool bThirstLow = false;
 bool bStaminaRegenSuppressed = false;
 ```
 
-모든 패널티 파라미터는 `EditAnywhere`로 에디터에서 조정 가능하다.
+모든 파라미터는 `DS1CharacterStatData` 에셋(`DA_PlayerStatus`)을 통해 에디터에서 조정한다. `StatData`가 없으면 코드 기본값으로 동작한다.
 
 ---
 
@@ -99,8 +100,8 @@ GetWorld()->GetTimerManager().SetTimer(
 ### 2. HungerThirstDecayTick()
 
 ```cpp
-CurrentHunger -= HungerDecayRate;   // 기본 0.5/초
-CurrentThirst -= ThirstDecayRate;   // 기본 0.8/초
+CurrentHunger -= (1.0f / SecondsPerHungerDecay);   // 기본 2초에 1 감소
+CurrentThirst -= (1.0f / SecondsPerThirstDecay);   // 기본 1.25초에 1 감소
 // BroadcastAttributeChanged → HUD 업데이트
 // ApplyHungerThirstEffects() 호출
 ```
@@ -228,19 +229,22 @@ case EDS1AttributeType::Thirst:
 
 | 프로퍼티 | 기본값 | 효과 |
 | --- | --- | --- |
-| `HungerDecayRate` | 0.5/초 | 약 200초(3.3분)에 0으로 감소 |
-| `ThirstDecayRate` | 0.8/초 | 약 125초(2분)에 0으로 감소 |
+| `MaxHunger` | 100 | 배고픔 최대 수치 |
+| `MaxThirst` | 100 | 갈증 최대 수치 |
+| `SecondsPerHungerDecay` | 2.0초 | 배고픔 1 감소하는 데 걸리는 시간. `MaxHunger × 값` 초에 완전 소진 (기본 200초) |
+| `SecondsPerThirstDecay` | 1.25초 | 갈증 1 감소하는 데 걸리는 시간. `MaxThirst × 값` 초에 완전 소진 (기본 125초) |
 | `LowThreshold` | 0.3 | 30% 이하에서 패널티 발동 |
-| `ThirstHPDrainPerSecond` | 2 | 갈증 low 시 50초면 HP 소진 |
-| `HungerSpeedPenaltyMultiplier` | 0.7 | 이동속도 30% 감소 |
+| `ThirstHPDrainPerSecond` | 2 | 갈증 low 시 초당 HP 감소량 |
+| `HungerSpeedPenaltyMultiplier` | 0.7 | 이동속도 배율 (0.7 = 30% 감소) |
 
-게임 플레이 테스트 후 `LowThreshold`, `DecayRate` 위주로 조정하면 된다.
+게임 플레이 테스트 후 `SecondsPerHungerDecay`, `SecondsPerThirstDecay` 위주로 조정하면 된다.
 
 ---
 
 ## 관련 파일
 
 - `Source/DS1/DS1Define.h` — enum 정의
+- `Source/DS1/Data/DS1CharacterStatData.h/.cpp` — 스탯 파라미터 DataAsset
 - `Source/DS1/Data/DS1ItemData.h` — 소비 아이템 효과 타입 필드
 - `Source/DS1/Components/DS1AttributeComponent.h/.cpp` — 핵심 로직
 - `Source/DS1/Components/DS1InventoryComponent.cpp` — 소비 분기
@@ -252,11 +256,11 @@ case EDS1AttributeType::Thirst:
 
 ### 배고픔 (Hunger)
 
-게임 시작과 동시에 배고픔 수치가 초당 0.5씩 자동으로 줄어든다. 수치가 30% 이하로 떨어지면 이동속도가 30% 감소한다. 음식 아이템을 사용하면 수치가 회복되고 이동속도 패널티도 즉시 해제된다.
+게임 시작과 동시에 배고픔 수치가 2초에 1씩 자동으로 줄어든다 (기본값 기준 200초에 소진). 수치가 30% 이하로 떨어지면 이동속도가 30% 감소한다. 음식 아이템을 사용하면 수치가 회복되고 이동속도 패널티도 즉시 해제된다.
 
 ### 갈증 (Thirst)
 
-배고픔보다 빠르게 초당 0.8씩 감소한다. 수치가 30% 이하가 되면 초당 HP 2씩 드레인이 시작된다. 아무 조치를 취하지 않으면 약 50초 만에 HP가 소진되어 사망한다. 음료 아이템으로 수치를 회복하면 드레인이 즉시 멈춘다.
+배고픔보다 빠르게 1.25초에 1씩 감소한다 (기본값 기준 125초에 소진). 수치가 30% 이하가 되면 초당 HP 2씩 드레인이 시작된다. 아무 조치를 취하지 않으면 약 50초 만에 HP가 소진되어 사망한다. 음료 아이템으로 수치를 회복하면 드레인이 즉시 멈춘다.
 
 ### 스태미나 회복 정지 (둘 다 낮을 때)
 
@@ -266,14 +270,17 @@ case EDS1AttributeType::Thirst:
 
 ## 파라미터 조정 위치
 
-`DS1AttributeComponent`를 가진 블루프린트(보통 BP_Player)를 에디터에서 열고, Details 패널에서 아래 항목을 조정한다.
+`DA_PlayerStatus` (또는 직접 만든 `DS1CharacterStatData` 에셋)를 더블클릭해서 열고, 아래 항목을 조정한다.  
+BP_Player의 `AttributeComponent → Stats → Stat Data`에 해당 에셋을 할당해야 적용된다.
 
 | 파라미터 | 카테고리 | 기본값 | 설명 |
 | --- | --- | --- | --- |
-| `HungerDecayRate` | Hunger | 0.5/초 | 클수록 배고픔이 빨리 줄어든다 |
-| `ThirstDecayRate` | Thirst | 0.8/초 | 클수록 갈증이 빨리 줄어든다 |
-| `LowThreshold` | Penalty | 0.3 | 패널티 발동 임계값 (0.3 = 30%) |
-| `HungerSpeedPenaltyMultiplier` | Penalty | 0.7 | 이동속도 배율 (0.7 = 30% 감소) |
-| `ThirstHPDrainPerSecond` | Penalty | 2.0 | 갈증 low 시 초당 HP 감소량 |
+| `MaxHunger` | Hunger | 100 | 배고픔 최대 수치. 변경 시 완전 소진 시간도 비례 변동 |
+| `SecondsPerHungerDecay` | Hunger | 2.0초 | 배고픔 1 감소에 걸리는 시간. 작을수록 빨리 줄어든다 |
+| `MaxThirst` | Thirst | 100 | 갈증 최대 수치 |
+| `SecondsPerThirstDecay` | Thirst | 1.25초 | 갈증 1 감소에 걸리는 시간. 작을수록 빨리 줄어든다 |
+| `LowThreshold` | HungerThirst | 0.3 | 패널티 발동 임계값 (0.3 = 30%) |
+| `HungerSpeedPenaltyMultiplier` | HungerThirst | 0.7 | 이동속도 배율 (0.7 = 30% 감소) |
+| `ThirstHPDrainPerSecond` | HungerThirst | 2.0 | 갈증 low 시 초당 HP 감소량 |
 
-빠른 테스트가 필요할 때는 `HungerDecayRate`와 `ThirstDecayRate`를 5.0 이상으로 올려서 확인하고, 완료 후 원래 값으로 되돌린다.
+빠른 테스트가 필요할 때는 `SecondsPerHungerDecay`와 `SecondsPerThirstDecay`를 0.1~0.2로 낮춰서 확인하고, 완료 후 원래 값으로 되돌린다.

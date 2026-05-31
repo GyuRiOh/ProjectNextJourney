@@ -14,6 +14,8 @@ class DS1_API ADS1PlayerController : public APlayerController
 	GENERATED_BODY()
 
 public:
+	ADS1PlayerController();
+
 	void ToggleInventory();
 
 	FORCEINLINE bool IsInventoryOpen() const { return bInventoryOpen; }

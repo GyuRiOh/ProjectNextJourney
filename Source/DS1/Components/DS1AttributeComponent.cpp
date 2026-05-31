@@ -18,6 +18,26 @@ void UDS1AttributeComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
+	if (StatData)
+	{
+		MaxHealth          = StatData->MaxHealth;
+		BaseHealth         = StatData->MaxHealth;
+		MaxStamina         = StatData->MaxStamina;
+		BaseStamina        = StatData->MaxStamina;
+		StaminaRegenRate   = StatData->StaminaRegenRate;
+		StaminaRegenDelay  = StatData->StaminaRegenDelay;
+		MaxHunger               = StatData->MaxHunger;
+		SecondsPerHungerDecay   = StatData->SecondsPerHungerDecay;
+		MaxThirst               = StatData->MaxThirst;
+		SecondsPerThirstDecay   = StatData->SecondsPerThirstDecay;
+		LowThreshold            = StatData->LowThreshold;
+		ThirstHPDrainPerSecond  = StatData->ThirstHPDrainPerSecond;
+		HungerSpeedPenaltyMultiplier = StatData->HungerSpeedPenaltyMultiplier;
+	}
+
+	CurrentHunger = MaxHunger;
+	CurrentThirst = MaxThirst;
+
 	GetWorld()->GetTimerManager().SetTimer(
 		HungerThirstDecayHandle, this,
 		&ThisClass::HungerThirstDecayTick, 1.f, true);
@@ -140,8 +160,8 @@ void UDS1AttributeComponent::RegenerateStaminaHandler()
 
 void UDS1AttributeComponent::HungerThirstDecayTick()
 {
-	CurrentHunger = FMath::Clamp(CurrentHunger - HungerDecayRate, 0.f, MaxHunger);
-	CurrentThirst = FMath::Clamp(CurrentThirst - ThirstDecayRate, 0.f, MaxThirst);
+	CurrentHunger = FMath::Clamp(CurrentHunger - (1.0f / SecondsPerHungerDecay), 0.f, MaxHunger);
+	CurrentThirst = FMath::Clamp(CurrentThirst - (1.0f / SecondsPerThirstDecay), 0.f, MaxThirst);
 
 	BroadcastAttributeChanged(EDS1AttributeType::Hunger);
 	BroadcastAttributeChanged(EDS1AttributeType::Thirst);

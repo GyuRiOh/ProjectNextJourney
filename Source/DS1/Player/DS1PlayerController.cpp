@@ -5,7 +5,13 @@
 #include "Blueprint/WidgetBlueprintLibrary.h"
 #include "Components/DS1InventoryComponent.h"
 #include "GameFramework/Pawn.h"
+#include "Player/DS1CheatManager.h"
 #include "UI/DS1InventoryWidget.h"
+
+ADS1PlayerController::ADS1PlayerController()
+{
+	CheatClass = UDS1CheatManager::StaticClass();
+}
 
 void ADS1PlayerController::BeginPlay()
 {
